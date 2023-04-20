@@ -17,8 +17,15 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     private int FPS = 60;
 
-    KeyHandler keyHandler = new KeyHandler();
-    Thread gameThread;
+    // System variables
+    private final KeyHandler keyHandler = new KeyHandler();
+    private final UI ui = new UI(this); 
+
+    private Thread gameThread;
+
+    // Game state
+    enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN};
+    private GameState gameState = GameState.TITLE_SCREEN; 
 
     // Player default position
     private int playerX = screenWidth / 2;
@@ -91,9 +98,24 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D graphics2D = (Graphics2D) g;
 
-        graphics2D.setColor(Color.WHITE);
-        graphics2D.fillRect(playerX, playerY, tileSize, tileSize);
+        if (gameState == GameState.TITLE_SCREEN) {
+            ui.draw(graphics2D);
+        } else {
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.fillRect(playerX, playerY, tileSize, tileSize);
+        }
         graphics2D.dispose();
-        
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
     }
 }
