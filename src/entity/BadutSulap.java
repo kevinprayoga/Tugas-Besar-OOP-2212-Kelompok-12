@@ -1,4 +1,4 @@
-package src;
+package entity;
 
 public class BadutSulap extends Pekerjaan{
     private int gaji;

@@ -1,4 +1,4 @@
-package src;
+package entity;
 
 public abstract class Pekerjaan {
     private String jobString;

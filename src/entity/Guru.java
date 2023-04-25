@@ -1,4 +1,4 @@
-package src;
+package entity;
 
 public class Guru extends Pekerjaan {
     private int gaji;
