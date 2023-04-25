@@ -1,9 +1,9 @@
 package entity;
 
 public interface AksiAktif {
-    public void kerja(int time);
+    public void kerja(int time) throws Exception;
 
-    public void olahraga(int time);
+    public void olahraga(int time) throws Exception;
 
     public void tidur(int time);
 

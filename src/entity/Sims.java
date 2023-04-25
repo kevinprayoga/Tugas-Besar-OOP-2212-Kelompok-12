@@ -1,25 +1,27 @@
 
 package entity;
 
+import exceptions.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Sims implements AksiAktif{
-    private int mood, money,kesehatan,kekenyangan, gajiBank;
+    private int mood, money,kesehatan,kekenyangan, gajiBank,bonusInc;
     private LocalDateTime endTime,startTime;
     private boolean isBusy;
     private String activity;
+
 
     
     
     
     
     // Implementasi aksi aktif
-    public void kerja(int time) throws Exception{
+    public void kerja(int time) throws NotEnoughKesejahteraan{
         if(mood-(time/30*10) <= 0){
-            throw new Exception("Sim tidak cukup mood untuk bekerja selama itu!");
+            throw new NotEnoughKesejahteraan("Sim tidak cukup mood untuk bekerja selama itu!");
         } else if(kekenyangan - (time/30*10) <= 0){
-            throw new Exception("Sim tidak cukup kenyang untuk bekerja selama itu!");
+            throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bekerja selama itu!");
         } else{
         startTime = LocalDateTime.now();
         endTime = startTime.plusSeconds(time);
@@ -28,6 +30,21 @@ public class Sims implements AksiAktif{
         }
     }
 
+    public void olahraga(int time) throws NotEnoughKesejahteraan {
+        kesehatan += (time / 20 * 5);
+        kekenyangan -= (time / 20 * 5);
+        mood += (time / 20 * 10);
+        if(kekenyangan - (time/20*10) <= 0){
+            throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk berolahraga selama itu!");
+        } else{
+            startTime = LocalDateTime.now();
+            endTime = startTime.plusSeconds(time);
+            isBusy = true;
+            activity = "olahraga";
+        }
+    }
+
+    public void 
     public void update(){
         if (activity.equals("kerja")){
             if(LocalDateTime.now().compareTo(endTime) >= 0){
@@ -53,20 +70,6 @@ public class Sims implements AksiAktif{
                 kesehatan += (seconds/20*5);
                 startTime.plusSeconds(seconds - (seconds%20));
             }
-        }
-    }
-
-    public void olahraga(int time) throws Exception {
-        kesehatan += (time / 20 * 5);
-        kekenyangan -= (time / 20 * 5);
-        mood += (time / 20 * 10);
-        if(kekenyangan - (time/20*10) <= 0){
-            throw new Exception("Sim tidak cukup kenyang untuk berolahraga selama itu!");
-        } else{
-            startTime = LocalDateTime.now();
-            endTime = startTime.plusSeconds(time);
-            isBusy = true;
-            activity = "olahraga";
         }
     }
 
