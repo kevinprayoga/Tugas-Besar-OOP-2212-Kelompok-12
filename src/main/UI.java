@@ -116,7 +116,7 @@ public class UI {
 
         // Copyright
         graphics2d.setFont(pixolletta_general.deriveFont(18f));
-        graphics2d.drawString("The Simplicity © 2023 - Kelompok 15 OOP STI", UtilityTool.getXForCenterOfText("The Simplicity © 2023 - Kelompok 15 OOP STI", gamePanel, graphics2d), 990);
+        graphics2d.drawString("The Simplicity © 2023 - Kelompok 12 OOP STI", UtilityTool.getXForCenterOfText("The Simplicity © 2023 - Kelompok 15 OOP STI", gamePanel, graphics2d), 990);
     }
     
     private void drawLoadGameScreen() {
