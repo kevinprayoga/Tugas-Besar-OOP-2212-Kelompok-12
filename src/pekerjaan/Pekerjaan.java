@@ -1,8 +1,8 @@
-package entity;
+package pekerjaan;
 
 public abstract class Pekerjaan {
     private String jobString;
-    PekerjaanPrinter printer;
+    private PekerjaanPrinter printer;
 
     public Pekerjaan() {
         jobString = getRandomJob();
@@ -13,6 +13,10 @@ public abstract class Pekerjaan {
 
     public String getJob() {
         return jobString;
+    }
+
+    public PekerjaanPrinter getPekerjaanPrinter() {
+        return printer;
     }
 
     public static String getRandomJob(){

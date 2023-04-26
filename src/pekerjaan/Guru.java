@@ -1,9 +1,9 @@
-package entity;
+package pekerjaan;
 
-public class Dokter extends Pekerjaan{
+public class Guru extends Pekerjaan {
     private int gaji;
 
-    public Dokter() {
+    public Guru() {
         gaji = 50;
     }
 
