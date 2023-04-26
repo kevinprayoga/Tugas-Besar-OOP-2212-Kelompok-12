@@ -1,4 +1,4 @@
-package entity;
+package pekerjaan;
 
 public class Barista extends Pekerjaan{
     private int gaji;

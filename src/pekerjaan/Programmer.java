@@ -1,4 +1,4 @@
-package entity;
+package pekerjaan;
 
 public class Programmer extends Pekerjaan{
     private int gaji;

@@ -1,4 +1,4 @@
-package entity;
+package pekerjaan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +23,13 @@ public class PekerjaanPrinter {
         } else if (newJob.equals("Koki")){
             testPekerjaan = new Koki();
         } else if (newJob.equals("Polisi")){
-            testPekerjaan = new Barista();
+            testPekerjaan = new Polisi();
         } else if (newJob.equals("Programmer")){
-            testPekerjaan = new Koki();
+            testPekerjaan = new Programmer();
         } else if (newJob.equals("Dokter")){
-            testPekerjaan = new Barista();
+            testPekerjaan = new Dokter();
         } else if (newJob.equals("Guru")){
-            testPekerjaan = new Koki();
+            testPekerjaan = new Guru();
         }
     }
 }

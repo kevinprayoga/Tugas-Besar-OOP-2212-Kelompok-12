@@ -1,4 +1,4 @@
-package entity;
+package pekerjaan;
 
 public class Polisi extends Pekerjaan{
     private int gaji;
