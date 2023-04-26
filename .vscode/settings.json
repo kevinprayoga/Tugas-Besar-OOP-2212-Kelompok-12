@@ -2,5 +2,10 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "c:\\Users\\Administrator\\Downloads\\json-20230227.jar"
+    ],
+    "java.project.sourcePaths": [
+        "res",
+        "src",
+        "lib"
     ]
 }
