@@ -1,11 +1,13 @@
 package entity;
 
+import exceptions.NotEnoughKesejahteraan;
+
 public interface AksiAktif {
-    public void kerja(int time) throws Exception;
+    public void kerja(int time) throws NotEnoughKesejahteraan;
 
-    public void olahraga(int time) throws Exception;
+    public void olahraga(int time) throws NotEnoughKesejahteraan;
 
-    public void tidur(int time);
+    public void tidur(int time) throws NotEnoughKesejahteraan;
 
     public void makan(Makanan m);
 
