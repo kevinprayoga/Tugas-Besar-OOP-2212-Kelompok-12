@@ -3,26 +3,33 @@ package entity;
 public class Waktu {
     private static int startTime;
     private int remainTime;
+    private int day = 0;
 
     public Waktu() {
-        startTime = (int) System.currentTimeMillis() / 1000;
+        synchronized(Waktu.class){
+            startTime = (int) System.currentTimeMillis() / 1000;
+        }
     }
 
-    public int getTime() {
+    public synchronized int getTime() {
         int currentTime = (int) System.currentTimeMillis() / 1000;
         return currentTime - startTime;
     }
 
-    public int getDay() {
+    public synchronized int getDay() {
         // 1 hari = 12 menit = 720 detik
-        int timeInSec = getTime();
-        int day = timeInSec / 720;
+        int time = getTime();
+        day = time / 720;
         return day;
     }
 
-    public int getRemainTime(){
-        int timeInSec = getTime();
-        remainTime = timeInSec % 720;
+    public synchronized int getRemainTime(){
+        int time = getTime();
+        remainTime = time % 720;
         return remainTime;
+    }
+
+    public synchronized void reset() {
+        startTime = (int) System.currentTimeMillis() / 1000;
     }
 }

@@ -22,11 +22,11 @@ public class Posisi{
         this.setOrdinat(y);
     }
 
-    public int getAbsis(){
+    public int getX(){
         return absis;
     }
 
-    public int getOrdinat(){
+    public int getY(){
         return ordinat;
     }
 
