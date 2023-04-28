@@ -1,6 +1,9 @@
 package entity;
 
+import exceptions.ItemError;
 import exceptions.NotEnoughKesejahteraan;
+import exceptions.TidakCukupItem;
+import exceptions.TidakCukupUang;
 
 public interface AksiAktif {
     public void kerja(int time) throws NotEnoughKesejahteraan;
@@ -9,7 +12,7 @@ public interface AksiAktif {
 
     public void tidur(int time) throws NotEnoughKesejahteraan;
 
-    public void makan(Makanan m);
+    public void makan(Makanan m) throws ItemError;
 
     public void berkunjung(int time, Rumah r);
 
@@ -23,7 +26,7 @@ public interface AksiAktif {
 
     public int getBonusInc();
 
-    public void vacation();
+    public void vacation() throws TidakCukupItem;
 
     public void woodworking(NonMakanan item);
 
