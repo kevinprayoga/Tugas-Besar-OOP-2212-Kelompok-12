@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
 
     // Game state
-    enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN};
+    enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, HELP_SCREEN};
     private GameState gameState = GameState.TITLE_SCREEN; 
 
     // Player default position
@@ -97,12 +97,24 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D graphics2D = (Graphics2D) g;
-
-        if (gameState == GameState.TITLE_SCREEN) {
-            ui.draw(graphics2D);
-        } else {
-            graphics2D.setColor(Color.WHITE);
-            graphics2D.fillRect(playerX, playerY, tileSize, tileSize);
+        
+        switch (this.gameState) {
+            case TITLE_SCREEN:
+                ui.draw(graphics2D);
+                break;
+            case LOAD_GAME_SCREEN:
+                this.setBackground(Color.BLACK);
+                graphics2D.setColor(Color.WHITE);
+                graphics2D.fillRect(playerX, playerY, tileSize, tileSize);
+                break;
+            case WORLD_GAME_SCREEN:
+                break;
+            case HOUSE_GAME_SCREEN:
+                break;
+            case CHARACTER_SELECTION_SCREEN:
+                break;
+            case HELP_SCREEN:
+                break;
         }
         graphics2D.dispose();
     }
@@ -117,5 +129,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public int getScreenHeight() {
         return screenHeight;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }
