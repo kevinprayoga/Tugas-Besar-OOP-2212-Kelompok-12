@@ -2,7 +2,7 @@ package entity;
 
 import exceptions.ItemError;
 import exceptions.TidakCukupItem;
-import exceptions.TidakCukupUang;
+import exceptions.PekerjaanError;
 import exceptions.NotEnoughKesejahteraan;
 
 public interface AksiAktif {
