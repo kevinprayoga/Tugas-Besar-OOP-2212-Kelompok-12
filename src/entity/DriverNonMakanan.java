@@ -1,3 +1,4 @@
+package entity;
 /*
  * FILE NAME    : DriverNonMakanan.java
  * AUTHOR       : 18221045 Ivan Aldy Ganesen
