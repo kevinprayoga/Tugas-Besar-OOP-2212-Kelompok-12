@@ -1,9 +1,9 @@
 package entity;
 
 import exceptions.ItemError;
-import exceptions.NotEnoughKesejahteraan;
 import exceptions.TidakCukupItem;
 import exceptions.TidakCukupUang;
+import exceptions.NotEnoughKesejahteraan;
 
 public interface AksiAktif {
     public void kerja(int time) throws NotEnoughKesejahteraan;
