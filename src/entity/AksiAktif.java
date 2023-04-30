@@ -1,6 +1,8 @@
 package entity;
 
 import exceptions.ItemError;
+import exceptions.TidakCukupItem;
+import exceptions.PekerjaanError;
 import exceptions.NotEnoughKesejahteraan;
 import exceptions.TidakCukupItem;
 
