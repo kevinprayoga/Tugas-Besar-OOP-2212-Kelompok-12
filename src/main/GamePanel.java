@@ -3,6 +3,14 @@ package main;
 import java.awt.*;
 import javax.swing.*;
 
+import entity.House;
+import entity.World;
+import entity.unit.Time;
+import graphics.HousePainter;
+import graphics.PlayedSims;
+import graphics.UI;
+import graphics.WorldPainter;
+import util.CollisionHandler;
 import util.KeyHandler;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -24,17 +32,24 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
 
     // Game state
-    enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, HELP_SCREEN};
+    public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN};
     private GameState gameState = GameState.TITLE_SCREEN; 
+    private boolean isStoreOpened = false;
+    private boolean isAddSimsAvailable = true;
+    private boolean isEnteredHouse = false;
 
-    // Player default position
-    private int playerX = screenWidth / 2;
-    private int playerY = screenHeight / 2;
-    private int playerSpeed = 2;
+    // Game variables
+    private World world;
+    private House visitedHouse;
+    private WorldPainter worldPainter;
+    private HousePainter housePainter;
+    private Time mainTime;
+    private PlayedSims playedSims;
+    public CollisionHandler collisionHandler;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.WHITE);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
@@ -60,7 +75,6 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (delta >= 1) {
                 // 1: Update information, such as character position
-                update();
 
                 // 2: Draw the screen with updated information
                 repaint(); // Calls the paintComponent() method
@@ -69,28 +83,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
         }
-    }
-
-    public void update() {
-        if (keyHandler.upPressed) {
-            playerY -= playerSpeed;
-        }
-
-        if (keyHandler.downPressed) {
-            playerY += playerSpeed;
-        }
-
-        if (keyHandler.leftPressed) {
-            playerX -= playerSpeed;
-        }
-
-        if (keyHandler.rightPressed) {
-            playerX += playerSpeed;
-        }
-        playerX = Math.max(0, Math.min(playerX, screenWidth - tileSize));
-        playerY = Math.max(0, Math.min(playerY, screenHeight - tileSize));
-
-        // Main program loop update <<<<< taro di sini yak untuk program utama
     }
 
     public void paintComponent(java.awt.Graphics g) {
@@ -103,17 +95,24 @@ public class GamePanel extends JPanel implements Runnable {
                 ui.draw(graphics2D);
                 break;
             case LOAD_GAME_SCREEN:
-                this.setBackground(Color.BLACK);
-                graphics2D.setColor(Color.WHITE);
-                graphics2D.fillRect(playerX, playerY, tileSize, tileSize);
+                ui.draw(graphics2D);
                 break;
             case WORLD_GAME_SCREEN:
+                worldPainter.draw(graphics2D);
+                ui.draw(graphics2D);
                 break;
             case HOUSE_GAME_SCREEN:
+                housePainter.draw(graphics2D);
+                ui.draw(graphics2D);
                 break;
             case CHARACTER_SELECTION_SCREEN:
+                ui.draw(graphics2D);
+                break;
+            case NEW_CHAR_SCREEN:
+                ui.draw(graphics2D);
                 break;
             case HELP_SCREEN:
+                ui.draw(graphics2D);
                 break;
         }
         graphics2D.dispose();
@@ -131,7 +130,88 @@ public class GamePanel extends JPanel implements Runnable {
         return screenHeight;
     }
 
+    public int getTileSize() {
+        return tileSize;
+    }
+
+    public util.KeyHandler getKeyHandler() {
+        return keyHandler;
+    }
+
+    public UI getGameUI() {
+        return ui;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public Time getMainTime() {
+        return mainTime;
+    }
+
+    public PlayedSims getPlayedSims() {
+        return playedSims;
+    }
+
+    public House getHouse() {
+        return visitedHouse;
+    }
+
+    public boolean getStoreOpened() {
+        return isStoreOpened;
+    }
+
+    public boolean getAddSimsAvailable() {
+        return isAddSimsAvailable;
+    }
+
+    public boolean getEnteredHouse() {
+        return isEnteredHouse;
+    }
+
+    // Setter
+
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+        worldPainter = new WorldPainter(world, this); 
+        }
+
+    public void setMainTime(Time mainTime) {
+        this.mainTime = mainTime;
+    }
+
+    public void setPlayedSims(PlayedSims playedSims) {
+        this.playedSims = playedSims;
+        collisionHandler = new CollisionHandler(this, playedSims.getSims());
+    }
+
+    public void setHouse(House house) {
+        this.visitedHouse = house;
+        housePainter = new HousePainter(house, this);
+    }
+
+    public void setStoreOpened(boolean isStoreOpened) {
+        this.isStoreOpened = isStoreOpened;
+    }
+
+    public void setAddSimsAvailable(boolean isAddSimsAvailable) {
+        this.isAddSimsAvailable = isAddSimsAvailable;
+    }
+
+    public void setEnteredHouse(boolean isEnteredHouse) {
+        this.isEnteredHouse = isEnteredHouse;
+    }
+
+    public void pauseMainTime() {
+        mainTime.pause();
+    }
+
+    public void resumeMainTime() {
+        mainTime.continueThread();
     }
 }

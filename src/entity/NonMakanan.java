@@ -1,36 +1,29 @@
+package entity;
 /*
  * FILE NAME    : NonMakanan.java
  * AUTHOR       : 18221045 Ivan Aldy Ganesen
  * DESKRIPSI    :
  * Kelas ini adalah implementasi dari objek NonMakanan yang diperlukan pada Sims.
- * NonMakanan mencakup barang-barang yang tidak termasuk Makanan maupun Bahan Makanan,
+ * NonMakanan adalah salah satu child class dari Produk, 
+ * dan mencakup barang-barang yang tidak termasuk Makanan maupun Bahan Makanan,
  * yaitu Jam, KasurKingSize, KasurQueenSize, KasurSingleSize, KomporGas, KomporListrik,
  * MejaKursi, RakBuku, Shower dan Toilet.
 */
 
-// import java.util.ArrayList;
-// import java.util.Arrays;
-
-// Tipe kelas: Public
-public class NonMakanan {
+public class NonMakanan extends Produk {
     // Definisi variabel
     private Dimensi dimensi; // dimensi barang
     private int harga;       // harga dari barang
     private String aksi;     // aksi apa saja yang didukung barang
     private Posisi posisi;   // Letak NonMakanan (apabila berada di World)
-    // Variabel Tambahan
-    private String jenis;    // Tipe dari barang
-
-    /* INSERT IN MAIN LATER ON, HANDLING NON-LIST ENTRIES
-    final ArrayList<String> NonMakananList = new ArrayList<>(Arrays.asList("KasurKingSize", "KasurQueenSize", "KasurSingleSize",
-    "Shower", "Toilet", "KomporGas", "KomporListrik", "RakBuku", "MejaKursi", "Jam"));
-    */
 
     // KONSTRUKTOR
     // Asumsikan posisi hanya akan ada saat NonMakanan ditempatkan ke World
     // Parameter yang diperlukan: Tipe barang yang akan dibuat
     public NonMakanan(String type) {
         // Asumsikan type adalah nilai yang valid; tidak valid akan di-handle pada main
+        super(type); // tipe ditentukan sesuai masukan
+        
         if (type.equals("KasurKingSize")) { // barang Kasur King Size
             setDimensi(5, 2);
             setHarga(150);
@@ -72,7 +65,6 @@ public class NonMakanan {
             setHarga(10);
             setAksi("Melihat Waktu");
         }
-        setJenis(type); // tipe ditentukan sesuai masukan
     }
 
     // DAFTAR GETTER
@@ -92,24 +84,16 @@ public class NonMakanan {
         return posisi;
     }
 
-    public String getJenis() {
-        return jenis;
-    }
-
     // DAFTAR SETTER
-    public void setDimensi(int x, int y) { // setter dimensi
+    private void setDimensi(int x, int y) { // setter dimensi
         dimensi = new Dimensi(x, y);
     }
 
-    public void setHarga(int har) { // setter harga
+    private void setHarga(int har) { // setter harga
         harga = har;
     }
 
-    public void setAksi(String aks) { // setter aksi
+    private void setAksi(String aks) { // setter aksi
         aksi = aks;
-    }
-
-    public void setJenis(String jen) { // setter jenis
-        jenis = jen;
     }
 }
