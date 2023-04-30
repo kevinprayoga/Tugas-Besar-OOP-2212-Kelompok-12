@@ -10,10 +10,9 @@ import entity.Sim;
 import entity.Posisi;
 import entity.Waktu;
 
-public class PlayedSims implements Aksi {
+public class PlayedSims {
     private final GamePanel gamePanel;
     private Sim sims;
-    private Waktu actionTime;
 
     // Player settings
     private int speed;

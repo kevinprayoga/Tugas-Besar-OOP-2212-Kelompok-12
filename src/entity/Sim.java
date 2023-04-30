@@ -3,8 +3,11 @@ package entity;
 import exceptions.*;
 import pekerjaan.Pekerjaan;
 import pekerjaan.PekerjaanPrinter;
+import util.UtilityTool;
 
+import java.awt.image.BufferedImage;
 import java.io.NotActiveException;
+import java.nio.Buffer;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -23,6 +26,8 @@ public class Sim implements AksiAktif, AksiPasif{
     private int kesehatan;
     private String status;
     private int wood;
+
+    private int charType;
 
     private int timeTidur;
     private int dayTidur;
@@ -48,12 +53,15 @@ public class Sim implements AksiAktif, AksiPasif{
     private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>(null);
  
     // Konstruktor
-    public Sim(String nama) {
+    public Sim(String nama, int charType) {
         namaLengkap = nama;
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
         uang = 100;
+
+        this.charType = charType;
+
     }
 
     // Getter
@@ -99,6 +107,41 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public static int getJumlahPasif(){
         return jumlahPasif;
+    }
+
+    public int getCharType() {
+        return charType;
+    }
+
+    public BufferedImage getCharacter() {
+        BufferedImage character;
+        switch (charType) {
+            case 0:
+                character = UtilityTool.loadImage("res/image/sims/bnmo/BNMO_Down_Right (1).png");
+                break;
+                case 1:
+                character = UtilityTool.loadImage("res/image/sims/hans/Hans_Down_Right (1).png");
+                break;
+            case 2:
+                character = UtilityTool.loadImage("res/image/sims/ivan/Ivan_Down_Right (1).png");
+                break;
+            case 3:
+                character = UtilityTool.loadImage("res/image/sims/kevin/Kevin_Down_Right (1).png");
+                break;
+            case 4:
+                character = UtilityTool.loadImage("res/image/sims/nicholas/Nic_Down_Right (1).png");
+                break;
+            case 5:
+                character = UtilityTool.loadImage("res/image/sims/ojan/Ojan_Down_Right (1).png");
+                break;
+            case 6:
+                character = UtilityTool.loadImage("res/image/sims/rana/Rana_Down_Right (1).png");
+                break;
+            default:
+                character = UtilityTool.loadImage("res/image/sims/bnmo/BNMO_Down_Right (1).png");
+                break; 
+        }
+        return character;
     }
     
     // Implementasi aksi aktif

@@ -42,7 +42,6 @@ public class GamePanel extends JPanel implements Runnable {
     private Rumah visitedHouse;
     private WorldPainter worldPainter;
     private HousePainter housePainter;
-    private Time mainTime;
     private PlayedSims playedSims;
     public CollisionHandler collisionHandler;
 
@@ -145,15 +144,11 @@ public class GamePanel extends JPanel implements Runnable {
         return world;
     }
 
-    public Time getMainTime() {
-        return mainTime;
-    }
-
     public PlayedSims getPlayedSims() {
         return playedSims;
     }
 
-    public House getHouse() {
+    public Rumah getHouse() {
         return visitedHouse;
     }
 
@@ -180,16 +175,13 @@ public class GamePanel extends JPanel implements Runnable {
         worldPainter = new WorldPainter(world, this); 
         }
 
-    public void setMainTime(Time mainTime) {
-        this.mainTime = mainTime;
-    }
 
     public void setPlayedSims(PlayedSims playedSims) {
         this.playedSims = playedSims;
         collisionHandler = new CollisionHandler(this, playedSims.getSims());
     }
 
-    public void setHouse(House house) {
+    public void setHouse(Rumah house) {
         this.visitedHouse = house;
         housePainter = new HousePainter(house, this);
     }
@@ -204,13 +196,5 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setEnteredHouse(boolean isEnteredHouse) {
         this.isEnteredHouse = isEnteredHouse;
-    }
-
-    public void pauseMainTime() {
-        mainTime.pause();
-    }
-
-    public void resumeMainTime() {
-        mainTime.continueThread();
     }
 }

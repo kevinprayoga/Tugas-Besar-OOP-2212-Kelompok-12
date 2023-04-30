@@ -1,19 +1,19 @@
 package util;
 
-import entity.Sims;
+import entity.Sim;
 import entity.World;
-import entity.unit.Matrix;
+import entity.Matrix;
 import main.GamePanel;
 
 public class CollisionHandler {
     private final GamePanel gamePanel;
-    private Sims sims;
+    private Sim sims;
     private World world;
     private Matrix<Integer> worldTiles;
     private Matrix<Boolean> houseMap;
     private Matrix<Boolean> roomMap;
 
-    public CollisionHandler(GamePanel gamePanel, Sims sims) {
+    public CollisionHandler(GamePanel gamePanel, Sim sims) {
         this.gamePanel = gamePanel;
         this.sims = sims;
         this.world = gamePanel.getWorld();
