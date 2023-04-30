@@ -4,11 +4,15 @@ import exceptions.*;
 import pekerjaan.Pekerjaan;
 import pekerjaan.PekerjaanPrinter;
 
+import java.io.NotActiveException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Sim implements AksiAktif, AksiPasif{
+    Random rand = new Random();
+    
     private String namaLengkap;
     private Pekerjaan pekerjaan;
     private PekerjaanPrinter jobPrinter;
@@ -30,7 +34,6 @@ public class Sim implements AksiAktif, AksiPasif{
     private int startTimeVacation;
     private int startDayVacation;
 
-    private int addSimCD;
     private int bonusInc;
 
     private Rumah rumah;
@@ -40,8 +43,10 @@ public class Sim implements AksiAktif, AksiPasif{
     private int gajiBank;               // waktu leftover dari kerja
     private static int jumlahPasif;            // jumlah aksi pasif yang memerlukan waktu yang sedang berjalan
 
-    private static ArrayList<Thread> threads = new ArrayList<Thread>(null);
-
+    private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>(null);
+    private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>(null);
+    private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>(null);
+ 
     // Konstruktor
     public Sim(String nama) {
         namaLengkap = nama;
@@ -97,7 +102,7 @@ public class Sim implements AksiAktif, AksiPasif{
     }
     
     // Implementasi aksi aktif
-    public void kerja(int time) throws NotEnoughKesejahteraan{
+    public void kerja(int time) throws NotEnoughKesejahteraan,InterruptedException{
         if(mood - (time/30*10) <= 0) {
             throw new NotEnoughKesejahteraan("Sim tidak cukup mood untuk bekerja selama itu!");
         } else if(kekenyangan - (time/30*10) <= 0) {
@@ -116,7 +121,7 @@ public class Sim implements AksiAktif, AksiPasif{
         }
     }
 
-    public void olahraga(int time) throws NotEnoughKesejahteraan {
+    public void olahraga(int time) throws NotEnoughKesejahteraan,InterruptedException {
         if(kekenyangan - (time/20*10) <= 0){
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk berolahraga selama itu!");
         } else{
@@ -133,7 +138,7 @@ public class Sim implements AksiAktif, AksiPasif{
 
     
 
-    public void tidur(int time) throws ItemError{
+    public void tidur(int time) throws ItemError,InterruptedException{
         if (inFrontNonMakanan.getAksi() != "Tidur"){
             throw new ItemError("Sim tidak sedang berada di depan tempat tidur!");
         } else{
@@ -150,7 +155,7 @@ public class Sim implements AksiAktif, AksiPasif{
         }
     }
 
-    public void makan(Makanan m) throws ItemError{
+    public void makan(Makanan m) throws ItemError,InterruptedException{
         if (inFrontNonMakanan.getAksi() != "Makan"){
             throw new ItemError("Sim tidak sedang berada di depan meja kursi!");
         } else{
@@ -166,7 +171,7 @@ public class Sim implements AksiAktif, AksiPasif{
         
     }
 
-    public void buangAir(){
+    public void buangAir() throws ItemError,NotEnoughKesejahteraan,InterruptedException{
         if(inFrontNonMakanan.getAksi() != "Buang Air"){
             throw new ItemError("Sim sedang tidak di toilet!");
         } else{
@@ -206,7 +211,7 @@ public class Sim implements AksiAktif, AksiPasif{
         }
     }
 
-    public void woodworking(NonMakanan item){
+    public void woodworking(NonMakanan item) throws TidakCukupItem,InterruptedException{
         if(wood < item.getHarga()){
             throw new TidakCukupItem("Tidak cukup wood untuk woodworking!");
         } else{
@@ -221,7 +226,7 @@ public class Sim implements AksiAktif, AksiPasif{
         }
     }
 
-    public void bath(){
+    public void bath() throws ItemError,InterruptedException{
         if(inFrontNonMakanan.getAksi() != "Bath"){
             throw new ItemError("Sim sedang tidak di shower!");
         } else{
@@ -234,7 +239,7 @@ public class Sim implements AksiAktif, AksiPasif{
         }
     }
 
-    public void meditate(int time){
+    public void meditate(int time) throws NotEnoughKesejahteraan,InterruptedException{
         if(kekenyangan - (time/30*5) <= 0){
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bermeditasi selama itu!");
         } else{
@@ -248,7 +253,7 @@ public class Sim implements AksiAktif, AksiPasif{
         }
     }
 
-    public void read(){
+    public void read() throws ItemError,InterruptedException{
         if(inFrontNonMakanan.getAksi() != "Read"){
             throw new ItemError("Sim sedang tidak di depan rak buku!");
         } else{
@@ -256,7 +261,7 @@ public class Sim implements AksiAktif, AksiPasif{
             for(int i = 0;i<20; i++){
                 WaktuAlt.addSecond();
             }
-            int randomnum = new Random(10);
+            int randomnum = rand.nextInt(5);
             if(randomnum == 4){
                 bonusInc += 10;
             }
@@ -264,7 +269,7 @@ public class Sim implements AksiAktif, AksiPasif{
         }
     }
 
-    public void party(){
+    public void party() throws TidakCukupItem, InterruptedException{
         if(uang < 100){
             throw new TidakCukupItem("Tidak cukup uang untuk party!");
         } else{
@@ -281,17 +286,55 @@ public class Sim implements AksiAktif, AksiPasif{
     // Implementasi aksi pasif
     public void upgradeRumah(Ruangan r, String arah, String nama);
 
-    public void beliObjek(Objek o);
-
-    public void displayInventory(){
-        
+    public void beliObjek(Produk o) throws ItemError,TidakCukupItem{
+        if(o instanceof Makanan){
+            throw new ItemError("Makanan hanya dapat dimasak menggunakan bahan makanan!");
+        } else if (o instanceof NonMakanan){
+            if(uang - ((NonMakanan) o).getHarga() < 0){
+                throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
+            } else{
+                int waktuPengiriman = (rand.nextInt(5)+1)*30;
+                pembelianSim.add(this);
+                pembelianProduk.add(o);
+                timerPembelian.add(waktuPengiriman);
+            }
+        } else if (o instanceof BahanMakanan){
+            if(uang - ((BahanMakanan) o).getHarga() < 0){
+                throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
+            } else{
+                int waktuPengiriman = (rand.nextInt(5)+1)*30;
+                pembelianSim.add(this);
+                pembelianProduk.add(o);
+                timerPembelian.add(waktuPengiriman);
+            }
+        }
     }
 
-    public void installObject(Objek o, Posisi p);
+    public void displayInventory(){
+        inventory.printInventory();
+    }
 
-    public int getTime();
+    public void installObject(Produk o, Posisi p);
 
-    public void gamble(int money);
+    public int getTime() throws ItemError{
+        if(inFrontNonMakanan.getAksi() != "Read"){
+            throw new ItemError("Sim sedang tidak di depan jam!");
+        } else{
+            return WaktuAlt.getRemainTime();
+        }
+    }
+
+    public void gamble(int money) throws TidakCukupItem{
+        if(this.uang < money){
+            throw new TidakCukupItem("Tidak cukup uang untuk berjudi sebanyak itu!");
+        } else{
+            if(rand.nextInt(10) >= 5){
+                uang += money;
+            } else{
+                uang -= money;
+            }
+        }
+    }
 
     public void update(){
 
@@ -319,7 +362,7 @@ public class Sim implements AksiAktif, AksiPasif{
         //
         //
         if(kesehatan <= 0 || mood <= 0 || kekenyangan <= 0){
-
+            status = "dead";
         }
 
         //kesejahteraan < 100
@@ -337,6 +380,10 @@ public class Sim implements AksiAktif, AksiPasif{
             timeTidur = WaktuAlt.getTime();
             dayTidur = WaktuAlt.getDay();
         }
+        
+    }
+
+    public static void updatePembelian(){
         
     }
 }

@@ -1,3 +1,4 @@
+package entity;
 /*
  * FILE NAME    : Produk.java
  * AUTHOR       : 18221045 Ivan Aldy Ganesen
