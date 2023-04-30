@@ -131,6 +131,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.menuGame = new MenuGame(this);
         this.playableSims = new ArrayList<>();
         this.world = new World();
+        this.worldPainter = new WorldPainter(world, this);
     }
 
     public GameState getGameState() {
@@ -222,6 +223,6 @@ public class GamePanel extends JPanel implements Runnable {
     // Adder
     public void addPlayableSims(Sim sim) {
         this.playableSims.add(sim);
-        world.addSim(sim);
+        world.createSim(sim);
     }
 }

@@ -90,18 +90,18 @@ public class World {
     // Adder
     public void addSim(Sim sim) {
         simList.add(sim);
-        Rumah myHouse = addHouse(sim);
 
         int houseX = 0;
         int houseY = 0;
 
         for (int i = 0; i < getLength(); i++) {
             for (int j = 0; j < getWidth(); j++) {
-                try {
-                    if (perumahan.get(i, j).equals(myHouse)) {
-                        houseX = i; houseY = j;
+                if (perumahan.get(i, j) != null) {
+                    System.out.println(perumahan.get(i, j).getOwner().getNamaLengkap());
+                    if (perumahan.get(i, j).getOwner().equals(sim)) {
+                            houseX = i; houseY = j;
                     }
-                } catch (Exception e) {}
+                }
             }
         }
 
@@ -110,15 +110,25 @@ public class World {
         int y = (int) (Math.random() * 5) - 2 + houseY;
         
         // Checking if its not grass or sand or beyond map, if it is, randomize again
-        while (houseMap.get(x, y) || x < 0 || x > 63 || y < 0 || y > 63 && mapWorld.get(x, y) == 2 ) {
+        while (x < 0 || x > 63 || y < 0 || y > 63) {
+            if (!houseMap.get(x, y) && mapWorld.get(x, y) < 2) {
+                break;
+            }
             x = (int) (Math.random() * 5) - 2 + houseX;
             y = (int) (Math.random() * 5) - 2 + houseY;    
         }
 
-        sim.setPosisi(new Posisi(x, y));
+        sim.getPosisi().changeLoc(x, y);
+        System.out.println(sim.getNamaLengkap() + " is at " + x + ", " + y);
+        System.out.println(sim.getNamaLengkap() + " is at " + sim.getPosisi().getX() + ", " + sim.getPosisi().getY());
     }
 
-    public Rumah addHouse(Sim owner) {
+    public void createSim(Sim sim) {
+        createHouse(sim);
+        addSim(sim);
+    }
+
+    public Rumah createHouse(Sim owner) {
         // Randomizing house position
         int x = (int) (Math.random() * 63);
         int y = (int) (Math.random() * 63);

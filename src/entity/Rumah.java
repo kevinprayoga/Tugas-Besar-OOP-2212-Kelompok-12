@@ -14,6 +14,9 @@ public class Rumah {
     private Dimensi dimensi;
     private String[][] mapRumah;
     private HashMap<Integer, Ruangan> rooms;
+
+    // House state
+    private boolean isBuildMode = false;
     
     public Rumah(Sim owner){
         this.owner = owner;
@@ -83,6 +86,18 @@ public class Rumah {
 
     public Sim getOwner(){
         return this.owner;
+    }
+
+    public Dimensi getDimensi(){
+        return this.dimensi;
+    }
+
+    public boolean isBuildMode(){
+        return this.isBuildMode;
+    }
+
+    public void setBuildMode(boolean isBuildMode){
+        this.isBuildMode = isBuildMode;
     }
     
     public void addRuangan(Posisi loc, Object o){

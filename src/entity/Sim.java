@@ -45,6 +45,7 @@ public class Sim implements AksiAktif, AksiPasif{
     private Ruangan ruangan;
     private Posisi posisi;
     private String currentPosition; // "World" atau "Rumah"
+    private String currentActivity;
     private NonMakanan inFrontNonMakanan;
 
     private int gajiBank;               // waktu leftover dari kerja
@@ -63,7 +64,9 @@ public class Sim implements AksiAktif, AksiPasif{
         uang = 100;
 
         this.charType = charType;
-
+        currentPosition = "World";
+        currentActivity = "Gabut";
+        posisi = new Posisi(0, 0);
     }
 
     // Setter
@@ -73,6 +76,10 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public void setCurrentPosition(String currentPosition) {
         this.currentPosition = currentPosition;
+    }
+
+    public void setCurrentActivity(String currentActivity) {
+        this.currentActivity = currentActivity;
     }
 
     // Getter
@@ -130,6 +137,10 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public Posisi getPosisi() {
         return posisi;
+    }
+
+    public String getCurrentActivity() {
+        return currentActivity;
     }
 
     public BufferedImage getCharacter() {

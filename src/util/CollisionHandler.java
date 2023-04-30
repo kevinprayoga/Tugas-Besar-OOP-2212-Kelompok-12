@@ -40,6 +40,7 @@ public class CollisionHandler {
             return true;
         }
         if (houseMap.get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize())) {
+            System.out.println("Collide with house");
             if (!gamePanel.getEnteredHouse()) {
                 gamePanel.setHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
                 gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);

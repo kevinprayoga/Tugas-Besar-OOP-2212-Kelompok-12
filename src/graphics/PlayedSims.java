@@ -111,6 +111,7 @@ public class PlayedSims {
     }
 
     public void update() {
+        new Posisi(x * 16, y * 16);
         int tempX = x;
         int tempY = y;
 
