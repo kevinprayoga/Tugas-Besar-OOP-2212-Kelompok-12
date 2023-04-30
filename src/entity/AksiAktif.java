@@ -4,38 +4,31 @@ import exceptions.ItemError;
 import exceptions.TidakCukupItem;
 import exceptions.PekerjaanError;
 import exceptions.NotEnoughKesejahteraan;
-import exceptions.TidakCukupItem;
 
 public interface AksiAktif {
-    public void kerja(int time) throws NotEnoughKesejahteraan;
+    public void kerja(int time) throws NotEnoughKesejahteraan,InterruptedException;
 
-    public void olahraga(int time) throws NotEnoughKesejahteraan;
+    public void olahraga(int time) throws NotEnoughKesejahteraan,InterruptedException;
 
-    public void tidur(int time) throws NotEnoughKesejahteraan,ItemError;
+    public void tidur(int time) throws NotEnoughKesejahteraan,ItemError,InterruptedException;
 
-    public void makan(Makanan m) throws ItemError;
+    public void makan(Makanan m) throws ItemError,InterruptedException;
 
-    public void berkunjung(int time, Rumah r);
+    public void berkunjung(Rumah r);
 
-    public void buangAir() throws ItemError, NotEnoughKesejahteraan;
-
-    public int getTimeSTidur();
-
-    public int getTimeSBAir();
-
-    public int getSimCD();
+    public void buangAir() throws ItemError, NotEnoughKesejahteraan,InterruptedException;
 
     public int getBonusInc();
 
     public void vacation() throws TidakCukupItem;
 
-    public void woodworking(NonMakanan item);
+    public void woodworking(NonMakanan item) throws InterruptedException,TidakCukupItem;
 
-    public void bath() throws ItemError;
+    public void bath() throws ItemError,InterruptedException;
 
-    public void meditate(int time) throws NotEnoughKesejahteraan;
+    public void meditate(int time) throws NotEnoughKesejahteraan,InterruptedException;
 
-    public void read();
+    public void read() throws InterruptedException,ItemError;
 
-    public void party() throws TidakCukupItem;
+    public void party() throws TidakCukupItem,InterruptedException;
 }
