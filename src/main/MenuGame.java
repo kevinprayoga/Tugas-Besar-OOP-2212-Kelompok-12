@@ -1,13 +1,15 @@
 package main;
 
-import entity.Sims;
+import entity.Sim;
+import entity.WaktuAlt;
 import exceptions.*;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-public class MenuGame extends Sims{
+public class MenuGame{
     boolean gameStarted;
+    private int addSimDay;
     public void exitGame(){
         System.out.println("Keluar dari game. Sampai jumpa!");
         System.exit(0);
@@ -25,26 +27,30 @@ public class MenuGame extends Sims{
         sc.close();
     }
 
-    public void setPekerjaan(Sims s, String pekerjaanWish) throws PekerjaanError{
+    public void setPekerjaan(Sim s, String pekerjaanWish) throws PekerjaanError,TidakCukupItem{
         int randomnum;
-        if(pekerjaan == null){
-            Random rand = new Random()
+        if(s.pekerjaan == null){
+            Random rand = new Random();
             randomnum = rand.nextInt(7);
             if(randomnum == 0){
-                s.setPekerjaan("zzz");
+                s.pekerjaan = ;
             }
         } else{
-            if(kerjatime > 720){
-                s.setMoney(s.getMoney() - s.getPekerjaan().getGaji()/2);
-                s.setPekerjaan(pekerjaanWish);
-                s.pekerjaanStart = LocalDateTime.now();
+            if(s.kerjatime > 720){
+                if(s.getMoney() - s.getPekerjaan().getGaji()/2 <= 0){
+                    throw new TidakCukupItem("Uang tidak cukup untuk mengganti pekerjaan!");
+                } else{
+                    s.setMoney(s.getMoney() - s.getPekerjaan().getGaji()/2);
+                    s.pekerjaan = pekerjaanWish;
+                    s.pekerjaanStart = LocalDateTime.now();
+                }
             } else{
                 throw new PekerjaanError("Belum bisa mengganti pekerjaan.")
             }
         }
     }
 
-    public void viewSimInfo(Sims s){
+    public void viewSimInfo(Sim s){
         System.out.println("Nama Sim: "+s.getName());
         System.out.println("Pekerjaan: " +s.getPekerjaan());
         System.out.println("Kesehatan: "+s.getKesehatan());
@@ -60,16 +66,13 @@ public class MenuGame extends Sims{
     }
 
     public void viewInventory(Sims s){
-        s.getInventory().printInventory
+        s.getInventory().printInventory;
     }
 
     public void upgradeHouse(){
         
     }
 
-    public void move(){
-    
-    }
     public void editRoom(){}
     public void addSim(){}
     public void changeSim(){}
@@ -83,4 +86,12 @@ public class MenuGame extends Sims{
     public void save(){}
 
     public void load(){}
+
+    public int getSimCD(){
+        return addSimDay;
+    }
+
+    public boolean canAddSim(){
+        return addSimDay != WaktuAlt.getDay();
+    }
 }

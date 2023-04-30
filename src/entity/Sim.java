@@ -17,10 +17,15 @@ public class Sim implements AksiAktif, AksiPasif{
     private int mood;
     private int kesehatan;
     private String status;
-
     private int wood;
-    private LocalDateTime timeTidur;
-    private LocalDateTime timeMakan;
+
+    private int timeTidur;
+    private int dayTidur;
+    private boolean kesejahAltTidur;
+    private int timeMakan;
+    private int dayMakan;
+    private boolean kesejahAltBAir;
+
     private int addSimCD;
     private int bonusInc;
 
@@ -89,7 +94,9 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bekerja selama itu!");
         } else {
             status = "kerja";
-            Thread.sleep(time*1000);
+            for(int i = 0;i<time; i++){
+                WaktuAlt.addSecond();
+            }
             mood -= (time/30*10);
             kekenyangan -= (time/30*10);
             gajiBank += time;
@@ -103,7 +110,9 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk berolahraga selama itu!");
         } else{
             status = "olahraga";
-            Thread.sleep(time*1000);
+            for(int i = 0;i<time; i++){
+                WaktuAlt.addSecond();
+            }
             mood += (time/20*10);
             kekenyangan -= (time/20*5);
             kesehatan += (time/20*5);
@@ -117,7 +126,9 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new ItemError("Sim tidak sedang berada di depan tempat tidur!");
         } else{
             status = "tidur";
-            Thread.sleep(time*1000);
+            for(int i = 0;i<time; i++){
+                WaktuAlt.addSecond();
+            }
             mood += (time/240*30);
             kesehatan += (time/240*20);
             timeTidur = LocalDateTime.now();
@@ -130,7 +141,9 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new ItemError("Sim tidak sedang berada di depan meja kursi!");
         } else{
             status = "makan";
-            Thread.sleep(30*1000);
+            for(int i = 0;i<30; i++){
+                WaktuAlt.addSecond();
+            }
             kekenyangan += m.getKekenyangan();
         }
     }
@@ -147,24 +160,15 @@ public class Sim implements AksiAktif, AksiPasif{
                 throw new NotEnoughKesejahteraan("Sim tidak cukup mood untuk makan untuk buang air!");
             } else {
                 status = "buang air";
-                Thread.sleep(30*1000);
+                for(int i = 0;i<30; i++){
+                    WaktuAlt.addSecond();
+                }
                 kekenyangan -= 20;
                 mood += 10;
             }
         }
     }
 
-    public int getTimeSTidur(){
-        return (int) ChronoUnit.SECONDS.between(LocalDateTime.now(), timeTidur);
-    }
-
-    public int getTimeSBAir(){
-        return (int) ChronoUnit.SECONDS.between(LocalDateTime.now(), timeMakan);
-    }
-
-    public int getSimCD(){
-        return addSimCD;
-    }
 
     public int getBonusInc(){
         return bonusInc;
@@ -179,8 +183,9 @@ public class Sim implements AksiAktif, AksiPasif{
             kekenyangan = 100;
             mood = 100;
             kesehatan = 100;
-            timeMakan = LocalDateTime.now();
-            timeTidur = LocalDateTime.now();
+            timeMakan = -1;
+            timeTidur = WaktuAlt.getTime();
+            dayTidur = WaktuAlt.getDay();
         }
     }
 
@@ -190,7 +195,9 @@ public class Sim implements AksiAktif, AksiPasif{
         } else{
             wood -= item.getHarga();
             status = "woodworking";
-            Thread.sleep(item.getHarga()/2*1000);
+            for(int i = 0;i<item.getHarga()/2; i++){
+                WaktuAlt.addSecond();
+            }
             mood += 10;
             // add inventory
             //inventory.
@@ -202,7 +209,9 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new ItemError("Sim sedang tidak di shower!");
         } else{
             status = "bath";
-            Thread.sleep(10*1000);
+            for(int i = 0;i<10; i++){
+                WaktuAlt.addSecond();
+            }
             mood += 5;
             kesehatan += 5;
         }
@@ -213,7 +222,9 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bermeditasi selama itu!");
         } else{
             status = "meditasi";
-            Thread.sleep(time*1000);
+            for(int i = 0;i<time; i++){
+                WaktuAlt.addSecond();
+            }
             mood += (time/30*10);
             kesehatan += (time/30*5);
             kekenyangan -= (time/30*5);
@@ -225,7 +236,9 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new ItemError("Sim sedang tidak di depan rak buku!");
         } else{
             status = "read";
-            Thread.sleep(20*1000);
+            for(int i = 0;i<20; i++){
+                WaktuAlt.addSecond();
+            }
             int randomnum = new Random(10);
             if(randomnum == 4){
                 bonusInc += 10;
@@ -240,7 +253,9 @@ public class Sim implements AksiAktif, AksiPasif{
         } else{
             uang -= 500;
             status = "party";
-            Thread.sleep(120*1000);
+            for(int i = 0;i<120; i++){
+                WaktuAlt.addSecond();
+            }
             kekenyangan += 80;
             mood += 80;
         }
@@ -264,7 +279,45 @@ public class Sim implements AksiAktif, AksiPasif{
     public void gamble(int money);
 
     public void update(){
-        if(tim)
+
+        // Alter berdasarkan waktu sejak buang air dan tidur
+        if(((dayTidur*720 + timeTidur) - (WaktuAlt.getDay()*720 + WaktuAlt.getTime())) >= 600 && !kesejahAltTidur){
+            mood -= 5;
+            kesehatan -= 5;
+            kesejahAltTidur = true;
+        } else if(((dayTidur*720 + timeTidur) - (WaktuAlt.getDay()*720 + WaktuAlt.getTime())) <= 600 && kesejahAltTidur){
+            mood += 5;
+            kesehatan += 5;
+            kesejahAltTidur = false;
+        }
+        if(timeMakan != -1 && ((dayMakan*720 + timeMakan) - (WaktuAlt.getDay()*720 + WaktuAlt.getTime())) >= 240 && !kesejahAltBAir){
+            kesehatan -= 5;
+            mood -= 5;
+            kesejahAltBAir = true;
+        } else if(timeMakan != -1 && ((dayMakan*720 + timeMakan) - (WaktuAlt.getDay()*720 + WaktuAlt.getTime())) <= 240 && kesejahAltBAir){
+            kesehatan += 5;
+            mood += 5;
+            kesejahAltBAir = false;
+        }
+
+        // cekHidup
+        //
+        //
+        if(kesehatan <= 0 || mood <= 0 || kekenyangan <= 0){
+
+        }
+
+        //kesejahteraan < 100
+        if(kesehatan > 100 ){
+            kesehatan = 100;
+        }
+        if(mood >= 100){
+            mood = 100;
+        }
+        if(kekenyangan >= 100){
+            kekenyangan = 100;
+        }
+
         
     }
 }
