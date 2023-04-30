@@ -46,4 +46,20 @@ public class UtilityTool {
         graphics2D.dispose();
         return scaledImage;
     }
+
+    public static BufferedImage flipImageVertically(BufferedImage image) {
+        BufferedImage flippedImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D graphics2D = flippedImage.createGraphics();
+        graphics2D.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), 0, image.getHeight(), image.getWidth(), 0, null);
+        graphics2D.dispose();
+        return flippedImage;
+    }
+
+    public static BufferedImage flipImageHorizontally(BufferedImage image) {
+        BufferedImage flippedImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D graphics2D = flippedImage.createGraphics();
+        graphics2D.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), image.getWidth(), 0, 0, image.getHeight(), null);
+        graphics2D.dispose();
+        return flippedImage;
+    }
 }
