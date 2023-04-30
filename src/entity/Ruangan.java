@@ -42,7 +42,7 @@ public class Ruangan {
         this.mapRuangan[dimensi.getLength() - loc.getX()][loc.getY() - 1] = "EMPTY";
     }
     
-    public void moveObjek(Object objek, Posisi loc){
+    public void moveObjek(NonMakanan objek, Posisi loc){
         removeObjek(objek.getPosisi());
         addObjek(loc, objek);
         objek.setPosisi(loc);

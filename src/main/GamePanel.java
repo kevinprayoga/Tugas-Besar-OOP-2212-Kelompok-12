@@ -3,9 +3,8 @@ package main;
 import java.awt.*;
 import javax.swing.*;
 
-import entity.House;
+import entity.Rumah;
 import entity.World;
-import entity.unit.Time;
 import graphics.HousePainter;
 import graphics.PlayedSims;
 import graphics.UI;
@@ -40,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Game variables
     private World world;
-    private House visitedHouse;
+    private Rumah visitedHouse;
     private WorldPainter worldPainter;
     private HousePainter housePainter;
     private Time mainTime;

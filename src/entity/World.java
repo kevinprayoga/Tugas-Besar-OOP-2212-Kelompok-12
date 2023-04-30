@@ -32,6 +32,7 @@ public class World {
             int length = scanner.nextInt();
             int width = scanner.nextInt();
             single_instance = new World(length,width);
+            scanner.close();
         }
 
         return single_instance;

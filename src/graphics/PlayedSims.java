@@ -6,15 +6,14 @@ import util.UtilityTool;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import entity.Aksi;
-import entity.Sims;
-import entity.unit.Point;
-import entity.unit.Time;
+import entity.Sim;
+import entity.Posisi;
+import entity.Waktu;
 
 public class PlayedSims implements Aksi {
     private final GamePanel gamePanel;
-    private Sims sims;
-    private Time actionTime;
+    private Sim sims;
+    private Waktu actionTime;
 
     // Player settings
     private int speed;
@@ -29,7 +28,7 @@ public class PlayedSims implements Aksi {
     
     String file = "res/image/sims/";
     
-    public PlayedSims(GamePanel gamePanel, Sims sims) {
+    public PlayedSims(GamePanel gamePanel, Sim sims) {
         this.gamePanel = gamePanel;
         this.sims = sims;
         this.keyHandler = gamePanel.getKeyHandler();
@@ -171,7 +170,7 @@ public class PlayedSims implements Aksi {
 
     // Getter
 
-    public Sims getSims() {
+    public Sim getSims() {
         return sims;
     }
 

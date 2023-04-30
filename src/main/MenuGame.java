@@ -1,7 +1,7 @@
 package main;
 
 import entity.Sim;
-import entity.WaktuAlt;
+import entity.waktu;
 import exceptions.*;
 import java.util.Scanner;
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ public class MenuGame{
 
     public void setPekerjaan(Sim s, String pekerjaanWish) throws PekerjaanError,TidakCukupItem{
         int randomnum;
-        if(s.pekerjaan == null){
+        if(s.getPekerjaan() == null){
             Random rand = new Random();
             randomnum = rand.nextInt(7);
             if(randomnum == 0){
@@ -53,7 +53,7 @@ public class MenuGame{
     }
 
     public void viewSimInfo(Sim s){
-        System.out.println("Nama Sim: "+s.getName());
+        System.out.println("Nama Sim: "+s.getNamaLengkap());
         System.out.println("Pekerjaan: " +s.getPekerjaan());
         System.out.println("Kesehatan: "+s.getKesehatan());
         System.out.println("Kekenyangan: "+s.getKekenyangan());
@@ -94,6 +94,6 @@ public class MenuGame{
     }
 
     public boolean canAddSim(){
-        return addSimDay != WaktuAlt.getDay();
+        return addSimDay != waktu.getDay();
     }
 }
