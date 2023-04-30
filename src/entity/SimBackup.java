@@ -30,6 +30,7 @@ public class Sim implements AksiAktif, AksiPasif{
 
     private int gajiBank;
     private LocalDateTime endTime,startTime, duration;
+    private boolean isBusy;
 
     // Konstruktor
     public Sim(String nama) {
@@ -116,7 +117,8 @@ public class Sim implements AksiAktif, AksiPasif{
         if (inFrontNonMakanan.getAksi() != "Makan"){
             throw new ItemError("Sim tidak sedang berada di depan meja kursi!");
         } else{
-            setActivity("makan", 30);
+            Thread.sleep(30*1000);
+            System.out.println("Sim sudah selesai makan!");
             kekenyangan += m.getKekenyangan();
         }
     }
@@ -198,7 +200,7 @@ public class Sim implements AksiAktif, AksiPasif{
         if(uang < 100){
             throw new TidakCukupItem("Tidak cukup uang untuk party!");
         } else{
-            uang -= 800;
+            uang -= 1800;
             setActivity("party", 180);
         }
     }
@@ -223,6 +225,7 @@ public class Sim implements AksiAktif, AksiPasif{
     public void update(){
         if (status.equals("kerja")){
             if(LocalDateTime.now().compareTo(endTime) <= 0){
+                isBusy = false;
                 status = "";
                 int seconds = timeBetween(endTime, startTime);
                 mood -= (seconds/30*10);
@@ -241,6 +244,7 @@ public class Sim implements AksiAktif, AksiPasif{
             }
         } else if (status.equals("olahraga")){
             if(LocalDateTime.now().compareTo(endTime) >= 0){
+                isBusy = false;
                 status = "";
                 int seconds = timeBetween(endTime, startTime); 
                 mood += (seconds/20*10);
@@ -255,6 +259,7 @@ public class Sim implements AksiAktif, AksiPasif{
             }
         } else if(status.equals("tidur")){
             if(LocalDateTime.now().compareTo(endTime) >= 0){
+                isBusy = false;
                 status = "";
                 int seconds = timeBetween(endTime, startTime); 
                 mood += (seconds/240*30);
@@ -263,20 +268,23 @@ public class Sim implements AksiAktif, AksiPasif{
                 int seconds = timeBetween(LocalDateTime.now(), startTime); 
                 mood += (seconds/240*30);
                 kesehatan += (seconds/240*20);
-                startTime.plusSeconds(seconds - (seconds%240));
+                startTime.plusSeconds(seconds - (seconds%20));
             }
         } else if(status.equals("makan")){
             if(LocalDateTime.now().compareTo(endTime) >= 0){
+                isBusy = false;
                 status = "";
             } 
         } else if(status.equals("buang air")){
             if(LocalDateTime.now().compareTo(endTime) >= 0){
+                isBusy = false;
                 status = "";
                 kekenyangan -= 20;
                 mood += 10;
             } 
         } else if(status.equals("vacation")){
             if(LocalDateTime.now().compareTo(endTime) >= 0){
+                isBusy = false;
                 status = "";
                 kekenyangan = 100;
                 mood = 100;
@@ -286,49 +294,19 @@ public class Sim implements AksiAktif, AksiPasif{
             }
         } else if(status.equals("woodworking")){
             if(LocalDateTime.now().compareTo(endTime) >= 0){
+                isBusy = false;
                 status = "";
                 mood += 10;
             } 
-        } else if(status.equals("bath")){
-            if(LocalDateTime.now().compareTo(endTime) >= 0){
-                status = "";
-                mood += 5;
-                kesehatan += 5;
-            } 
-        } else if(status.equals("meditate")){
-            if(LocalDateTime.now().compareTo(endTime) >= 0){
-                status = "";
-                int seconds = timeBetween(endTime, startTime); 
-                mood += (seconds/30*10);
-                kesehatan += (seconds/30*5);
-                kekenyangan -= (seconds/30*5);
-            } else{
-                int seconds = timeBetween(LocalDateTime.now(), startTime); 
-                mood += (seconds/30*10);
-                kesehatan += (seconds/30*5);
-                kekenyangan -= (seconds/30*5);
-                startTime.plusSeconds(seconds - (seconds%30));
-            }
-        } else if(status.equals("read")){
-            if(LocalDateTime.now().compareTo(endTime) >= 0){
-                status = "";
-                mood += 5;
-            }
-        } else if(status.equals("party")){
-            if(LocalDateTime.now().compareTo(endTime) >= 0){
-                status = "";
-                mood += 50;
-            }
-        } else{
-            // kosong
+        } 
         }
-        
     }
 
 
     public void setActivity(String status, int time){
         startTime = LocalDateTime.now();
         endTime = startTime.plusSeconds(time);
+        isBusy = true;
         this.status = status;
     }
     public int timeBetween(LocalDateTime start, LocalDateTime end){
