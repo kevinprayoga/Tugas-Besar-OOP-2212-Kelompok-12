@@ -1,13 +1,10 @@
-package entity;
+public class BahanMakanan extends Produk {
 
-public class BahanMakanan {
-
-    private String namaBahan;
     private int kekenyangan;
     private int harga;
 
     public BahanMakanan(String namaBahan) {
-        setNamaBahan(namaBahan);
+        super(namaBahan);
         
         switch (namaBahan) {
             case "Nasi":
@@ -45,20 +42,12 @@ public class BahanMakanan {
         }
     }
 
-    public String getNamaBahan() {
-        return this.namaBahan;
-    }
-
     public int getKekenyangan() {
         return this.kekenyangan;
     }
 
     public int getHarga() {
         return this.harga;
-    }
-
-    private void setNamaBahan(String namaBahan) {
-        this.namaBahan = namaBahan;
     }
 
     private void setKekenyangan(int kekenyangan) {
