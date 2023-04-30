@@ -6,6 +6,7 @@ import pekerjaan.PekerjaanPrinter;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class Sim implements AksiAktif, AksiPasif{
     private String namaLengkap;
@@ -22,9 +23,12 @@ public class Sim implements AksiAktif, AksiPasif{
     private int timeTidur;
     private int dayTidur;
     private boolean kesejahAltTidur;
-    private int timeMakan;
+    private int timeMakan =-1;              // time -1 berarti tidak makan atau sudah buang air untuk makan sebelumnya
     private int dayMakan;
     private boolean kesejahAltBAir;
+
+    private int startTimeVacation;
+    private int startDayVacation;
 
     private int addSimCD;
     private int bonusInc;
@@ -33,8 +37,10 @@ public class Sim implements AksiAktif, AksiPasif{
     private Ruangan ruangan;
     private NonMakanan inFrontNonMakanan;
 
-    private int gajiBank;
-    private LocalDateTime endTime,startTime, duration;
+    private int gajiBank;               // waktu leftover dari kerja
+    private static int jumlahPasif;            // jumlah aksi pasif yang memerlukan waktu yang sedang berjalan
+
+    private static ArrayList<Thread> threads = new ArrayList<Thread>(null);
 
     // Konstruktor
     public Sim(String nama) {
@@ -85,6 +91,10 @@ public class Sim implements AksiAktif, AksiPasif{
     public Ruangan getRuangan() {
         return ruangan;
     }
+
+    public static int getJumlahPasif(){
+        return jumlahPasif;
+    }
     
     // Implementasi aksi aktif
     public void kerja(int time) throws NotEnoughKesejahteraan{
@@ -97,6 +107,7 @@ public class Sim implements AksiAktif, AksiPasif{
             for(int i = 0;i<time; i++){
                 WaktuAlt.addSecond();
             }
+            status = "";
             mood -= (time/30*10);
             kekenyangan -= (time/30*10);
             gajiBank += time;
@@ -113,6 +124,7 @@ public class Sim implements AksiAktif, AksiPasif{
             for(int i = 0;i<time; i++){
                 WaktuAlt.addSecond();
             }
+            status = "";
             mood += (time/20*10);
             kekenyangan -= (time/20*5);
             kesehatan += (time/20*5);
@@ -129,9 +141,11 @@ public class Sim implements AksiAktif, AksiPasif{
             for(int i = 0;i<time; i++){
                 WaktuAlt.addSecond();
             }
+            status = "";
             mood += (time/240*30);
             kesehatan += (time/240*20);
-            timeTidur = LocalDateTime.now();
+            timeTidur = WaktuAlt.getTime();
+            dayTidur = WaktuAlt.getDay();
             
         }
     }
@@ -157,7 +171,7 @@ public class Sim implements AksiAktif, AksiPasif{
             throw new ItemError("Sim sedang tidak di toilet!");
         } else{
             if(kekenyangan - 20 <= 0) {
-                throw new NotEnoughKesejahteraan("Sim tidak cukup mood untuk makan untuk buang air!");
+                throw new NotEnoughKesejahteraan("Sim tidak cukup makan untuk buang air!");
             } else {
                 status = "buang air";
                 for(int i = 0;i<30; i++){
@@ -173,6 +187,7 @@ public class Sim implements AksiAktif, AksiPasif{
     public int getBonusInc(){
         return bonusInc;
     }
+
     // aksi pasif khusus
     public void vacation() throws TidakCukupItem{
         if(uang < 1800){
@@ -180,6 +195,8 @@ public class Sim implements AksiAktif, AksiPasif{
         } else{
             uang -= 1800;
             status = "vacation";
+            startTimeVacation = WaktuAlt.getTime();
+            startDayVacation = WaktuAlt.getDay();
             kekenyangan = 100;
             mood = 100;
             kesehatan = 100;
@@ -266,11 +283,9 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public void beliObjek(Objek o);
 
-    public void moveRoom(Ruangan r);
-
-    public void moveTo(Objek o);
-
-    public void displayInventory();
+    public void displayInventory(){
+        
+    }
 
     public void installObject(Objek o, Posisi p);
 
@@ -317,7 +332,11 @@ public class Sim implements AksiAktif, AksiPasif{
         if(kekenyangan >= 100){
             kekenyangan = 100;
         }
-
+        if(status == "vacation" && ((WaktuAlt.getDay()*720+WaktuAlt.getTime()) - (startDayVacation*720 +startTimeVacation)) >= 2160){
+            status = "";
+            timeTidur = WaktuAlt.getTime();
+            dayTidur = WaktuAlt.getDay();
+        }
         
     }
 }

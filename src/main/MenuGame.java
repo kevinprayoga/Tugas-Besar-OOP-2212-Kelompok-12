@@ -10,6 +10,8 @@ import java.util.Random;
 public class MenuGame{
     boolean gameStarted;
     private int addSimDay;
+
+
     public void exitGame(){
         System.out.println("Keluar dari game. Sampai jumpa!");
         System.exit(0);
