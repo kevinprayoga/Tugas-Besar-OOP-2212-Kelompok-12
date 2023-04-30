@@ -1,9 +1,12 @@
 package main;
 
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import entity.Rumah;
+import entity.Sim;
 import entity.World;
 import graphics.HousePainter;
 import graphics.PlayedSims;
@@ -38,10 +41,12 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isEnteredHouse = false;
 
     // Game variables
+    private MenuGame menuGame;
     private World world;
     private Rumah visitedHouse;
     private WorldPainter worldPainter;
     private HousePainter housePainter;
+    private ArrayList<Sim> playableSims;
     private PlayedSims playedSims;
     public CollisionHandler collisionHandler;
 
@@ -51,6 +56,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+
+        this.menuGame = new MenuGame(this);
+        this.playableSims = new ArrayList<>();
     }
 
     public void startGameThread() {
@@ -116,6 +124,15 @@ public class GamePanel extends JPanel implements Runnable {
         graphics2D.dispose();
     }
 
+    public void reset() {
+        this.isStoreOpened = false;
+        this.isAddSimsAvailable = true;
+        this.isEnteredHouse = false;
+        this.menuGame = new MenuGame(this);
+        this.playableSims = new ArrayList<>();
+        this.world = new World();
+    }
+
     public GameState getGameState() {
         return gameState;
     }
@@ -146,6 +163,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public PlayedSims getPlayedSims() {
         return playedSims;
+    }
+
+    public ArrayList<Sim> getPlayableSims() {
+        return playableSims;
     }
 
     public Rumah getHouse() {
@@ -196,5 +217,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setEnteredHouse(boolean isEnteredHouse) {
         this.isEnteredHouse = isEnteredHouse;
+    }
+
+    // Adder
+    public void addPlayableSims(Sim sim) {
+        this.playableSims.add(sim);
+        world.addSim(sim);
     }
 }

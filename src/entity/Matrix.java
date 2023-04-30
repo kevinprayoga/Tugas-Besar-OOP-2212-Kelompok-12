@@ -1,4 +1,4 @@
-package entity.unit;
+package entity;
 
 public class Matrix<T> {
     private T[][] matrix;

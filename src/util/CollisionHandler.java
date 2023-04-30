@@ -17,7 +17,7 @@ public class CollisionHandler {
         this.gamePanel = gamePanel;
         this.sims = sims;
         this.world = gamePanel.getWorld();
-        this.worldTiles = world.getTiles();
+        this.worldTiles = world.getMapWorld();
         this.houseMap = world.getHouseMap();
     }
 
@@ -33,7 +33,7 @@ public class CollisionHandler {
     }
     
     public boolean isCollideWorld(int x, int y) {
-        if (x < 0 || y < 0 || x / gamePanel.getTileSize() >= world.getDimension().getWidth() - 1 || y / gamePanel.getTileSize() >= world.getDimension().getHeight() - 1) {
+        if (x < 0 || y < 0 || x / gamePanel.getTileSize() >= world.getWidth() - 1 || y / gamePanel.getTileSize() >= world.getLength() - 1) {
             return true;
         }
         if (worldTiles.get((x + 8) / gamePanel.getTileSize(), (y + 16) / gamePanel.getTileSize()) == 2) {
@@ -41,7 +41,7 @@ public class CollisionHandler {
         }
         if (houseMap.get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize())) {
             if (!gamePanel.getEnteredHouse()) {
-                gamePanel.setHouse(world.getHouseMatrix().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
+                gamePanel.setHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
                 gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
                 return true;
             } else {

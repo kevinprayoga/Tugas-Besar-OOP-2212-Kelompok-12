@@ -23,9 +23,9 @@ public class WorldPainter {
         // Draw tiles
         for (int i = 0; i < 64; i++) {
             for (int j = 0; j < 64; j++) {
-                if (world.getTiles().get(i, j) == 0) {
+                if (world.getMapWorld().get(i, j) == 0) {
                     graphics2d.drawImage(dirtTiles, i * gamePanel.getTileSize(), j * gamePanel.getTileSize(), gamePanel);
-                } else if (world.getTiles().get(i, j) == 1) {
+                } else if (world.getMapWorld().get(i, j) == 1) {
                     graphics2d.drawImage(sandTiles, i * gamePanel.getTileSize(), j * gamePanel.getTileSize(), gamePanel);
                 } else {
                     graphics2d.drawImage(waterTiles, i * gamePanel.getTileSize(), j * gamePanel.getTileSize(), gamePanel);
@@ -37,24 +37,24 @@ public class WorldPainter {
         int tempY = 0;
 
         // Drawing houses and sims from up to down
-        for (int i = 0; i < world.getHouseMatrix().getRow(); i++) {
-            for (int j = 0; j < world.getHouseMatrix().getColumn(); j++) {
-                if (world.getHouseMatrix().get(i, j) != null) {
-                    if (world.getHouseMatrix().get(i, j).getOwner().equals(gamePanel.getPlayedSims().getSims())) {
-                        tempX = world.getHouseMatrix().get(i, j).getPoint().getX() * gamePanel.getTileSize();
-                        tempY = world.getHouseMatrix().get(i, j).getPoint().getY() * gamePanel.getTileSize() - 20;
+        for (int i = 0; i < world.getPerumahan().getRow(); i++) {
+            for (int j = 0; j < world.getPerumahan().getColumn(); j++) {
+                if (world.getPerumahan().get(i, j) != null) {
+                    if (world.getPerumahan().get(i, j).getOwner().equals(gamePanel.getPlayedSims().getSims())) {
+                        tempX = i * gamePanel.getTileSize();
+                        tempY = j * gamePanel.getTileSize() - 20;
                         BufferedImage mark = UtilityTool.loadImage("res/image/world/House Mark.png");
-                        graphics2d.drawImage(mark, world.getHouseMatrix().get(i, j).getPoint().getX() * gamePanel.getTileSize() - 10, world.getHouseMatrix().get(i, j).getPoint().getY() * gamePanel.getTileSize() - 10, gamePanel);
+                        graphics2d.drawImage(mark, i * gamePanel.getTileSize() - 10, j * gamePanel.getTileSize() - 10, gamePanel);
                     }
-                    graphics2d.drawImage(world.getHouseMatrix().get(i, j).getImage(), world.getHouseMatrix().get(i, j).getPoint().getX() * gamePanel.getTileSize(), world.getHouseMatrix().get(i, j).getPoint().getY() * gamePanel.getTileSize() - 4, gamePanel);
+                    graphics2d.drawImage(world.getPerumahan().get(i, j).getImage(), i * gamePanel.getTileSize(), j * gamePanel.getTileSize() - 4, gamePanel);
                 }
             }
         }
         
         // Drawing non-playable sims
-        for (int i = 0; i < world.getSims().size(); i++) {
-            if (!world.getSims().get(i).equals(gamePanel.getPlayedSims().getSims()) && world.getSims().get(i).getCurrentLocation() == "World") {
-                graphics2d.drawImage(world.getSims().get(i).getCharacter(), world.getSims().get(i).getCurrentPosition().getX() * gamePanel.getTileSize(), world.getSims().get(i).getCurrentPosition().getY() * gamePanel.getTileSize() - 4, gamePanel);
+        for (int i = 0; i < world.getSimList().size(); i++) {
+            if (!world.getSimList().get(i).equals(gamePanel.getPlayedSims().getSims()) && world.getSimList().get(i).getCurrentPosition() == "World") {
+                graphics2d.drawImage(world.getSimList().get(i).getCharacter(), world.getSimList().get(i).getPosisi().getX() * gamePanel.getTileSize(), world.getSimList().get(i).getPosisi().getY() * gamePanel.getTileSize() - 4, gamePanel);
             }
         }
         

@@ -43,14 +43,16 @@ public class Sim implements AksiAktif, AksiPasif{
 
     private Rumah rumah;
     private Ruangan ruangan;
+    private Posisi posisi;
+    private String currentPosition; // "World" atau "Rumah"
     private NonMakanan inFrontNonMakanan;
 
     private int gajiBank;               // waktu leftover dari kerja
     private static int jumlahPasif;            // jumlah aksi pasif yang memerlukan waktu yang sedang berjalan
 
-    private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>(null);
-    private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>(null);
-    private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>(null);
+    private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>();
+    private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>();
+    private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>();
  
     // Konstruktor
     public Sim(String nama, int charType) {
@@ -62,6 +64,15 @@ public class Sim implements AksiAktif, AksiPasif{
 
         this.charType = charType;
 
+    }
+
+    // Setter
+    public void setPosisi(Posisi posisi) {
+        this.posisi = posisi;
+    }
+
+    public void setCurrentPosition(String currentPosition) {
+        this.currentPosition = currentPosition;
     }
 
     // Getter
@@ -111,6 +122,14 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public int getCharType() {
         return charType;
+    }
+
+    public String getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public Posisi getPosisi() {
+        return posisi;
     }
 
     public BufferedImage getCharacter() {
@@ -428,5 +447,11 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public static void updatePembelian(){
         
+    }
+
+    @Override
+    public void installObject(NonMakanan o, Posisi p) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'installObject'");
     }
 }

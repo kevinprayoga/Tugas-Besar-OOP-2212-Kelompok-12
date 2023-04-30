@@ -1,16 +1,31 @@
 package main;
 
 import entity.Sim;
+import entity.World;
 import entity.waktu;
 import exceptions.*;
+import graphics.PlayedSims;
+
 import java.util.Scanner;
+import java.awt.Menu;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MenuGame{
+    private final GamePanel gamePanel;
+
     boolean gameStarted;
     private int addSimDay;
+    private World mainWorld;
+    private ArrayList<Sim> playableSims;
+    private PlayedSims playedSims;
 
+    public MenuGame(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+        playableSims = gamePanel.getPlayableSims();
+        playedSims = gamePanel.getPlayedSims();
+    }
 
     public void exitGame(){
         System.out.println("Keluar dari game. Sampai jumpa!");
