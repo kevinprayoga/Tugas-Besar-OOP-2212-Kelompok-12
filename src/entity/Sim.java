@@ -74,6 +74,14 @@ public class Sim implements AksiAktif, AksiPasif {
         getInventory().addItem(new NonMakanan("Kompor Gas"));
         getInventory().addItem(new NonMakanan("Meja dan Kursi"));
         getInventory().addItem(new NonMakanan("Jam"));
+        getInventory().addItem(new NonMakanan("Rak Buku"));
+        getInventory().addItem(new NonMakanan("Shower"));
+        getInventory().addItem(new NonMakanan("Kasur Queen Size"));
+        getInventory().addItem(new NonMakanan("Kasur King Size"));
+        getInventory().addItem(new NonMakanan("Nasi"));
+        getInventory().addItem(new NonMakanan("Bayam"));
+        getInventory().addItem(new NonMakanan("Ayam"));
+        getInventory().addItem(new NonMakanan("Wortel"));
     }
 
     // Setter

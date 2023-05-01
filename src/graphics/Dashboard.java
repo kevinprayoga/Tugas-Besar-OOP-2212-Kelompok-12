@@ -30,10 +30,13 @@ public class Dashboard {
     }
 
     public void draw(Graphics2D graphics2D) {
+        
         if (isDashboardOpen) {
             drawDashboard(graphics2D);
             if (isInventoryOpen) {
                 drawInventory(graphics2D);
+                InventoryPainter inventoryPainter = new InventoryPainter(gamePanel);
+                inventoryPainter.draw(graphics2D);
             } else {
                 drawOpenInventory(graphics2D);
             }

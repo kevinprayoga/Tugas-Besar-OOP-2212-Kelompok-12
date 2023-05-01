@@ -10,6 +10,7 @@
 package entity;
 
 import java.util.Arrays; // untuk keperluan konversi list
+import java.awt.List;
 import java.util.ArrayList; // untuk membuat ArrayList
 import java.util.Map; // untuk konversi entry
 import java.util.HashMap; // untuk membuat HashMap
@@ -17,9 +18,9 @@ import java.util.HashMap; // untuk membuat HashMap
 public class Inventory {
     // definisi variabel
     private HashMap<String, Integer> inventory; // untuk inventory
-    private ArrayList<String> listmakanan; // menyimpan nama-nama produk yang merupakan Makanan
-    private ArrayList<String> listbahanmakanan; // menyimpan nama-nama produk yang merupakan BahanMakanan
-    private ArrayList<String> listnonmakanan; // menyimpan nama-nama produk yang merupakan NonMakanan
+    public ArrayList<String> listmakanan; // menyimpan nama-nama produk yang merupakan Makanan
+    public ArrayList<String> listbahanmakanan; // menyimpan nama-nama produk yang merupakan BahanMakanan
+    public ArrayList<String> listnonmakanan; // menyimpan nama-nama produk yang merupakan NonMakanan
 
     // KONSTRUKTOR
     // tidak memerlukan parameter apapun
@@ -37,8 +38,8 @@ public class Inventory {
                 Arrays.asList("Nasi", "Kentang", "Ayam", "Sapi", "Wortel", "Bayam", "Kacang", "Susu"));
 
         // membuat ArrayList berisi kemungkinan nama-nama NonMakanan
-        listnonmakanan = new ArrayList<String>(Arrays.asList("KasurKingSize", "KasurQueenSize", "KasurSingleSize",
-                "Shower", "Toilet", "KomporGas", "KomporListrik", "RakBuku", "MejaKursi", "Jam"));
+        listnonmakanan = new ArrayList<String>(Arrays.asList("Kasur King Size", "Kasur Queen Size", "Kasur Single Size",
+                "Shower", "Toilet", "Kompor Gas", "Kompor Listrik", "Rak Buku", "Meja dan Kursi", "Jam"));
     }
 
     public <M extends Produk> void addItem(M item) {
@@ -108,6 +109,27 @@ public class Inventory {
             }
         }
 
+    }
+
+    public ArrayList<String> getInventoryList() {
+        /*
+         * fungsi ini akan mengembalikan ArrayList yang berisi nama-nama item yang
+         * tersedia di inventory.
+         */
+        ArrayList<String> list = new ArrayList<String>(); // membuat ArrayList baru
+        for (Map.Entry<String, Integer> curr : inventory.entrySet()) {
+            // curr adalah pasangan String dan Integer
+            list.add(curr.getKey()); // menambahkan nama item ke ArrayList
+        }
+        return list; // mengembalikan ArrayList
+    }
+
+    public HashMap<String, Integer> getInventory() {
+        /*
+         * fungsi ini akan mengembalikan HashMap yang berisi nama-nama item yang
+         * tersedia di inventory beserta jumlahnya.
+         */
+        return inventory; // mengembalikan HashMap
     }
 
     public void printInventory() {
