@@ -27,6 +27,7 @@ public class Sim implements AksiAktif, AksiPasif {
     private int wood;
 
     private int charType;
+    private int totalWaktuKerja;
 
     private int timeTidur;
     private int dayTidur;
@@ -186,6 +187,7 @@ public class Sim implements AksiAktif, AksiPasif {
             gajiBank += time;
             uang += ((gajiBank / 240) * (jobPrinter.getTestPekerjaan().getGaji())) * ((100 + getBonusInc()) / 100);
             gajiBank = gajiBank % 240;
+            totalWaktuKerja += time;
         }
     }
 
@@ -359,6 +361,7 @@ public class Sim implements AksiAktif, AksiPasif {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
             } else {
                 int waktuPengiriman = (rand.nextInt(5) + 1) * 30;
+                uang -= ((NonMakanan) o).getHarga();
                 pembelianSim.add(this);
                 pembelianProduk.add(o);
                 timerPembelian.add(waktuPengiriman);
@@ -368,6 +371,7 @@ public class Sim implements AksiAktif, AksiPasif {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
             } else {
                 int waktuPengiriman = (rand.nextInt(5) + 1) * 30;
+                uang -= ((BahanMakanan) o).getHarga();
                 pembelianSim.add(this);
                 pembelianProduk.add(o);
                 timerPembelian.add(waktuPengiriman);
