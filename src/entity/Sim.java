@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.naming.NameNotFoundException;
+
 public class Sim implements AksiAktif, AksiPasif {
     Random rand = new Random();
 
@@ -27,12 +29,13 @@ public class Sim implements AksiAktif, AksiPasif {
     private int wood;
 
     private int charType;
+    private int totalWaktuKerja;
 
     private int timeTidur;
     private int dayTidur;
     private boolean kesejahAltTidur;
 
-    private int timeMakan = -1;              // time -1 berarti tidak makan atau sudah buang air untuk makan sebelumnya
+    private int timeMakan = -1; // time -1 berarti tidak makan atau sudah buang air untuk makan sebelumnya
     private int dayMakan;
     private boolean kesejahAltBAir;
 
@@ -48,14 +51,19 @@ public class Sim implements AksiAktif, AksiPasif {
     private String currentActivity;
     private NonMakanan inFrontNonMakanan;
 
-    private int gajiBank;               // waktu leftover dari kerja
+    private int gajiBank; // waktu leftover dari kerja
 
     private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>();
     private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>();
     private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>();
 
     // Konstruktor
-    public Sim(String nama, int charType) {
+    public Sim(String nama, int charType) throws NameNotFoundException {
+
+        if (nama.length() < 3) {
+            throw new NameNotFoundException("Name can not be null!");
+        }
+
         namaLengkap = nama;
         kekenyangan = 80;
         mood = 80;
@@ -66,6 +74,13 @@ public class Sim implements AksiAktif, AksiPasif {
         currentPosition = "World";
         currentActivity = "Gabut";
         posisi = new Posisi(0, 0);
+
+        inventory = new Inventory();
+        getInventory().addItem(new NonMakanan("Kasur Single Size"));
+        getInventory().addItem(new NonMakanan("Toilet"));
+        getInventory().addItem(new NonMakanan("Kompor Gas"));
+        getInventory().addItem(new NonMakanan("Meja dan Kursi"));
+        getInventory().addItem(new NonMakanan("Jam"));
     }
 
     // Setter
@@ -186,6 +201,7 @@ public class Sim implements AksiAktif, AksiPasif {
             gajiBank += time;
             uang += ((gajiBank / 240) * (jobPrinter.getTestPekerjaan().getGaji())) * ((100 + getBonusInc()) / 100);
             gajiBank = gajiBank % 240;
+            totalWaktuKerja += time;
         }
     }
 
@@ -361,6 +377,7 @@ public class Sim implements AksiAktif, AksiPasif {
                 }
             }
         }
+
     }
 
     public void beliObjek(Produk o) throws ItemError, TidakCukupItem {
@@ -371,6 +388,7 @@ public class Sim implements AksiAktif, AksiPasif {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
             } else {
                 int waktuPengiriman = (rand.nextInt(5) + 1) * 30;
+                uang -= ((NonMakanan) o).getHarga();
                 pembelianSim.add(this);
                 pembelianProduk.add(o);
                 timerPembelian.add(waktuPengiriman);
@@ -380,6 +398,7 @@ public class Sim implements AksiAktif, AksiPasif {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
             } else {
                 int waktuPengiriman = (rand.nextInt(5) + 1) * 30;
+                uang -= ((BahanMakanan) o).getHarga();
                 pembelianSim.add(this);
                 pembelianProduk.add(o);
                 timerPembelian.add(waktuPengiriman);
@@ -391,9 +410,9 @@ public class Sim implements AksiAktif, AksiPasif {
         inventory.printInventory();
     }
 
-    public void installObject(NonMakanan o, Ruangan r){
-        NonMakanan z = (NonMakanan)inventory.getItem(o.getNamaProduk());
-
+    public void installObject(NonMakanan o, Posisi loc) {
+        NonMakanan barang = (NonMakanan) inventory.getItem(o.getNamaProduk());
+        this.ruangan.addObjek(loc, barang);
     }
 
     public int getTime() throws ItemError {
@@ -416,7 +435,7 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void update(){
+    public void update() {
         // Alter berdasarkan waktu sejak buang air dan tidur
         if (((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())) >= 600 && !kesejahAltTidur) {
             mood -= 5;
@@ -466,11 +485,10 @@ public class Sim implements AksiAktif, AksiPasif {
 
     }
 
-
-    public void updatePembelian(){
-        for(int i = 0;i<timerPembelian.size();i++){
-            timerPembelian.set(i, timerPembelian.get(i)-1);
-            if(timerPembelian.get(i) == 0){
+    public void updatePembelian() {
+        for (int i = 0; i < timerPembelian.size(); i++) {
+            timerPembelian.set(i, timerPembelian.get(i) - 1);
+            if (timerPembelian.get(i) == 0) {
                 timerPembelian.remove(i);
                 // add ke inventory
                 (pembelianSim.get(i)).inventory.addItem(pembelianProduk.get(i));
@@ -478,7 +496,6 @@ public class Sim implements AksiAktif, AksiPasif {
                 pembelianSim.remove(i);
             }
         }
-
     }
 
     public void moveRuangan(String namaRuangan) {

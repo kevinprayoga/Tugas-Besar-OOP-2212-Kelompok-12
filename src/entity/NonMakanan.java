@@ -57,7 +57,7 @@ public class NonMakanan extends Produk {
             setDimensi(1, 1);
             setHarga(5);
             setAksi("Read");
-        } else if (type.equals("Meja Kursi")) { // barang Meja Kursi
+        } else if (type.equals("Meja dan Kursi")) { // barang Meja Kursi
             setDimensi(3, 3);
             setHarga(50);
             setAksi("Makan");
