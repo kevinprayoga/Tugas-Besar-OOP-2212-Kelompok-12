@@ -7,9 +7,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
+
 import javax.swing.*;
 
 import entity.Sim;
+import entity.Waktu;
 import exceptions.NameNotValidException;
 import util.UtilityTool;
 import main.CharacterSelector;
@@ -120,6 +123,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.setGameState(GameState.LOAD_GAME_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GameState.LOAD_GAME_SCREEN);
                 System.out.println("Load game screen");
                 gamePanel.removeAll();
             }
@@ -129,6 +133,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.setGameState(GameState.HELP_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GameState.HELP_SCREEN);
                 System.out.println("Show help screen");
                 gamePanel.removeAll();
             }
@@ -162,7 +167,9 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.TITLE_SCREEN);
+                gamePanel.leastRecentlyUsed.pop();
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 System.out.println("Back to title screen");
                 gamePanel.removeAll();
             }
@@ -185,7 +192,10 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.TITLE_SCREEN);
+                gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 System.out.println("Back to title screen");
                 gamePanel.removeAll();
             }
@@ -385,7 +395,10 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.LOAD_GAME_SCREEN);
+                gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 System.out.println("Back to load screen");
                 gamePanel.removeAll();
             }
@@ -532,7 +545,7 @@ public class UI {
                     Sim sims = new Sim(nameField, optionSelected);
                     gamePanel.getWorld().addSim(sims);
                     gamePanel.addPlayableSims(sims);
-                    gamePanel.setAddSimsAvailable(false);
+                    gamePanel.menuGame.setSimCD(Waktu.getDay());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
                     gamePanel.removeAll();
                     System.out.println("Load game screen");
@@ -551,7 +564,10 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.LOAD_GAME_SCREEN);
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                gamePanel.leastRecentlyUsed.pop();
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 System.out.println("Main menu");
                 gamePanel.removeAll();
             }
@@ -569,7 +585,10 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.TITLE_SCREEN);
+                gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 System.out.println("Title screen ASDASDAS");
                 gamePanel.removeAll();
             }
@@ -586,6 +605,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
                 System.out.println("Character selection screen");
                 gamePanel.removeAll();
             }
@@ -611,7 +631,10 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
+                gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 gamePanel.setHouse(null);
                 System.out.println("World screen");
                 gamePanel.removeAll();
@@ -629,6 +652,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
                 System.out.println("Character selection screen");
                 gamePanel.removeAll();
             }

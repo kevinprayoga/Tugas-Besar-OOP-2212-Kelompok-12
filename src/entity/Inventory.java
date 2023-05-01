@@ -1,4 +1,3 @@
-package entity;
 /*
  * FILE NAME    : Inventory.java
  * AUTHOR       : 18221045 Ivan Aldy Ganesen
@@ -7,6 +6,8 @@ package entity;
  * Nantinya Inventory akan menyimpan barang-barang berupa turunan dari kelas parent Produk,
  * yaitu Makanan, BahanMakanan, dan NonMakanan.
 */
+
+package entity;
 
 import java.util.Arrays;    // untuk keperluan konversi list
 import java.util.ArrayList; // untuk membuat ArrayList

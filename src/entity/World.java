@@ -104,18 +104,11 @@ public class World {
             }
         }
 
-        // Randomizing sims position on radius 2 of the house
-        int x = (int) (Math.random() * 5) - 2 + houseX;
-        int y = (int) (Math.random() * 5) - 2 + houseY;
-        
-        // Checking if its not grass or sand or beyond map, if it is, randomize again
-        while (x < 0 || x > 63 || y < 0 || y > 63) {
-            if (!houseMap.get(x, y) && mapWorld.get(x, y) < 2) {
-                break;
-            }
-            x = (int) (Math.random() * 5) - 2 + houseX;
-            y = (int) (Math.random() * 5) - 2 + houseY;    
-        }
+        int x, y;
+        if (houseX > getLength() - 1) x = getLength() - 1;
+        else x = houseX + 1;
+        if (houseY > getWidth() - 1) y = getWidth() - 1;
+        else y = houseY + 1;
 
         sim.getPosisi().changeLoc(x, y);
         System.out.println(sim.getNamaLengkap() + " is at " + x + ", " + y);
@@ -153,8 +146,7 @@ public class World {
                 System.out.print(houseMap.get(i, j));
                 if (j < getWidth() - 1) {
                     System.out.print(" | ");
-                }
-                else {
+                } else {
                     System.out.println();
                 }
             }

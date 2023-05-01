@@ -4,6 +4,7 @@ import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
 
+
 public class Rumah {
     private Sim owner;
     private BufferedImage image;
@@ -16,8 +17,8 @@ public class Rumah {
 
     // House state
     private boolean isBuildMode = false;
-    
-    public Rumah(Sim owner){
+
+    public Rumah(Sim owner) {
         this.owner = owner;
         int type = (int) (Math.random() * 11) + 1;
         switch (type) {
@@ -70,19 +71,19 @@ public class Rumah {
         createRuangan(5, 5);
     }
 
-    public BufferedImage getImage(){
+    public BufferedImage getImage() {
         return this.image;
     }
 
-    public Sim getOwner(){
+    public Sim getOwner() {
         return this.owner;
     }
 
-    public Dimensi getDimensi(){
+    public Dimensi getDimensi() {
         return this.dimensi;
     }
 
-    public boolean isBuildMode(){
+    public boolean isBuildMode() {
         return this.isBuildMode;
     }
 
@@ -117,6 +118,7 @@ public class Rumah {
 
     public void setNewRuangan(int x, int y, Ruangan room) {
         this.matRoom.set(x, y, room);
+
     }
 
 }
