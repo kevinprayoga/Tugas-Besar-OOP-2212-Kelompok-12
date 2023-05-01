@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.Scanner;
+// import java.util.Scanner;
 
 import util.UtilityTool;
 
@@ -62,6 +62,7 @@ public class Rumah {
         this.dimensi = new Dimensi(9, 9);
         this.petaRuangan = new Matrix(9, 9);
         this.ruangan = new HashMap<>(9 * 9);
+        this.simList = new ArrayList<>(10);
 
         Ruangan center = new Ruangan();
         this.petaRuangan.set(4, 4, center);
@@ -102,4 +103,11 @@ public class Rumah {
         this.ruangan.put(namaRuangan, r);
     }
 
+    public void addSim(Sim sim) {
+        this.simList.add(sim);
+    }
+
+    public void removeSim(Sim sim) {
+        this.simList.remove(sim);
+    }
 }

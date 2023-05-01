@@ -12,10 +12,11 @@ package entity;
 
 public class NonMakanan extends Produk {
     // Definisi variabel
-    private Dimensi dimensi; // dimensi barang
-    private int harga;       // harga dari barang
-    private String aksi;     // aksi apa saja yang didukung barang
-    private Posisi posisi;   // Letak NonMakanan (apabila berada di World)
+    private Dimensi dimensi;    // dimensi barang
+    private int harga;          // harga dari barang
+    private String aksi;        // aksi apa saja yang didukung barang
+    private Posisi posisi;      // Letak NonMakanan (apabila berada di World)
+    private String orientasi;   // Orientasi barang {Up, Down, Left, Right}
 
     // KONSTRUKTOR
     // Asumsikan posisi hanya akan ada saat NonMakanan ditempatkan ke World
@@ -24,15 +25,15 @@ public class NonMakanan extends Produk {
         // Asumsikan type adalah nilai yang valid; tidak valid akan di-handle pada main
         super(type); // tipe ditentukan sesuai masukan
         
-        if (type.equals("KasurKingSize")) { // barang Kasur King Size
+        if (type.equals("Kasur King Size")) { // barang Kasur King Size
             setDimensi(5, 2);
             setHarga(150);
             setAksi("Tidur");
-        } else if (type.equals("KasurQueenSize")) { // barang Kasur Queen Size
+        } else if (type.equals("Kasur Queen Size")) { // barang Kasur Queen Size
             setDimensi(4, 2);
             setHarga(100);
             setAksi("Tidur");
-        } else if (type.equals("KasurSingleSize")) { // barang Kasur Single Size
+        } else if (type.equals("Kasur Single Size")) { // barang Kasur Single Size
             setDimensi(4, 1);
             setHarga(50);
             setAksi("Tidur");
@@ -44,19 +45,19 @@ public class NonMakanan extends Produk {
             setDimensi(1, 1);
             setHarga(50);
             setAksi("Buang Air");
-        } else if (type.equals("KomporGas")) { // barang Kompor Gas
+        } else if (type.equals("Kompor Gas")) { // barang Kompor Gas
             setDimensi(2, 1);
             setHarga(100);
             setAksi("Memasak");
-        } else if (type.equals("KomporListrik")) { // barang Kompor Listrik
+        } else if (type.equals("Kompor Listrik")) { // barang Kompor Listrik
             setDimensi(1, 1);
             setHarga(200);
             setAksi("Memasak");
-        } else if (type.equals("RakBuku")) { // barang Rak Buku
+        } else if (type.equals("Rak Buku")) { // barang Rak Buku
             setDimensi(1, 1);
             setHarga(5);
             setAksi("Read");
-        } else if (type.equals("MejaKursi")) { // barang Meja Kursi
+        } else if (type.equals("Meja Kursi")) { // barang Meja Kursi
             setDimensi(3, 3);
             setHarga(50);
             setAksi("Makan");
@@ -65,6 +66,8 @@ public class NonMakanan extends Produk {
             setHarga(10);
             setAksi("Melihat Waktu");
         }
+
+        setOrientasi("Down");
     }
 
     // DAFTAR GETTER
@@ -72,8 +75,8 @@ public class NonMakanan extends Produk {
         return harga;
     }
 
-    public String getDimensi() { // getter dimensi
-        return String.format("<%d, %d>", dimensi.getLength(), dimensi.getWidth());
+    public Dimensi getDimensi() { // getter dimensi
+        return dimensi;
     }
 
     public String getAksi() { // getter aksi
@@ -82,6 +85,10 @@ public class NonMakanan extends Produk {
 
     public Posisi getPosisi() { // getter posisi
         return posisi;
+    }
+
+    public String getOrientasi() { // getter orientasi
+        return orientasi;
     }
 
     // DAFTAR SETTER
@@ -95,5 +102,9 @@ public class NonMakanan extends Produk {
 
     private void setAksi(String aks) { // setter aksi
         aksi = aks;
+    }
+
+    public void setOrientasi(String ori) { // setter orientasi
+        orientasi = ori;
     }
 }
