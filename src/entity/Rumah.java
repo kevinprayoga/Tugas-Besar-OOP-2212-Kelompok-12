@@ -3,7 +3,8 @@ package entity;
 import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
-
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Rumah {
     private Sim owner;
@@ -11,14 +12,15 @@ public class Rumah {
 
     private Dimensi dimensi;
 
-    private Matrix<Boolean> roomMap;
+    private HashMap<String, Ruangan> ruangan;
     private Matrix<Ruangan> matRoom;
     private Posisi posisi;
+    private ArrayList<Sim> simList;
 
     // House state
     private boolean isBuildMode = false;
-
-    public Rumah(Sim owner) {
+    
+    public Rumah(Sim owner){
         this.owner = owner;
         int type = (int) (Math.random() * 11) + 1;
         switch (type) {
@@ -58,41 +60,39 @@ public class Rumah {
         }
 
         dimensi = new Dimensi(9, 9);
-        roomMap = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
-        matRoom = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
+        matRoom = new Matrix<>(9, 9);
+        ruangan = new HashMap<>(9 * 9);
 
-        // Set Default Value to EMPTY, which means EMPTY SPACE
-        for (int i = 0; i < dimensi.getLength(); i++) {
-            for (int j = 0; j < dimensi.getWidth(); j++) {
-                roomMap.set(i, j, false);
-            }
-        }
-
-        createRuangan(5, 5);
+        createRuangan(4, 4, "center");
+        owner.getInventory().addItem(new NonMakanan("KasurSingleSize"));
+        owner.getInventory().addItem(new NonMakanan("Toilet"));
+        owner.getInventory().addItem(new NonMakanan("KomporGas"));
+        owner.getInventory().addItem(new NonMakanan("MejaKursi"));
+        owner.getInventory().addItem(new NonMakanan("Jam"));
     }
 
-    public BufferedImage getImage() {
-        return this.image;
+    public BufferedImage getImage(){
+        return image;
     }
 
-    public Sim getOwner() {
-        return this.owner;
+    public Sim getOwner(){
+        return owner;
     }
 
-    public Dimensi getDimensi() {
-        return this.dimensi;
+    public Dimensi getDimensi(){
+        return dimensi;
     }
 
-    public boolean isBuildMode() {
-        return this.isBuildMode;
-    }
-
-    public Matrix<Boolean> getRoomMap() {
-        return roomMap;
+    public boolean isBuildMode(){
+        return isBuildMode;
     }
 
     public Matrix<Ruangan> getMatRoom() {
         return matRoom;
+    }
+
+    public ArrayList<Sim> getSimList() {
+        return simList;
     }
 
     public Posisi getPosisi(World world) {
@@ -101,14 +101,14 @@ public class Rumah {
         return posisi;
     }
 
-    public Ruangan getRuangan(int x, int y) {
-        return this.matRoom.get(x, y);
+    public Ruangan getRuangan(String roomName) {
+        return ruangan.get(roomName);
     }
 
-    public Ruangan createRuangan(int x, int y) {
+    public Ruangan createRuangan(int x, int y, String roomName) {
         Ruangan room = new Ruangan();
         setNewRuangan(x, y, room);
-        roomMap.set(x, y, true);
+        ruangan.put(roomName, room);
         return room;
     }
 
@@ -117,15 +117,15 @@ public class Rumah {
     }
 
     public void setNewRuangan(int x, int y, Ruangan room) {
-        this.matRoom.set(x, y, room);
-
+        matRoom.set(x, y, room);
     }
 
     public void addSim(Sim sim) {
-        this.simList.add(sim);
+        simList.add(sim);
     }
 
     public void removeSim(Sim sim) {
-        this.simList.remove(sim);
+        simList.remove(sim);
     }
+
 }
