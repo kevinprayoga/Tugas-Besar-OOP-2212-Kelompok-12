@@ -14,8 +14,14 @@ public class Rumah {
 
     private HashMap<String, Ruangan> ruangan;
     private Matrix<Ruangan> matRoom;
+    private Matrix<Integer> roomBuild;
     private Posisi posisi;
     private ArrayList<Sim> simList;
+
+    private int timerUpgrade = -1;
+    private Integer[] upgradeLokasi = new Integer[2];
+    private String nameUpgrade;
+
 
     // House state
     private boolean isBuildMode = false;
@@ -61,7 +67,15 @@ public class Rumah {
 
         dimensi = new Dimensi(9, 9);
         matRoom = new Matrix<>(9, 9);
+        roomBuild = new Matrix<>(9, 9);
         ruangan = new HashMap<>(9 * 9);
+
+        // Set Default Value to EMPTY, which means EMPTY SPACE
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                roomBuild.set(i, j, 0);
+            }
+        }
 
         createRuangan(4, 4, "center");
     }
@@ -90,6 +104,10 @@ public class Rumah {
         return simList;
     }
 
+    public Matrix<Integer> getRoomBuild() {
+        return roomBuild;
+    }
+
     public Posisi getPosisi(World world) {
         posisi.setAbsis(world.getPerumahan().getRow());
         posisi.setOrdinat(world.getPerumahan().getColumn());
@@ -100,10 +118,40 @@ public class Rumah {
         return ruangan.get(roomName);
     }
 
+    public int getUpgradeTimer(){
+        return timerUpgrade;
+    }
+
+    public void setUpgradeTimer(int time){
+        timerUpgrade = time;
+    }
+
+    public Integer[] getUpgradeLokasi(){
+        return upgradeLokasi;
+    }
+
+    public void setUpgradeLokasi(int x, int y){
+        upgradeLokasi[0] = x;
+        upgradeLokasi[1] = y;
+    }
+
+    public String getUpgradeNama(){
+        return nameUpgrade;
+    } 
+
+    public void setUpgradeNama(String nama){
+        nameUpgrade = nama;
+    }
+
     public Ruangan createRuangan(int x, int y, String roomName) {
         Ruangan room = new Ruangan();
         setNewRuangan(x, y, room);
+        roomBuild.set(x, y, 1); // jika terisi ruangan
         ruangan.put(roomName, room);
+        if (roomBuild.get(x + 1, y) == 0 && x < 9) roomBuild.set(x + 1, y, 2); // jika ruangan available diisi
+        if (roomBuild.get(x, y + 1) == 0 && y < 9) roomBuild.set(x, y + 1, 2); // jika ruangan available diisi
+        if (roomBuild.get(x - 1, y) == 0 && x >= 0) roomBuild.set(x - 1, y, 2); // jika ruangan available diisi
+        if (roomBuild.get(x, y - 1) == 0 && y >= 0) roomBuild.set(x, y - 1, 2); // jika ruangan available diisi
         return room;
     }
 
