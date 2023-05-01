@@ -545,7 +545,6 @@ public class UI {
                     Sim sims = new Sim(nameField, optionSelected);
                     gamePanel.getWorld().addSim(sims);
                     gamePanel.addPlayableSims(sims);
-                    gamePanel.setAddSimsAvailable(gamePanel.menuGame.canAddSim());
                     gamePanel.menuGame.setSimCD(Waktu.getDay());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
                     gamePanel.removeAll();
