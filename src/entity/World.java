@@ -1,4 +1,5 @@
 package entity;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -31,11 +32,12 @@ public class World {
             Scanner scanner = new Scanner(System.in);
             int length = scanner.nextInt();
             int width = scanner.nextInt();
-            single_instance = new World(length,width);
+            single_instance = new World(length, width);
+            scanner.close();
         }
 
         return single_instance;
-    }   
+    }
 
     // Methods
     public int getLength() {
@@ -67,8 +69,7 @@ public class World {
                 System.out.print(i[j]);
                 if (j < i.length - 1) {
                     System.out.print(" | ");
-                }
-                else {
+                } else {
                     System.out.println();
                 }
             }

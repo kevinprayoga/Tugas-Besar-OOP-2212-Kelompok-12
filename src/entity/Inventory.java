@@ -7,6 +7,8 @@
  * yaitu Makanan, BahanMakanan, dan NonMakanan.
 */
 
+package entity;
+
 import java.util.Arrays;    // untuk keperluan konversi list
 import java.util.ArrayList; // untuk membuat ArrayList
 import java.util.Map;       // untuk konversi entry

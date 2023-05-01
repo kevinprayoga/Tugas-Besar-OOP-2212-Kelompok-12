@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Sim implements AksiAktif, AksiPasif{
     Random rand = new Random();
@@ -385,5 +386,9 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public static void updatePembelian(){
         
+    }
+
+    public void berpindahRuangan(String namaRuangan) {
+        this.ruangan = this.rumah.getRuangan(namaRuangan);
     }
 }
