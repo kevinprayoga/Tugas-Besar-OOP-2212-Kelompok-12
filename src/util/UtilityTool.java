@@ -37,7 +37,7 @@ public class UtilityTool {
         return image;
     }
 
-    public static BufferedImage scaleImage(BufferedImage image, float scale) {
+    public static BufferedImage scaleImage(BufferedImage image, double scale) {
         int width = (int) (image.getWidth() * scale);
         int height = (int) (image.getHeight() * scale);
         BufferedImage scaledImage = new BufferedImage(width, height, image.getType());
@@ -46,6 +46,8 @@ public class UtilityTool {
         graphics2D.dispose();
         return scaledImage;
     }
+
+    public static BufferedImage scaleDownImage; 
 
     public static BufferedImage flipImageVertically(BufferedImage image) {
         BufferedImage flippedImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
