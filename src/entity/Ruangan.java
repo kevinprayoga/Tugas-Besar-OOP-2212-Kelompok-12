@@ -10,7 +10,6 @@ public class Ruangan {
     private Dimensi dimensi;
     private String[][] mapRuangan;
     private HashMap<Integer, NonMakanan> objects;
-    private String[] ruangSekitar;
 
     public Ruangan(){
         this.dimensi = new Dimensi(6,6);

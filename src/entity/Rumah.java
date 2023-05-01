@@ -6,20 +6,21 @@ import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.TreeSet;
+import java.util.ArrayList;
 
 public class Rumah {
     private Sim owner;
     private BufferedImage image;
 
     private Dimensi dimensi;
-    private String[][] mapRumah;
-    private HashMap<Integer, Ruangan> rooms;
+    private Matrix<Ruangan> petaRuangan;
+    private HashMap<String, Ruangan> ruangan;
+    private ArrayList<Sim> simList;
 
     // House state
     private boolean isBuildMode = false;
-    
-    public Rumah(Sim owner){
+
+    public Rumah(Sim owner) {
         this.owner = owner;
         int type = (int) (Math.random() * 11) + 1;
         switch (type) {
@@ -58,68 +59,47 @@ public class Rumah {
                 break;
         }
 
-        // asumsi dimensi sama kayak 1 ruangan
-        this.dimensi = new Dimensi(6,6);
-        this.mapRumah = new String[dimensi.getLength()][dimensi.getWidth()];
-        this.rooms = new HashMap<>(dimensi.getWidth() * dimensi.getLength());
-    
-        for (String[] i : this.mapRumah) {
-            for (int j = 0; j < dimensi.getLength(); j++) {
-                i[j] = "EMPTY";
-            }
-        }
-    }
-    
-    public String[][] getMapRumah(){
-        return this.mapRumah;
-    }
-    
-    public Ruangan getRuangan(int x, int y){
-        // Due to the difference between Cartesian Diagram mapping & Matrix mapping,
-        // the Matrix is turned into Cartesian Diagram;
+        this.dimensi = new Dimensi(9, 9);
+        this.petaRuangan = new Matrix(9, 9);
+        this.ruangan = new HashMap<>(9 * 9);
 
-        this.rooms.put("FIRST", new Ruangan());
-        this.roomNames.add("FIRST");
+        Ruangan center = new Ruangan();
+        this.petaRuangan.set(4, 4, center);
+        this.ruangan.put("Center", center);
     }
 
-    public BufferedImage getImage(){
+    public Matrix<Ruangan> getPetaRuangan() {
+        return this.petaRuangan;
+    }
+
+    public Ruangan getRuangan(String namaRuangan) {
+        return this.ruangan.get(namaRuangan);
+    }
+
+    public BufferedImage getImage() {
         return this.image;
     }
 
-    public Sim getOwner(){
+    public Sim getOwner() {
         return this.owner;
     }
 
-    public Dimensi getDimensi(){
+    public Dimensi getDimensi() {
         return this.dimensi;
     }
 
-    public boolean isBuildMode(){
+    public boolean isBuildMode() {
         return this.isBuildMode;
     }
 
-    public void setBuildMode(boolean isBuildMode){
+    public void setBuildMode(boolean isBuildMode) {
         this.isBuildMode = isBuildMode;
     }
-    
-    public Ruangan getRuangan(String namaRuangan){
-        return this.rooms.get(namaRuangan);
-    }
-    
-    public void addRuangan(Ruangan r, String namaRuangan, String wasd){
-        this.rooms.put(namaRuangan, new Ruangan());
-        r.addRuangSekitar(wasd, namaRuangan);
-    }
-    
-    /*
-    public void removeRuangan(Posisi loc){
-        this.rooms.remove(loc.getX() + (dimensi.getLength() * (loc.getY() - 1)));
-        this.mapRumah[dimensi.getLength() - loc.getX()][loc.getY() - 1] = "EMPTY";
-    }
-    */
-    
-    public boolean ruanganExist(String namaRuangan) {
-        return this.roomNames.contains(namaRuangan);
+
+    public void addRuangan(Posisi loc, String namaRuangan) {
+        Ruangan r = new Ruangan();
+        this.petaRuangan.set(loc.getX(), loc.getY(), r);
+        this.ruangan.put(namaRuangan, r);
     }
 
 }
