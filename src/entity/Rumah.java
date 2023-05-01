@@ -1,21 +1,19 @@
 package entity;
 
-import java.util.Scanner;
-
 import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.ArrayList;
+
 
 public class Rumah {
     private Sim owner;
     private BufferedImage image;
 
     private Dimensi dimensi;
-    private Matrix<Ruangan> petaRuangan;
-    private HashMap<String, Ruangan> ruangan;
-    private ArrayList<Sim> simList;
+
+    private Matrix<Boolean> roomMap;
+    private Matrix<Ruangan> matRoom;
+    private Posisi posisi;
 
     // House state
     private boolean isBuildMode = false;
@@ -59,21 +57,18 @@ public class Rumah {
                 break;
         }
 
-        this.dimensi = new Dimensi(9, 9);
-        this.petaRuangan = new Matrix(9, 9);
-        this.ruangan = new HashMap<>(9 * 9);
+        dimensi = new Dimensi(9, 9);
+        roomMap = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
+        matRoom = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
 
-        Ruangan center = new Ruangan();
-        this.petaRuangan.set(4, 4, center);
-        this.ruangan.put("Center", center);
-    }
+        // Set Default Value to EMPTY, which means EMPTY SPACE
+        for (int i = 0; i < dimensi.getLength(); i++) {
+            for (int j = 0; j < dimensi.getWidth(); j++) {
+                roomMap.set(i, j, false);
+            }
+        }
 
-    public Matrix<Ruangan> getPetaRuangan() {
-        return this.petaRuangan;
-    }
-
-    public Ruangan getRuangan(String namaRuangan) {
-        return this.ruangan.get(namaRuangan);
+        createRuangan(5, 5);
     }
 
     public BufferedImage getImage() {
@@ -92,14 +87,38 @@ public class Rumah {
         return this.isBuildMode;
     }
 
-    public void setBuildMode(boolean isBuildMode) {
+    public Matrix<Boolean> getRoomMap() {
+        return roomMap;
+    }
+
+    public Matrix<Ruangan> getMatRoom() {
+        return matRoom;
+    }
+
+    public Posisi getPosisi(World world) {
+        posisi.setAbsis(world.getPerumahan().getRow());
+        posisi.setOrdinat(world.getPerumahan().getColumn());
+        return posisi;
+    }
+
+    public Ruangan getRuangan(int x, int y) {
+        return this.matRoom.get(x, y);
+    }
+
+    public Ruangan createRuangan(int x, int y) {
+        Ruangan room = new Ruangan();
+        setNewRuangan(x, y, room);
+        roomMap.set(x, y, true);
+        return room;
+    }
+
+    public void setBuildMode(boolean isBuildMode){
         this.isBuildMode = isBuildMode;
     }
 
-    public void addRuangan(Posisi loc, String namaRuangan) {
-        Ruangan r = new Ruangan();
-        this.petaRuangan.set(loc.getX(), loc.getY(), r);
-        this.ruangan.put(namaRuangan, r);
+    public void setNewRuangan(int x, int y, Ruangan room) {
+        this.matRoom.set(x, y, room);
+
     }
 
 }
