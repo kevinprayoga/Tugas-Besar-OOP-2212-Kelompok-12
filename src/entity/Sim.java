@@ -4,13 +4,7 @@ import exceptions.*;
 import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
-import java.io.NotActiveException;
-import java.nio.Buffer;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 import javax.naming.NameNotFoundException;
 
@@ -53,9 +47,8 @@ public class Sim implements AksiAktif, AksiPasif {
 
     private int gajiBank; // waktu leftover dari kerja
 
-    private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>();
-    private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>();
-    private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>();
+    private int timerPembelian = -1;
+    private Produk pembelianProduk;
 
     // Konstruktor
     public Sim(String nama, int charType) throws NameNotFoundException {
@@ -151,6 +144,10 @@ public class Sim implements AksiAktif, AksiPasif {
 
     public String getCurrentActivity() {
         return currentActivity;
+    }
+
+    public int getTotalWaktuKerja(){
+        return totalWaktuKerja;
     }
 
     public BufferedImage getCharacter() {
@@ -302,8 +299,7 @@ public class Sim implements AksiAktif, AksiPasif {
                 Waktu.addSecond();
             }
             mood += 10;
-            // add inventory
-            // inventory.
+            inventory.addItem(item);
         }
     }
 
@@ -376,21 +372,17 @@ public class Sim implements AksiAktif, AksiPasif {
             if (uang - ((NonMakanan) o).getHarga() < 0) {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
             } else {
-                int waktuPengiriman = (rand.nextInt(5) + 1) * 30;
+                timerPembelian= (rand.nextInt(5) + 1) * 30;
                 uang -= ((NonMakanan) o).getHarga();
-                pembelianSim.add(this);
-                pembelianProduk.add(o);
-                timerPembelian.add(waktuPengiriman);
+                pembelianProduk = o;
             }
         } else if (o instanceof BahanMakanan) {
-            if (uang - ((BahanMakanan) o).getHarga() < 0) {
+            if (uang - ((NonMakanan) o).getHarga() < 0) {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
             } else {
-                int waktuPengiriman = (rand.nextInt(5) + 1) * 30;
-                uang -= ((BahanMakanan) o).getHarga();
-                pembelianSim.add(this);
-                pembelianProduk.add(o);
-                timerPembelian.add(waktuPengiriman);
+                timerPembelian= (rand.nextInt(5) + 1) * 30;
+                uang -= ((NonMakanan) o).getHarga();
+                pembelianProduk = o;
             }
         }
     }
@@ -472,18 +464,12 @@ public class Sim implements AksiAktif, AksiPasif {
             dayTidur = Waktu.getDay();
         }
 
-    }
-
-    public void updatePembelian() {
-        for (int i = 0; i < timerPembelian.size(); i++) {
-            timerPembelian.set(i, timerPembelian.get(i) - 1);
-            if (timerPembelian.get(i) == 0) {
-                timerPembelian.remove(i);
-                // add ke inventory
-                (pembelianSim.get(i)).inventory.addItem(pembelianProduk.get(i));
-                pembelianProduk.remove(i);
-                pembelianSim.remove(i);
-            }
+        if(timerPembelian != -1){
+            timerPembelian -= 1;
+        }
+        if(timerPembelian == 0){
+            timerPembelian -= 1;
+            inventory.addItem((pembelianProduk));
         }
     }
 
