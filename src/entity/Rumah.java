@@ -1,19 +1,18 @@
 package entity;
 
-import java.util.Scanner;
-
 import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 public class Rumah {
     private Sim owner;
     private BufferedImage image;
 
     private Dimensi dimensi;
-    private String[][] mapRumah;
-    private HashMap<Integer, Ruangan> rooms;
+
+    private Matrix<Boolean> roomMap;
+    private Matrix<Ruangan> matRoom;
+    private Posisi posisi;
 
     // House state
     private boolean isBuildMode = false;
@@ -57,27 +56,18 @@ public class Rumah {
                 break;
         }
 
-        // asumsi dimensi sama kayak 1 ruangan
-        this.dimensi = new Dimensi(6,6);
-        this.mapRumah = new String[dimensi.getLength()][dimensi.getWidth()];
-        this.rooms = new HashMap<>(dimensi.getWidth() * dimensi.getLength());
-    
-        for (String[] i : this.mapRumah) {
-            for (int j = 0; j < dimensi.getLength(); j++) {
-                i[j] = "EMPTY";
+        dimensi = new Dimensi(9, 9);
+        roomMap = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
+        matRoom = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
+
+        // Set Default Value to EMPTY, which means EMPTY SPACE
+        for (int i = 0; i < dimensi.getLength(); i++) {
+            for (int j = 0; j < dimensi.getWidth(); j++) {
+                roomMap.set(i, j, false);
             }
         }
-    }
-    
-    public String[][] getMapRumah(){
-        return this.mapRumah;
-    }
-    
-    public Ruangan getRuangan(int x, int y){
-        // Due to the difference between Cartesian Diagram mapping & Matrix mapping,
-        // the Matrix is turned into Cartesian Diagram;
 
-        return this.rooms.get(x + (dimensi.getLength() * (y - 1)));
+        createRuangan(5, 5);
     }
 
     public BufferedImage getImage(){
@@ -96,24 +86,37 @@ public class Rumah {
         return this.isBuildMode;
     }
 
+    public Matrix<Boolean> getRoomMap() {
+        return roomMap;
+    }
+
+    public Matrix<Ruangan> getMatRoom() {
+        return matRoom;
+    }
+
+    public Posisi getPosisi(World world) {
+        posisi.setAbsis(world.getPerumahan().getRow());
+        posisi.setOrdinat(world.getPerumahan().getColumn());
+        return posisi;
+    }
+
+    public Ruangan getRuangan(int x, int y) {
+        return this.matRoom.get(x, y);
+    }
+
+    public Ruangan createRuangan(int x, int y) {
+        Ruangan room = new Ruangan();
+        setNewRuangan(x, y, room);
+        roomMap.set(x, y, true);
+        return room;
+    }
+
     public void setBuildMode(boolean isBuildMode){
         this.isBuildMode = isBuildMode;
     }
-    
-    public void addRuangan(Posisi loc, Object o){
-        this.rooms.put(loc.getX() + (dimensi.getLength() * (loc.getY() - 1)), o);
-        this.mapRumah[dimensi.getLength() - loc.getX()][loc.getY() - 1] = o.toString();
-    }
-    
-    public void removeRuangan(Posisi loc){
-        this.rooms.remove(loc.getX() + (dimensi.getLength() * (loc.getY() - 1)));
-        this.mapRumah[dimensi.getLength() - loc.getX()][loc.getY() - 1] = "EMPTY";
-    }
-    
-    public void moveRuangan(Ruangan ruang, Posisi loc){
-        removeRuangan(Ruangan.getPosisi());
-        addObjek(loc, objek);
-        rooms.setPosisi(loc);
+
+    public void setNewRuangan(int x, int y, Ruangan room) {
+        this.matRoom.set(x, y, room);
     }
 
 }
