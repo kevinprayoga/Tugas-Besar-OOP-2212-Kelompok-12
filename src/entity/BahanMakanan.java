@@ -1,3 +1,4 @@
+package entity;
 public class BahanMakanan extends Produk {
 
     private int kekenyangan;

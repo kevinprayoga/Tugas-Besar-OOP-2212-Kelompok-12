@@ -1,11 +1,13 @@
 package main;
 
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
-import entity.House;
+import entity.Rumah;
+import entity.Sim;
 import entity.World;
-import entity.unit.Time;
 import graphics.HousePainter;
 import graphics.PlayedSims;
 import graphics.UI;
@@ -37,13 +39,15 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isStoreOpened = false;
     private boolean isAddSimsAvailable = true;
     private boolean isEnteredHouse = false;
+    public boolean isHouseSelected = false;
 
     // Game variables
+    private MenuGame menuGame;
     private World world;
-    private House visitedHouse;
+    private Rumah visitedHouse;
     private WorldPainter worldPainter;
     private HousePainter housePainter;
-    private Time mainTime;
+    private ArrayList<Sim> playableSims;
     private PlayedSims playedSims;
     public CollisionHandler collisionHandler;
 
@@ -53,6 +57,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+
+        this.menuGame = new MenuGame(this);
+        this.playableSims = new ArrayList<>();
     }
 
     public void startGameThread() {
@@ -118,6 +125,16 @@ public class GamePanel extends JPanel implements Runnable {
         graphics2D.dispose();
     }
 
+    public void reset() {
+        this.isStoreOpened = false;
+        this.isAddSimsAvailable = true;
+        this.isEnteredHouse = false;
+        this.menuGame = new MenuGame(this);
+        this.playableSims = new ArrayList<>();
+        this.world = new World();
+        this.worldPainter = new WorldPainter(world, this);
+    }
+
     public GameState getGameState() {
         return gameState;
     }
@@ -146,15 +163,15 @@ public class GamePanel extends JPanel implements Runnable {
         return world;
     }
 
-    public Time getMainTime() {
-        return mainTime;
-    }
-
     public PlayedSims getPlayedSims() {
         return playedSims;
     }
 
-    public House getHouse() {
+    public ArrayList<Sim> getPlayableSims() {
+        return playableSims;
+    }
+
+    public Rumah getHouse() {
         return visitedHouse;
     }
 
@@ -181,16 +198,13 @@ public class GamePanel extends JPanel implements Runnable {
         worldPainter = new WorldPainter(world, this); 
         }
 
-    public void setMainTime(Time mainTime) {
-        this.mainTime = mainTime;
-    }
 
     public void setPlayedSims(PlayedSims playedSims) {
         this.playedSims = playedSims;
         collisionHandler = new CollisionHandler(this, playedSims.getSims());
     }
 
-    public void setHouse(House house) {
+    public void setHouse(Rumah house) {
         this.visitedHouse = house;
         housePainter = new HousePainter(house, this);
     }
@@ -207,11 +221,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.isEnteredHouse = isEnteredHouse;
     }
 
-    public void pauseMainTime() {
-        mainTime.pause();
-    }
-
-    public void resumeMainTime() {
-        mainTime.continueThread();
+    // Adder
+    public void addPlayableSims(Sim sim) {
+        this.playableSims.add(sim);
+        world.createSim(sim);
     }
 }

@@ -1,16 +1,31 @@
 package main;
 
 import entity.Sim;
-import entity.WaktuAlt;
+import entity.Waktu;
+import entity.World;
 import exceptions.*;
+import graphics.PlayedSims;
+
 import java.util.Scanner;
+import java.awt.Menu;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MenuGame{
+    private final GamePanel gamePanel;
+
     boolean gameStarted;
     private int addSimDay;
+    private World mainWorld;
+    private ArrayList<Sim> playableSims;
+    private PlayedSims playedSims;
 
+    public MenuGame(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+        playableSims = gamePanel.getPlayableSims();
+        playedSims = gamePanel.getPlayedSims();
+    }
 
     public void exitGame(){
         System.out.println("Keluar dari game. Sampai jumpa!");
@@ -31,7 +46,7 @@ public class MenuGame{
 
     public void setPekerjaan(Sim s, String pekerjaanWish) throws PekerjaanError,TidakCukupItem{
         int randomnum;
-        if(s.pekerjaan == null){
+        if(s.getPekerjaan() == null){
             Random rand = new Random();
             randomnum = rand.nextInt(7);
             if(randomnum == 0){
@@ -47,13 +62,13 @@ public class MenuGame{
                     s.pekerjaanStart = LocalDateTime.now();
                 }
             } else{
-                throw new PekerjaanError("Belum bisa mengganti pekerjaan.")
+                throw new PekerjaanError("Belum bisa mengganti pekerjaan.");
             }
         }
     }
 
     public void viewSimInfo(Sim s){
-        System.out.println("Nama Sim: "+s.getName());
+        System.out.println("Nama Sim: "+s.getNamaLengkap());
         System.out.println("Pekerjaan: " +s.getPekerjaan());
         System.out.println("Kesehatan: "+s.getKesehatan());
         System.out.println("Kekenyangan: "+s.getKekenyangan());
@@ -61,14 +76,14 @@ public class MenuGame{
         System.out.println("Uang: "+s.getUang());
     }
     
-    public void viewLocation(){
-        System.out.println("Rumah pada sumbu  x: "+Rumah.getLokasi().getAbsis());
-        System.out.println("Rumah pada sumbu y: "+Rumah.getLokasi().getOrdinat());
+    public void viewLocation(Sim s){
+        System.out.println("Rumah pada sumbu  x: "+s.getRumah().getLokasi().getAbsis());
+        System.out.println("Rumah pada sumbu y: "+s.getRumah().getLokasi().getOrdinat());
         System.out.println("Ruangan" + ruangan.getName());
     }
 
-    public void viewInventory(Sims s){
-        s.getInventory().printInventory;
+    public void viewInventory(Sim s){
+        s.getInventory().printInventory();
     }
 
     public void upgradeHouse(){
@@ -94,6 +109,6 @@ public class MenuGame{
     }
 
     public boolean canAddSim(){
-        return addSimDay != WaktuAlt.getDay();
+        return addSimDay != waktu.getDay();
     }
 }
