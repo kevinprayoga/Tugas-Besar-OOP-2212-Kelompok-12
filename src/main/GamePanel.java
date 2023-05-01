@@ -139,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.isEnteredHouse = false;
         this.menuGame = new MenuGame(this);
         this.playableSims = new ArrayList<>();
-        this.world = new World();
+        this.world = World.getWorld();
         this.worldPainter = new WorldPainter(world, this);
     }
 
