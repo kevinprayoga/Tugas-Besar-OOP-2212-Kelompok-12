@@ -365,7 +365,18 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     // Implementasi aksi pasif
-    public void upgradeRumah(Ruangan r, String arah, String nama) {
+    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException{
+        if (uang < 1500) {
+            throw new TidakCukupItem("Tidak cukup uang untuk Upgrade Rumah!");
+        } else {
+            if (rumah.getRoomBuild().get(x, y) == 2) {
+                uang -= 1500;
+                rumah.createRuangan(x, y, nama);
+                for (int i = 0; i < 1080; i++) {
+                    Waktu.addSecond();
+                }
+            }
+        }
 
     }
 
