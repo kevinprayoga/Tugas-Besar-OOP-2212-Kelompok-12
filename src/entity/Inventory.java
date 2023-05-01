@@ -52,7 +52,7 @@ public class Inventory {
         }
     }
 
-    public Object getItem(String item) {
+    public Produk getItem(String item) {
         /*
             * fungsi ini akan mengambil item dari inventory.
             * setiap kali fungsi ini dijalankan, value untuk key yang sesuai
