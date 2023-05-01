@@ -16,7 +16,7 @@ public class MenuGame{
     private final GamePanel gamePanel;
 
     boolean gameStarted;
-    private int addSimDay;
+    private int addSimDay = -1;
     private World mainWorld;
     private ArrayList<Sim> playableSims;
     private PlayedSims playedSims;
@@ -43,7 +43,7 @@ public class MenuGame{
         String command = sc.nextLine();
         sc.close();
     }
-
+    /* 
     public void setPekerjaan(Sim s, String pekerjaanWish) throws PekerjaanError,TidakCukupItem{
         int randomnum;
         if(s.getPekerjaan() == null){
@@ -66,7 +66,7 @@ public class MenuGame{
             }
         }
     }
-
+    */
     public void viewSimInfo(Sim s){
         System.out.println("Nama Sim: "+s.getNamaLengkap());
         System.out.println("Pekerjaan: " +s.getPekerjaan());
@@ -74,12 +74,6 @@ public class MenuGame{
         System.out.println("Kekenyangan: "+s.getKekenyangan());
         System.out.println("Mood: "+s.getMood());
         System.out.println("Uang: "+s.getUang());
-    }
-    
-    public void viewLocation(Sim s){
-        System.out.println("Rumah pada sumbu  x: "+s.getRumah().getLokasi().getAbsis());
-        System.out.println("Rumah pada sumbu y: "+s.getRumah().getLokasi().getOrdinat());
-        System.out.println("Ruangan" + ruangan.getName());
     }
 
     public void viewInventory(Sim s){
@@ -91,7 +85,7 @@ public class MenuGame{
     }
 
     public void editRoom(){}
-    public void addSim(){}
+
     public void changeSim(){}
 
     public void displayObjects(){}
@@ -108,7 +102,11 @@ public class MenuGame{
         return addSimDay;
     }
 
+    public void setSimCD(int day){
+        addSimDay = day;
+    }
+
     public boolean canAddSim(){
-        return addSimDay != waktu.getDay();
+        return addSimDay != Waktu.getDay();
     }
 }

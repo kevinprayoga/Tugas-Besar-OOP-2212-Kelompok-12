@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.awt.Color;
 
 import javax.swing.JLabel;
@@ -64,15 +65,18 @@ public class CharacterSelector {
                         gamePanel.setPlayedSims(new PlayedSims(gamePanel, sim));
                         if (sim.getCurrentPosition().equals("World")) {
                             gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.WORLD_GAME_SCREEN);
                         } else {
                             gamePanel.setGameState(GameState.HOUSE_GAME_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.HOUSE_GAME_SCREEN);
                         }
+                        System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                         gamePanel.removeAll();
                     }
                 });
 
             } else {
-                if (gamePanel.getAddSimsAvailable()) {
+                if (gamePanel.menuGame.canAddSim()) {
                     BufferedImage image = UtilityTool.loadImage("res/image/ui/add char.png");
                     graphics2d.drawImage(image, x, y, gamePanel);
                     
@@ -84,6 +88,8 @@ public class CharacterSelector {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             gamePanel.setGameState(GameState.NEW_CHAR_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.NEW_CHAR_SCREEN);
+                            System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                             gamePanel.removeAll();
                         }
                     });
