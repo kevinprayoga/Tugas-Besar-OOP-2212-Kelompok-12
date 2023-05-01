@@ -353,7 +353,7 @@ public class Sim implements AksiAktif, AksiPasif {
         if (uang < 1500) {
             throw new TidakCukupItem("Tidak cukup uang untuk Upgrade Rumah!");
         } else {
-            if (rumah.getRoomBuild().get(x, y) == 2) {
+            if (rumah.getRoomBuild().get(x, y) == 2) { // meriksa kalau 2 artinya ruangan available untuk diisi
                 uang -= 1500;
                 rumah.createRuangan(x, y, nama);
                 for (int i = 0; i < 1080; i++) {
