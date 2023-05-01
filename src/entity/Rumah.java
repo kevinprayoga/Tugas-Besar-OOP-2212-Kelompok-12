@@ -18,6 +18,11 @@ public class Rumah {
     private Posisi posisi;
     private ArrayList<Sim> simList;
 
+    private int timerUpgrade = -1;
+    private Integer[] upgradeLokasi = new Integer[2];
+    private String nameUpgrade;
+
+
     // House state
     private boolean isBuildMode = false;
     
@@ -111,6 +116,31 @@ public class Rumah {
 
     public Ruangan getRuangan(String roomName) {
         return ruangan.get(roomName);
+    }
+
+    public int getUpgradeTimer(){
+        return timerUpgrade;
+    }
+
+    public void setUpgradeTimer(int time){
+        timerUpgrade = time;
+    }
+
+    public Integer[] getUpgradeLokasi(){
+        return upgradeLokasi;
+    }
+
+    public void setUpgradeLokasi(int x, int y){
+        upgradeLokasi[0] = x;
+        upgradeLokasi[1] = y;
+    }
+
+    public String getUpgradeNama(){
+        return nameUpgrade;
+    } 
+
+    public void setUpgradeNama(String nama){
+        nameUpgrade = nama;
     }
 
     public Ruangan createRuangan(int x, int y, String roomName) {
