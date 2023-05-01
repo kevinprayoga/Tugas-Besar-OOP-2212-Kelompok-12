@@ -1,7 +1,6 @@
 package entity;
 import java.util.ArrayList;
 
-import entity.Matrix;
 import util.Noise;
 
 public class World {
