@@ -471,8 +471,8 @@ public class Sim implements AksiAktif, AksiPasif {
 
     public void moveRuangan(String namaRuangan) {
         Ruangan r = this.rumah.getRuangan(namaRuangan);
-        this.ruangan.removeSim()
-        r.a
-        
+        this.ruangan.removeSim(this);
+        this.ruangan = r;
+        this.ruangan.addSim(this);
     }
 }

@@ -107,4 +107,8 @@ public class NonMakanan extends Produk {
     public void setOrientasi(String ori) { // setter orientasi
         orientasi = ori;
     }
+
+    public void setPosisi(Posisi pos) {
+        posisi = pos;
+    }
 }
