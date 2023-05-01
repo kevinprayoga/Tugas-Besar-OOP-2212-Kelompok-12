@@ -74,6 +74,13 @@ public class Sim implements AksiAktif, AksiPasif {
         currentPosition = "World";
         currentActivity = "Gabut";
         posisi = new Posisi(0, 0);
+
+        inventory = new Inventory();
+        getInventory().addItem(new NonMakanan("Kasur Single Size"));
+        getInventory().addItem(new NonMakanan("Toilet"));
+        getInventory().addItem(new NonMakanan("Kompor Gas"));
+        getInventory().addItem(new NonMakanan("Meja dan Kursi"));
+        getInventory().addItem(new NonMakanan("Jam"));
     }
 
     // Setter
