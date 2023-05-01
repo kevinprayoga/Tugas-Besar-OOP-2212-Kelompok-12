@@ -4,17 +4,16 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import entity.Inventory;
+import entity.Sim;
 import main.GamePanel;
 
 public class Store {
     private GamePanel gamePanel;
-    private Inventory shoppingCart;
-    private Inventory inventory;
+    private Sim sim;
 
     public Store(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        this.shoppingCart = new Inventory();
-        this.inventory = gamePanel.getPlayedSims().getSims().getInventory();
+        this.sim = gamePanel.getPlayedSims().getSims();
     }
 
     public void draw(Graphics2D graphics2d) {
