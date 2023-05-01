@@ -142,6 +142,7 @@ public class World {
         // Create new house
         Rumah house = new Rumah(owner);
         setNewHouse(x, y, house);
+        houseMap.set(x, y, true);
         return house;
     }
 

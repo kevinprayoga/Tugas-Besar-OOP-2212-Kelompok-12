@@ -44,6 +44,7 @@ public class CollisionHandler {
             if (!gamePanel.getEnteredHouse()) {
                 gamePanel.setHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
                 gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
+                gamePanel.isHouseSelected = true;
                 return true;
             } else {
                 gamePanel.setEnteredHouse(false);

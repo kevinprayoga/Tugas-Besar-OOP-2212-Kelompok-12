@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isStoreOpened = false;
     private boolean isAddSimsAvailable = true;
     private boolean isEnteredHouse = false;
+    public boolean isHouseSelected = false;
 
     // Game variables
     private MenuGame menuGame;

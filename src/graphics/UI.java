@@ -595,7 +595,10 @@ public class UI {
     }
 
     private void drawHouseGameScreen() {
-        
+        if (gamePanel.isHouseSelected) {
+            gamePanel.removeAll();
+            gamePanel.isHouseSelected = false;
+        }
         // Back button
         BufferedImage backButtonImage = UtilityTool.loadImage("res/image/ui/back button.png");
         graphics2d.drawImage(backButtonImage, 12, 12, gamePanel);
