@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 import entity.Sim;
 import graphics.ColorPalette;
-import graphics.PlayedSim;
+import graphics.PlayedSims;
 import main.GamePanel.GameState;
 import util.UtilityTool;
 

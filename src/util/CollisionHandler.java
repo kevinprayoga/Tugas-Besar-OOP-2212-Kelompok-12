@@ -1,13 +1,13 @@
 package util;
 
-import entity.Sims;
+import entity.Sim;
 import entity.World;
 import entity.unit.Matrix;
 import main.GamePanel;
 
 public class CollisionHandler {
     private final GamePanel gamePanel;
-    private Sims sims;
+    private Sim sims;
     private World world;
     private Matrix<Integer> worldTiles;
     private Matrix<Boolean> houseMap;

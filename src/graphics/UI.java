@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.*;
 
-import entity.Sims;
-import entity.Sims.NameNotValidException;
+import entity.Sim;
+import entity.Sim.NameNotValidException;
 import util.UtilityTool;
 import main.CharacterSelector;
 import main.GameLoader;
@@ -530,8 +530,8 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    Sims sims = new Sims(nameField, optionSelected);
-                    gamePanel.getWorld().addSims(sims);
+                    Sim sims = new Sim(nameField, optionSelected);
+                    gamePanel.getWorld().addSim(sims);
                     gamePanel.setAddSimsAvailable(false);
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
                     gamePanel.removeAll();

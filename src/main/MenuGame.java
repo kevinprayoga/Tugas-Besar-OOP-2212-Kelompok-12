@@ -1,7 +1,7 @@
 package main;
 
 import entity.Sim;
-import entity.waktu;
+import entity.Waktu;
 import exceptions.*;
 import java.util.Scanner;
 import java.time.LocalDateTime;
@@ -47,7 +47,7 @@ public class MenuGame{
                     s.pekerjaanStart = LocalDateTime.now();
                 }
             } else{
-                throw new PekerjaanError("Belum bisa mengganti pekerjaan.")
+                throw new PekerjaanError("Belum bisa mengganti pekerjaan.");
             }
         }
     }
@@ -61,14 +61,14 @@ public class MenuGame{
         System.out.println("Uang: "+s.getUang());
     }
     
-    public void viewLocation(){
-        System.out.println("Rumah pada sumbu  x: "+Rumah.getLokasi().getAbsis());
-        System.out.println("Rumah pada sumbu y: "+Rumah.getLokasi().getOrdinat());
+    public void viewLocation(Sim s){
+        System.out.println("Rumah pada sumbu  x: "+s.getRumah().getLokasi().getAbsis());
+        System.out.println("Rumah pada sumbu y: "+s.getRumah().getLokasi().getOrdinat());
         System.out.println("Ruangan" + ruangan.getName());
     }
 
-    public void viewInventory(Sims s){
-        s.getInventory().printInventory;
+    public void viewInventory(Sim s){
+        s.getInventory().printInventory();
     }
 
     public void upgradeHouse(){

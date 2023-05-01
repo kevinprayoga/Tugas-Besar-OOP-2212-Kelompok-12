@@ -3,14 +3,14 @@ package graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import entity.House;
+import entity.Rumah;
 import main.GamePanel;
 
 public class HousePainter {
     private final GamePanel gamePanel;
-    private House house;
+    private Rumah house;
 
-    public HousePainter(House house, GamePanel gamePanel) {
+    public HousePainter(Rumah house, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.house = house;
     }

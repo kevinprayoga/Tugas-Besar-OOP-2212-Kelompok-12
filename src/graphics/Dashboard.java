@@ -1,7 +1,7 @@
 package graphics;
 
 import entity.Inventory;
-import entity.Sims;
+import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 
 public class Dashboard {
     private final GamePanel gamePanel;
-    private Sims sims;
+    private Sim sims;
     private Inventory inventory;
 
     // Dashboard State
