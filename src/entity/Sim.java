@@ -368,12 +368,11 @@ public class Sim implements AksiAktif, AksiPasif {
             if (rumah.getRoomBuild().get(x, y) == 2) {
                 uang -= 1500;
                 rumah.createRuangan(x, y, nama);
-                for (int i = 0; i < 1080; i++) {
-                    Waktu.addSecond();
-                }
+                rumah.setUpgradeTimer(1080);
+                rumah.setUpgradeLokasi(x, y);
+                rumah.setUpgradeNama(nama);
             }
         }
-
     }
 
     public void beliObjek(Produk o) throws ItemError, TidakCukupItem {
@@ -481,6 +480,15 @@ public class Sim implements AksiAktif, AksiPasif {
         if(timerPembelian == 0){
             timerPembelian -= 1;
             inventory.addItem((pembelianProduk));
+        }
+
+        if(rumah.getUpgradeTimer() != -1){
+            rumah.setUpgradeTimer(rumah.getUpgradeTimer()-1);
+        }
+
+        if(rumah.getUpgradeTimer() == 0){
+            rumah.setUpgradeTimer(-1);
+            rumah.createRuangan(rumah.getUpgradeLokasi()[0], rumah.getUpgradeLokasi()[1], rumah.getUpgradeNama());
         }
     }
 
