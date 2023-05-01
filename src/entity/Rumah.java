@@ -73,11 +73,6 @@ public class Rumah {
         }
 
         createRuangan(4, 4, "center");
-        owner.getInventory().addItem(new NonMakanan("KasurSingleSize"));
-        owner.getInventory().addItem(new NonMakanan("Toilet"));
-        owner.getInventory().addItem(new NonMakanan("KomporGas"));
-        owner.getInventory().addItem(new NonMakanan("MejaKursi"));
-        owner.getInventory().addItem(new NonMakanan("Jam"));
     }
 
     public BufferedImage getImage(){

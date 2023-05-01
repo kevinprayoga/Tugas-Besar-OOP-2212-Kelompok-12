@@ -40,6 +40,11 @@ public class Dashboard {
         } else {
             drawOpenDashboard(graphics2D);
         }
+
+        if (gamePanel.getStoreOpened()) {
+            Store store = new Store(gamePanel);
+            store.draw(graphics2D);
+        }
     }
 
     private void drawDashboard(Graphics2D graphics2D) {

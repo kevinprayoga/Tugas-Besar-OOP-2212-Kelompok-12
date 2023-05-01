@@ -9,40 +9,44 @@
 
 package entity;
 
-import java.util.Arrays;    // untuk keperluan konversi list
+import java.util.Arrays; // untuk keperluan konversi list
 import java.util.ArrayList; // untuk membuat ArrayList
-import java.util.Map;       // untuk konversi entry
-import java.util.HashMap;   // untuk membuat HashMap
+import java.util.Map; // untuk konversi entry
+import java.util.HashMap; // untuk membuat HashMap
 
 public class Inventory {
     // definisi variabel
     private HashMap<String, Integer> inventory; // untuk inventory
-    private ArrayList<String> listmakanan;      // menyimpan nama-nama produk yang merupakan Makanan
+    private ArrayList<String> listmakanan; // menyimpan nama-nama produk yang merupakan Makanan
     private ArrayList<String> listbahanmakanan; // menyimpan nama-nama produk yang merupakan BahanMakanan
-    private ArrayList<String> listnonmakanan;   // menyimpan nama-nama produk yang merupakan NonMakanan
+    private ArrayList<String> listnonmakanan; // menyimpan nama-nama produk yang merupakan NonMakanan
 
     // KONSTRUKTOR
     // tidak memerlukan parameter apapun
     public Inventory() {
-        // membuat sebuah HashMap baru dengan tipe key berupa String dan value berupa Integer
+        // membuat sebuah HashMap baru dengan tipe key berupa String dan value berupa
+        // Integer
         inventory = new HashMap<String, Integer>();
 
         // membuat ArrayList berisi kemungkinan nama-nama Makanan
-        listmakanan = new ArrayList<String>(Arrays.asList("Nasi Ayam", "Nasi Kari",  "Susu Kacang", "Tumis Sayur", "Bistik"));
-        
+        listmakanan = new ArrayList<String>(
+                Arrays.asList("Nasi Ayam", "Nasi Kari", "Susu Kacang", "Tumis Sayur", "Bistik"));
+
         // membuat ArrayList berisi kemungkinan nama-nama BahanMakanan
-        listbahanmakanan = new ArrayList<String>(Arrays.asList("Nasi", "Kentang", "Ayam", "Sapi", "Wortel", "Bayam", "Kacang", "Susu"));
-        
+        listbahanmakanan = new ArrayList<String>(
+                Arrays.asList("Nasi", "Kentang", "Ayam", "Sapi", "Wortel", "Bayam", "Kacang", "Susu"));
+
         // membuat ArrayList berisi kemungkinan nama-nama NonMakanan
-        listnonmakanan = new ArrayList<String>(Arrays.asList("KasurKingSize", "KasurQueenSize", "KasurSingleSize", "Shower", "Toilet", "KomporGas", "KomporListrik", "RakBuku", "MejaKursi", "Jam"));
+        listnonmakanan = new ArrayList<String>(Arrays.asList("KasurKingSize", "KasurQueenSize", "KasurSingleSize",
+                "Shower", "Toilet", "KomporGas", "KomporListrik", "RakBuku", "MejaKursi", "Jam"));
     }
 
     public <M extends Produk> void addItem(M item) {
         /*
-            * fungsi ini akan menambahkan item ke dalam inventory.
-            * asumsikan parameter fungsi selalu valid, yaitu merupakan
-            * subclass dari Produk (Makanan, BahanMakanan, NonMakanan)
-        */
+         * fungsi ini akan menambahkan item ke dalam inventory.
+         * asumsikan parameter fungsi selalu valid, yaitu merupakan
+         * subclass dari Produk (Makanan, BahanMakanan, NonMakanan)
+         */
 
         String it = item.getNamaProduk(); // Menampung nama produk agar mempermudah statement kondisional
         if (inventory.containsKey(it)) { // sudah terdapat key di dalam HashMap
@@ -54,12 +58,12 @@ public class Inventory {
         }
     }
 
-    public Object getItem(String item) {
+    public Produk getItem(String item) {
         /*
-            * fungsi ini akan mengambil item dari inventory.
-            * setiap kali fungsi ini dijalankan, value untuk key yang sesuai
-            * dengan nama item yang bersangkutan akan berkurang 1.
-        */
+         * fungsi ini akan mengambil item dari inventory.
+         * setiap kali fungsi ini dijalankan, value untuk key yang sesuai
+         * dengan nama item yang bersangkutan akan berkurang 1.
+         */
         if (!listmakanan.contains(item) && !listbahanmakanan.contains(item) && !listnonmakanan.contains(item)) {
             // barang yang ingin diambil bukan Produk yang tersedia
             System.out.println("Item isn't available!");
@@ -103,17 +107,19 @@ public class Inventory {
                 return itemnonmak; // mengembalikan item
             }
         }
-        
+
     }
 
     public void printInventory() {
         /*
-            * fungsi ini akan menampilkan isi dari inventory.
-            * Jika inventory kosong, maka akan ditampilkan pesan bahwa inventory kosong.
-            * Jika inventory tidak kosong, maka inventory akan ditampilkan ke layar dengan format:
-            * x. y: z item(s),
-            * dengan x adalah nomor barang sekarang, y adalah nama barang, dan z adalah jumlah barang.
-        */
+         * fungsi ini akan menampilkan isi dari inventory.
+         * Jika inventory kosong, maka akan ditampilkan pesan bahwa inventory kosong.
+         * Jika inventory tidak kosong, maka inventory akan ditampilkan ke layar dengan
+         * format:
+         * x. y: z item(s),
+         * dengan x adalah nomor barang sekarang, y adalah nama barang, dan z adalah
+         * jumlah barang.
+         */
 
         if (inventory.size() == 0) { // inventory kosong
             System.out.printf("Inventory is empty!\n"); // pesan bahwa inventory kosong dimunculkan

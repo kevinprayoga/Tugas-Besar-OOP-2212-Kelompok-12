@@ -88,10 +88,12 @@ public class GamePanel extends JPanel implements Runnable {
 
                 // 2: Draw the screen with updated information
                 repaint(); // Calls the paintComponent() method
-                if (this.gameState == GameState.WORLD_GAME_SCREEN || this.gameState == GameState.HOUSE_GAME_SCREEN) {
-                    System.out.println(playedSims.getSims().getPosisi().getX() + " " + playedSims.getSims().getPosisi().getY());
-                }
 
+                // Debugging
+                // if (this.gameState == GameState.WORLD_GAME_SCREEN || this.gameState == GameState.HOUSE_GAME_SCREEN) {
+                //     System.out.println(playedSims.getSims().getPosisi().getX() + " " + playedSims.getSims().getPosisi().getY());
+                // }
+                System.out.println(menuGame.getSimCD()); 
                 delta--;
             }
 
@@ -137,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.isEnteredHouse = false;
         this.menuGame = new MenuGame(this);
         this.playableSims = new ArrayList<>();
-        this.world = new World();
+        this.world = World.getWorld();
         this.worldPainter = new WorldPainter(world, this);
     }
 
