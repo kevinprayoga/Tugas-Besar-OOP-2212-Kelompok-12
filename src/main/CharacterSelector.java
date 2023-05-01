@@ -64,8 +64,10 @@ public class CharacterSelector {
                         gamePanel.setPlayedSims(new PlayedSims(gamePanel, sim));
                         if (sim.getCurrentPosition().equals("World")) {
                             gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.WORLD_GAME_SCREEN);
                         } else {
                             gamePanel.setGameState(GameState.HOUSE_GAME_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.HOUSE_GAME_SCREEN);
                         }
                         gamePanel.removeAll();
                     }

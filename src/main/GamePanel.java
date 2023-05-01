@@ -2,6 +2,7 @@ package main;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.*;
 
@@ -35,11 +36,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Game state
     public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN};
-    private GameState gameState = GameState.TITLE_SCREEN; 
+    private GameState gameState; 
     private boolean isStoreOpened = false;
     private boolean isAddSimsAvailable = true;
     private boolean isEnteredHouse = false;
     public boolean isHouseSelected = false;
+    public Stack<GameState> leastRecentlyUsed = new Stack<>();
 
     // Game variables
     private MenuGame menuGame;
@@ -60,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.menuGame = new MenuGame(this);
         this.playableSims = new ArrayList<>();
+        this.gameState = GameState.TITLE_SCREEN;
+        this.leastRecentlyUsed.push(GameState.TITLE_SCREEN);
     }
 
     public void startGameThread() {
@@ -85,6 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                 // 2: Draw the screen with updated information
                 repaint(); // Calls the paintComponent() method
+                // isAddSimsAvailable = menuGame.canAddSim();
 
                 delta--;
             }
