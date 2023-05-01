@@ -61,14 +61,18 @@ public class CharacterSelector {
                 label.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        gamePanel.setPlayedSim(new PlayedSims(gamePanel, sim));
-                        gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
+                        gamePanel.setPlayedSims(new PlayedSims(gamePanel, sim));
+                        if (sim.getCurrentPosition().equals("World")) {
+                            gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
+                        } else {
+                            gamePanel.setGameState(GameState.HOUSE_GAME_SCREEN);
+                        }
                         gamePanel.removeAll();
                     }
                 });
 
             } else {
-                if (gamePanel.getAddSimAvailable()) {
+                if (gamePanel.getAddSimsAvailable()) {
                     BufferedImage image = UtilityTool.loadImage("res/image/ui/add char.png");
                     graphics2d.drawImage(image, x, y, gamePanel);
                     
@@ -97,9 +101,9 @@ public class CharacterSelector {
 
     public void draw(Graphics2D graphics2d) {
         Placeholder[] placeholders = new Placeholder[9];
-        for (int i = 0; i < Math.min(9, gamePanel.getWorld().getSim().size() + 1 - iterator * 9) ; i++) {
-            if (i + iterator * 9 != gamePanel.getWorld().getSim().size()) {
-                placeholders[i] = new Placeholder(gamePanel, gamePanel.getWorld().getSim().get(i + iterator * 9));
+        for (int i = 0; i < Math.min(9, gamePanel.getPlayableSims().size() + 1 - iterator * 9) ; i++) {
+            if (i + iterator * 9 != gamePanel.getPlayableSims().size()) {
+                placeholders[i] = new Placeholder(gamePanel, gamePanel.getPlayableSims().get(i + iterator * 9));
                 placeholders[i].type = Placeholder.Types.Sim;
                 placeholders[i].draw(graphics2d, 63, 84 + i * 97);
             } else {
@@ -127,7 +131,7 @@ public class CharacterSelector {
             });
         }
 
-        if (9 < gamePanel.getWorld().getSim().size() + 1 - iterator * 9) {
+        if (9 < gamePanel.getPlayableSims().size() + 1 - iterator * 9) {
             BufferedImage image = UtilityTool.loadImage("res/image/ui/arrow down.png");
             graphics2d.drawImage(image, 169, 968, gamePanel);
 

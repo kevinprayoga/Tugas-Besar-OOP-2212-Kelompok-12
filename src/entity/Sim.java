@@ -3,8 +3,11 @@ package entity;
 import exceptions.*;
 import pekerjaan.Pekerjaan;
 import pekerjaan.PekerjaanPrinter;
+import util.UtilityTool;
 
+import java.awt.image.BufferedImage;
 import java.io.NotActiveException;
+import java.nio.Buffer;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -24,6 +27,8 @@ public class Sim implements AksiAktif, AksiPasif{
     private String status;
     private int wood;
 
+    private int charType;
+
     private int timeTidur;
     private int dayTidur;
     private boolean kesejahAltTidur;
@@ -38,22 +43,43 @@ public class Sim implements AksiAktif, AksiPasif{
 
     private Rumah rumah;
     private Ruangan ruangan;
+    private Posisi posisi;
+    private String currentPosition; // "World" atau "Rumah"
+    private String currentActivity;
     private NonMakanan inFrontNonMakanan;
 
     private int gajiBank;               // waktu leftover dari kerja
     private static int jumlahPasif;            // jumlah aksi pasif yang memerlukan waktu yang sedang berjalan
 
-    private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>(null);
-    private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>(null);
-    private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>(null);
+    private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>();
+    private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>();
+    private static ArrayList<Produk> pembelianProduk = new ArrayList<Produk>();
  
     // Konstruktor
-    public Sim(String nama) {
+    public Sim(String nama, int charType) {
         namaLengkap = nama;
         kekenyangan = 80;
         mood = 80;
         kesehatan = 80;
         uang = 100;
+
+        this.charType = charType;
+        currentPosition = "World";
+        currentActivity = "Gabut";
+        posisi = new Posisi(0, 0);
+    }
+
+    // Setter
+    public void setPosisi(Posisi posisi) {
+        this.posisi = posisi;
+    }
+
+    public void setCurrentPosition(String currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
+    public void setCurrentActivity(String currentActivity) {
+        this.currentActivity = currentActivity;
     }
 
     // Getter
@@ -99,6 +125,53 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public static int getJumlahPasif(){
         return jumlahPasif;
+    }
+
+    public int getCharType() {
+        return charType;
+    }
+
+    public String getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public Posisi getPosisi() {
+        return posisi;
+    }
+
+    public String getCurrentActivity() {
+        return currentActivity;
+    }
+
+    public BufferedImage getCharacter() {
+        BufferedImage character;
+        switch (charType) {
+            case 0:
+                character = UtilityTool.loadImage("res/image/sims/bnmo/BNMO_Down_Right (1).png");
+                break;
+                case 1:
+                character = UtilityTool.loadImage("res/image/sims/hans/Hans_Down_Right (1).png");
+                break;
+            case 2:
+                character = UtilityTool.loadImage("res/image/sims/ivan/Ivan_Down_Right (1).png");
+                break;
+            case 3:
+                character = UtilityTool.loadImage("res/image/sims/kevin/Kevin_Down_Right (1).png");
+                break;
+            case 4:
+                character = UtilityTool.loadImage("res/image/sims/nicholas/Nic_Down_Right (1).png");
+                break;
+            case 5:
+                character = UtilityTool.loadImage("res/image/sims/ojan/Ojan_Down_Right (1).png");
+                break;
+            case 6:
+                character = UtilityTool.loadImage("res/image/sims/rana/Rana_Down_Right (1).png");
+                break;
+            default:
+                character = UtilityTool.loadImage("res/image/sims/bnmo/BNMO_Down_Right (1).png");
+                break; 
+        }
+        return character;
     }
     
     // Implementasi aksi aktif
@@ -385,5 +458,11 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public static void updatePembelian(){
         
+    }
+
+    @Override
+    public void installObject(NonMakanan o, Posisi p) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'installObject'");
     }
 }

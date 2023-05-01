@@ -83,7 +83,7 @@ public class Dashboard {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     System.out.println("Build Button Clicked");
-                    gamePanel.getHouse().setBuildMode(!gamePanel.getHouse().getBuildMode());
+                    gamePanel.getHouse().setBuildMode(!gamePanel.getHouse().isBuildMode());
                     gamePanel.removeAll();
                 }
             });

@@ -10,10 +10,9 @@ import entity.Sim;
 import entity.Posisi;
 import entity.Waktu;
 
-public class PlayedSims implements Aksi {
+public class PlayedSims {
     private final GamePanel gamePanel;
     private Sim sims;
-    private Waktu actionTime;
 
     // Player settings
     private int speed;
@@ -33,11 +32,11 @@ public class PlayedSims implements Aksi {
         this.sims = sims;
         this.keyHandler = gamePanel.getKeyHandler();
         this.speed = 1;
-        this.x = sims.getCurrentPosition().getX() * gamePanel.getTileSize();
-        this.y = sims.getCurrentPosition().getY() * gamePanel.getTileSize();
+        this.x = sims.getPosisi().getX() * gamePanel.getTileSize();
+        this.y = sims.getPosisi().getY() * gamePanel.getTileSize();
 
         // Load image
-        switch(sims.getC()) {
+        switch(sims.getCharType()) {
             case 0:
                 file += "bnmo/BNMO_";
                 break;
@@ -60,33 +59,6 @@ public class PlayedSims implements Aksi {
                 file += "rana/Rana_";
                 break;
         }
-    }
-
-    public void kerja() {
-    }
-
-    public void olahraga() {
-
-    }
-
-    public void tidur() {
-
-    }
-
-    public void makan() {
-
-    }
-
-    public void masak() {
-
-    }
-
-    public void berkunjung() {
-
-    }
-    
-    public void buangAir() {
-    
     }
 
     // draw
@@ -139,6 +111,7 @@ public class PlayedSims implements Aksi {
     }
 
     public void update() {
+        new Posisi(x * 16, y * 16);
         int tempX = x;
         int tempY = y;
 
@@ -165,7 +138,7 @@ public class PlayedSims implements Aksi {
         }
 
         // Update position of played sims
-        sims.setCurrentPosition(new Point((int) x / gamePanel.getTileSize(),(int) y / gamePanel.getTileSize()));
+        sims.setPosisi(new Posisi((int) x / gamePanel.getTileSize(),(int) y / gamePanel.getTileSize()));
     }
 
     // Getter
