@@ -30,7 +30,7 @@ public class Sim implements AksiAktif, AksiPasif{
     private int timeTidur;
     private int dayTidur;
     private boolean kesejahAltTidur;
-    private int timeMakan =-1;              // time -1 berarti tidak makan atau sudah buang air untuk makan sebelumnya
+    private int timeMakan = -1;              // time -1 berarti tidak makan atau sudah buang air untuk makan sebelumnya
     private int dayMakan;
     private boolean kesejahAltBAir;
 
@@ -47,7 +47,6 @@ public class Sim implements AksiAktif, AksiPasif{
     private NonMakanan inFrontNonMakanan;
 
     private int gajiBank;               // waktu leftover dari kerja
-    private static int jumlahPasif;            // jumlah aksi pasif yang memerlukan waktu yang sedang berjalan
 
     private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>();
     private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>();
@@ -119,10 +118,6 @@ public class Sim implements AksiAktif, AksiPasif{
 
     public Ruangan getRuangan() {
         return ruangan;
-    }
-
-    public static int getJumlahPasif(){
-        return jumlahPasif;
     }
 
     public int getCharType() {
