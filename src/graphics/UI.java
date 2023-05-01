@@ -525,7 +525,7 @@ public class UI {
         graphics2d.fillRect(616, 908, 328, 56);
         
         // Button text
-        if (nameField.length() > 3) {
+        if (nameField.length() >= 3) {
             graphics2d.setColor(ColorPalette.dark_grey);
         } else {
             graphics2d.setColor(ColorPalette.light_grey);
