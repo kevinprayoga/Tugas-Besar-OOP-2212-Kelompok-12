@@ -1,8 +1,6 @@
 package entity;
 
 import exceptions.*;
-import pekerjaan.Pekerjaan;
-import pekerjaan.PekerjaanPrinter;
 import util.UtilityTool;
 
 import java.awt.image.BufferedImage;

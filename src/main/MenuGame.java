@@ -1,8 +1,8 @@
 package main;
 
 import entity.Sim;
+import entity.Waktu;
 import entity.World;
-import entity.waktu;
 import exceptions.*;
 import graphics.PlayedSims;
 
@@ -43,7 +43,7 @@ public class MenuGame{
         String command = sc.nextLine();
         sc.close();
     }
-
+    /* 
     public void setPekerjaan(Sim s, String pekerjaanWish) throws PekerjaanError,TidakCukupItem{
         int randomnum;
         if(s.getPekerjaan() == null){
@@ -62,11 +62,11 @@ public class MenuGame{
                     s.pekerjaanStart = LocalDateTime.now();
                 }
             } else{
-                throw new PekerjaanError("Belum bisa mengganti pekerjaan.")
+                throw new PekerjaanError("Belum bisa mengganti pekerjaan.");
             }
         }
     }
-
+    */
     public void viewSimInfo(Sim s){
         System.out.println("Nama Sim: "+s.getNamaLengkap());
         System.out.println("Pekerjaan: " +s.getPekerjaan());
@@ -76,14 +76,14 @@ public class MenuGame{
         System.out.println("Uang: "+s.getUang());
     }
     
-    public void viewLocation(){
-        System.out.println("Rumah pada sumbu  x: "+Rumah.getLokasi().getAbsis());
-        System.out.println("Rumah pada sumbu y: "+Rumah.getLokasi().getOrdinat());
-        System.out.println("Ruangan" + ruangan.getName());
+    public void viewLocation(Sim s){
+        System.out.println("Rumah pada sumbu  x: "+s.getRumah().getLokasi().getAbsis());
+        System.out.println("Rumah pada sumbu y: "+s.getRumah().getLokasi().getOrdinat());
+        System.out.println("Ruangan" + s.getRuangan().getMap());
     }
 
-    public void viewInventory(Sims s){
-        s.getInventory().printInventory;
+    public void viewInventory(Sim s){
+        s.getInventory().printInventory();
     }
 
     public void upgradeHouse(){
@@ -91,7 +91,7 @@ public class MenuGame{
     }
 
     public void editRoom(){}
-    public void addSim(){}
+
     public void changeSim(){}
 
     public void displayObjects(){}
@@ -109,6 +109,6 @@ public class MenuGame{
     }
 
     public boolean canAddSim(){
-        return addSimDay != waktu.getDay();
+        return addSimDay != Waktu.getDay();
     }
 }

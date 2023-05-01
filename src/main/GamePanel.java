@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Stack<GameState> leastRecentlyUsed = new Stack<>();
 
     // Game variables
-    private MenuGame menuGame;
+    public MenuGame menuGame;
     private World world;
     private Rumah visitedHouse;
     private WorldPainter worldPainter;
