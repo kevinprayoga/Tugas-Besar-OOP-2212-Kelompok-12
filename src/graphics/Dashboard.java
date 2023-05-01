@@ -1,7 +1,7 @@
 package graphics;
 
 import entity.Inventory;
-import entity.Sims;
+import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 
 public class Dashboard {
     private final GamePanel gamePanel;
-    private Sims sims;
+    private Sim sims;
     private Inventory inventory;
 
     // Dashboard State
@@ -83,7 +83,7 @@ public class Dashboard {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     System.out.println("Build Button Clicked");
-                    gamePanel.getHouse().setBuildMode(!gamePanel.getHouse().getBuildMode());
+                    gamePanel.getHouse().setBuildMode(!gamePanel.getHouse().isBuildMode());
                     gamePanel.removeAll();
                 }
             });
