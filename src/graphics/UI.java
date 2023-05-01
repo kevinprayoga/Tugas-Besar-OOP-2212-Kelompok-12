@@ -13,6 +13,7 @@ import javax.swing.*;
 
 import entity.Sim;
 import entity.Waktu;
+import entity.World;
 import exceptions.NameNotValidException;
 import util.UtilityTool;
 import main.CharacterSelector;
@@ -545,7 +546,6 @@ public class UI {
                     Sim sims = new Sim(nameField, optionSelected);
                     gamePanel.getWorld().addSim(sims);
                     gamePanel.addPlayableSims(sims);
-                    gamePanel.setAddSimsAvailable(gamePanel.menuGame.canAddSim());
                     gamePanel.menuGame.setSimCD(Waktu.getDay());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
                     gamePanel.removeAll();
@@ -632,12 +632,11 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.leastRecentlyUsed.pop();
-                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
-                GameState previousState = gamePanel.leastRecentlyUsed.peek();
-                gamePanel.setGameState(previousState);
+                gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
                 gamePanel.setHouse(null);
+                gamePanel.getPlayedSims().getSims().setCurrentPosition("House");
                 System.out.println("World screen");
+                gamePanel.getWorld().addSim((gamePanel.getPlayedSims().getSims()));
                 gamePanel.removeAll();
             }
         });

@@ -17,7 +17,7 @@ public class HousePainter {
 
     public void draw(Graphics2D graphics2d) {
         gamePanel.setBackground(Color.decode("#211F1B"));
-        BufferedImage house.getImage();
+        // BufferedImage house.getImage();
     }
     
 }
