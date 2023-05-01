@@ -74,7 +74,7 @@ public class CharacterSelector {
                 });
 
             } else {
-                if (gamePanel.getAddSimsAvailable()) {
+                if (gamePanel.menuGame.canAddSim()) {
                     BufferedImage image = UtilityTool.loadImage("res/image/ui/add char.png");
                     graphics2d.drawImage(image, x, y, gamePanel);
                     

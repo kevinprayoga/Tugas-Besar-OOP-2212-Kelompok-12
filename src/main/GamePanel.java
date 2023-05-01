@@ -38,7 +38,6 @@ public class GamePanel extends JPanel implements Runnable {
     public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN};
     private GameState gameState; 
     private boolean isStoreOpened = false;
-    private boolean isAddSimsAvailable = true;
     private boolean isEnteredHouse = false;
     public boolean isHouseSelected = false;
     public Stack<GameState> leastRecentlyUsed = new Stack<>();
@@ -89,7 +88,6 @@ public class GamePanel extends JPanel implements Runnable {
 
                 // 2: Draw the screen with updated information
                 repaint(); // Calls the paintComponent() method
-                // isAddSimsAvailable = menuGame.canAddSim();
 
                 delta--;
             }
@@ -132,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void reset() {
         this.isStoreOpened = false;
-        this.isAddSimsAvailable = true;
+        this.menuGame.setSimCD(-1);
         this.isEnteredHouse = false;
         this.menuGame = new MenuGame(this);
         this.playableSims = new ArrayList<>();
@@ -184,10 +182,6 @@ public class GamePanel extends JPanel implements Runnable {
         return isStoreOpened;
     }
 
-    public boolean getAddSimsAvailable() {
-        return isAddSimsAvailable;
-    }
-
     public boolean getEnteredHouse() {
         return isEnteredHouse;
     }
@@ -216,10 +210,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setStoreOpened(boolean isStoreOpened) {
         this.isStoreOpened = isStoreOpened;
-    }
-
-    public void setAddSimsAvailable(boolean isAddSimsAvailable) {
-        this.isAddSimsAvailable = isAddSimsAvailable;
     }
 
     public void setEnteredHouse(boolean isEnteredHouse) {
