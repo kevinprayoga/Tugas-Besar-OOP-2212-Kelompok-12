@@ -138,7 +138,7 @@ public class PlayedSims {
         }
 
         // Update position of played sims
-        sims.setPosisi(new Posisi((int) x / gamePanel.getTileSize(),(int) y / gamePanel.getTileSize()));
+        sims.getPosisi().changeLoc((int) x / gamePanel.getTileSize(),(int) y / gamePanel.getTileSize());
     }
 
     // Getter

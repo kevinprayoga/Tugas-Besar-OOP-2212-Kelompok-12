@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.awt.Color;
 
 import javax.swing.JLabel;
@@ -69,6 +70,7 @@ public class CharacterSelector {
                             gamePanel.setGameState(GameState.HOUSE_GAME_SCREEN);
                             gamePanel.leastRecentlyUsed.push(GameState.HOUSE_GAME_SCREEN);
                         }
+                        System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                         gamePanel.removeAll();
                     }
                 });
@@ -86,6 +88,8 @@ public class CharacterSelector {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             gamePanel.setGameState(GameState.NEW_CHAR_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.NEW_CHAR_SCREEN);
+                            System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                             gamePanel.removeAll();
                         }
                     });

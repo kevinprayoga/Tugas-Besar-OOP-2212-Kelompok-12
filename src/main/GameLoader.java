@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Arrays;
+
 import entity.Sim;
 import entity.World;
 import main.GamePanel.GameState;
@@ -13,6 +15,8 @@ public class GameLoader {
 
     public void loadGame(int opt) {
         gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
+        gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
+        System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
     }
 
     public void saveGame(int opt) {
@@ -25,5 +29,7 @@ public class GameLoader {
         gamePanel.reset();
         
         gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
+        gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
+        System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
     }
 } 

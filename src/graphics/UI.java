@@ -7,6 +7,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
+
 import javax.swing.*;
 
 import entity.Sim;
@@ -191,6 +193,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 System.out.println("Back to title screen");
@@ -393,6 +396,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 System.out.println("Back to load screen");
@@ -560,7 +564,10 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.LOAD_GAME_SCREEN);
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                gamePanel.leastRecentlyUsed.pop();
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 System.out.println("Main menu");
                 gamePanel.removeAll();
             }
@@ -579,6 +586,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 System.out.println("Title screen ASDASDAS");
@@ -624,6 +632,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 gamePanel.setHouse(null);
