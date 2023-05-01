@@ -1,7 +1,6 @@
 package entity;
 import java.util.ArrayList;
 
-import entity.Matrix;
 import util.Noise;
 
 public class World {
@@ -154,8 +153,7 @@ public class World {
                 System.out.print(houseMap.get(i, j));
                 if (j < getWidth() - 1) {
                     System.out.print(" | ");
-                }
-                else {
+                } else {
                     System.out.println();
                 }
             }
