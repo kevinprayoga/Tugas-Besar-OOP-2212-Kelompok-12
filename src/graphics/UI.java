@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.*;
 
 import entity.Sim;
+import entity.Waktu;
 import exceptions.NameNotValidException;
 import util.UtilityTool;
 import main.CharacterSelector;
@@ -532,7 +533,7 @@ public class UI {
                     Sim sims = new Sim(nameField, optionSelected);
                     gamePanel.getWorld().addSim(sims);
                     gamePanel.addPlayableSims(sims);
-                    gamePanel.setAddSimsAvailable(gamePanel.menuGame.canAddSim());
+                    gamePanel.menuGame.setSimCD(Waktu.getDay());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
                     gamePanel.removeAll();
                     System.out.println("Load game screen");
