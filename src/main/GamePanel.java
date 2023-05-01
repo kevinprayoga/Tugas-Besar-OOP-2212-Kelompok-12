@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
     public boolean isHouseSelected = false;
 
     // Game variables
-    private MenuGame menuGame;
+    public MenuGame menuGame;
     private World world;
     private Rumah visitedHouse;
     private WorldPainter worldPainter;
