@@ -16,7 +16,7 @@ public class MenuGame{
     private final GamePanel gamePanel;
 
     boolean gameStarted;
-    private int addSimDay;
+    private int addSimDay = -1;
     private World mainWorld;
     private ArrayList<Sim> playableSims;
     private PlayedSims playedSims;
@@ -100,6 +100,10 @@ public class MenuGame{
 
     public int getSimCD(){
         return addSimDay;
+    }
+
+    public void setSimCD(int day){
+        addSimDay = day;
     }
 
     public boolean canAddSim(){
