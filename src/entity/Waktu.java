@@ -1,35 +1,27 @@
 package entity;
 
 public class Waktu {
-    private static int startTime;
-    private int remainTime;
-    private int day = 0;
+    private static int time = 0;
+    private static int remainTime = 720;
+    private static int day = 0;
 
-    public Waktu() {
-        synchronized(Waktu.class){
-            startTime = (int) System.currentTimeMillis() / 1000;
-        }
+    public static int getTime() {
+        return time;
     }
 
-    public synchronized int getTime() {
-        int currentTime = (int) System.currentTimeMillis() / 1000;
-        return currentTime - startTime;
-    }
-
-    public synchronized int getDay() {
-        // 1 hari = 12 menit = 720 detik
-        int time = getTime();
-        day = time / 720;
-        return day;
-    }
-
-    public synchronized int getRemainTime(){
-        int time = getTime();
-        remainTime = time % 720;
+    public static int getRemainTime(){
         return remainTime;
     }
 
-    public synchronized void reset() {
-        startTime = (int) System.currentTimeMillis() / 1000;
+    public static int getDay() {
+        return day;
+    }
+
+    public static void addSecond() throws InterruptedException{
+        Thread.sleep(1000);
+        time += 1;
+        day += time/720;
+        time = time %720;
+        remainTime = 720 - time;
     }
 }

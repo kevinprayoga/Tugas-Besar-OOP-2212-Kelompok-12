@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.*;
 
-import entity.Sims;
-import entity.Sims.NameNotValidException;
+import entity.Sim;
+import exceptions.NameNotValidException;
 import util.UtilityTool;
 import main.CharacterSelector;
 import main.GameLoader;
@@ -45,7 +45,6 @@ public class UI {
     }
 
     public void draw(Graphics2D graphics2d) {
-        System.out.println(gamePanel.getGameState());
         this.graphics2d = graphics2d;
         switch (gamePanel.getGameState()) {
             case TITLE_SCREEN:
@@ -530,13 +529,14 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    Sims sims = new Sims(nameField, optionSelected);
-                    gamePanel.getWorld().addSims(sims);
+                    Sim sims = new Sim(nameField, optionSelected);
+                    gamePanel.getWorld().addSim(sims);
+                    gamePanel.addPlayableSims(sims);
                     gamePanel.setAddSimsAvailable(false);
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
                     gamePanel.removeAll();
                     System.out.println("Load game screen");
-                } catch (NameNotValidException e1) {
+                } catch (Exception e1) {
                     e1.printStackTrace();               
                 }
             }
@@ -597,7 +597,10 @@ public class UI {
     }
 
     private void drawHouseGameScreen() {
-        
+        if (gamePanel.isHouseSelected) {
+            gamePanel.removeAll();
+            gamePanel.isHouseSelected = false;
+        }
         // Back button
         BufferedImage backButtonImage = UtilityTool.loadImage("res/image/ui/back button.png");
         graphics2d.drawImage(backButtonImage, 12, 12, gamePanel);

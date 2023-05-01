@@ -1,5 +1,4 @@
 package entity;
-
 public class Makanan extends Produk {
     
     private String[] bahan;
