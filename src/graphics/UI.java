@@ -532,7 +532,7 @@ public class UI {
                     Sim sims = new Sim(nameField, optionSelected);
                     gamePanel.getWorld().addSim(sims);
                     gamePanel.addPlayableSims(sims);
-                    gamePanel.setAddSimsAvailable(MenuGame.canAddSim());
+                    gamePanel.setAddSimsAvailable(gamePanel.menuGame.canAddSim());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
                     gamePanel.removeAll();
                     System.out.println("Load game screen");

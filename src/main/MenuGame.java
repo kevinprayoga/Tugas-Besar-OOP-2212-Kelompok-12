@@ -75,12 +75,6 @@ public class MenuGame{
         System.out.println("Mood: "+s.getMood());
         System.out.println("Uang: "+s.getUang());
     }
-    
-    public void viewLocation(Sim s){
-        System.out.println("Rumah pada sumbu  x: "+s.getRumah().getLokasi().getAbsis());
-        System.out.println("Rumah pada sumbu y: "+s.getRumah().getLokasi().getOrdinat());
-        System.out.println("Ruangan" + s.getRuangan().getMap());
-    }
 
     public void viewInventory(Sim s){
         s.getInventory().printInventory();
