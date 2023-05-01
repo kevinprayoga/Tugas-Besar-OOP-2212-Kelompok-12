@@ -93,7 +93,6 @@ public class GamePanel extends JPanel implements Runnable {
                 // if (this.gameState == GameState.WORLD_GAME_SCREEN || this.gameState == GameState.HOUSE_GAME_SCREEN) {
                 //     System.out.println(playedSims.getSims().getPosisi().getX() + " " + playedSims.getSims().getPosisi().getY());
                 // }
-                System.out.println(menuGame.getSimCD()); 
                 delta--;
             }
 
