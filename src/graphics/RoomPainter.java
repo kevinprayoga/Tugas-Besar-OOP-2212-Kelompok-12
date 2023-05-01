@@ -1,6 +1,8 @@
 package graphics;
+import main.GamePanel;
+import entity.Ruangan;
 
 public class RoomPainter {
     private GamePanel gamePanel;
-    private Room room;
+    private Ruangan room;
 }

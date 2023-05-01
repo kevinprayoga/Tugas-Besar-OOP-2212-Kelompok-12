@@ -31,7 +31,8 @@ public class Sim implements AksiAktif, AksiPasif {
     private int timeTidur;
     private int dayTidur;
     private boolean kesejahAltTidur;
-    private int timeMakan = -1; // time -1 berarti tidak makan atau sudah buang air untuk makan sebelumnya
+
+    private int timeMakan = -1;              // time -1 berarti tidak makan atau sudah buang air untuk makan sebelumnya
     private int dayMakan;
     private boolean kesejahAltBAir;
 
@@ -47,8 +48,7 @@ public class Sim implements AksiAktif, AksiPasif {
     private String currentActivity;
     private NonMakanan inFrontNonMakanan;
 
-    private int gajiBank; // waktu leftover dari kerja
-    private static int jumlahPasif; // jumlah aksi pasif yang memerlukan waktu yang sedang berjalan
+    private int gajiBank;               // waktu leftover dari kerja
 
     private static ArrayList<Integer> timerPembelian = new ArrayList<Integer>();
     private static ArrayList<Sim> pembelianSim = new ArrayList<Sim>();
@@ -120,10 +120,6 @@ public class Sim implements AksiAktif, AksiPasif {
 
     public Ruangan getRuangan() {
         return ruangan;
-    }
-
-    public static int getJumlahPasif() {
-        return jumlahPasif;
     }
 
     public int getCharType() {
@@ -383,7 +379,10 @@ public class Sim implements AksiAktif, AksiPasif {
         inventory.printInventory();
     }
 
-    public void installObject(Produk o, Posisi p);
+    public void installObject(NonMakanan o, Ruangan r){
+        NonMakanan z = (NonMakanan)inventory.getItem(o.getNamaProduk());
+
+    }
 
     public int getTime() throws ItemError {
         if (inFrontNonMakanan.getAksi() != "Read") {
@@ -405,8 +404,7 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void update() {
-
+    public void update(){
         // Alter berdasarkan waktu sejak buang air dan tidur
         if (((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())) >= 600 && !kesejahAltTidur) {
             mood -= 5;
@@ -456,14 +454,19 @@ public class Sim implements AksiAktif, AksiPasif {
 
     }
 
-    public static void updatePembelian() {
 
-    }
+    public void updatePembelian(){
+        for(int i = 0;i<timerPembelian.size();i++){
+            timerPembelian.set(i, timerPembelian.get(i)-1);
+            if(timerPembelian.get(i) == 0){
+                timerPembelian.remove(i);
+                // add ke inventory
+                (pembelianSim.get(i)).inventory.addItem(pembelianProduk.get(i));
+                pembelianProduk.remove(i);
+                pembelianSim.remove(i);
+            }
+        }
 
-    @Override
-    public void installObject(NonMakanan o, Posisi p) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'installObject'");
     }
 
     public void moveRuangan(String namaRuangan) {
