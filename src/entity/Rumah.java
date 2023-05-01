@@ -121,4 +121,11 @@ public class Rumah {
 
     }
 
+    public void addSim(Sim sim) {
+        this.simList.add(sim);
+    }
+
+    public void removeSim(Sim sim) {
+        this.simList.remove(sim);
+    }
 }
