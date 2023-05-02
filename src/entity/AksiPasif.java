@@ -4,7 +4,7 @@ import exceptions.ItemError;
 import exceptions.TidakCukupItem;
 
 public interface AksiPasif {
-    public void upgradeRumah(Ruangan r, String arah, String nama);
+    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException;
 
     public void beliObjek(Produk o) throws ItemError,TidakCukupItem;
 
