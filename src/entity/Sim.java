@@ -12,7 +12,6 @@ public class Sim implements AksiAktif, AksiPasif {
     Random rand = new Random();
 
     private String namaLengkap;
-    private Pekerjaan pekerjaan;
     private PekerjaanPrinter jobPrinter;
     private int uang;
     private Inventory inventory;
@@ -20,6 +19,7 @@ public class Sim implements AksiAktif, AksiPasif {
     private int mood;
     private int kesehatan;
     private String status;
+
     private int wood;
 
     private int charType;
@@ -103,7 +103,11 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public Pekerjaan getPekerjaan() {
-        return pekerjaan;
+        return jobPrinter.getTestPekerjaan();
+    }
+
+    public PekerjaanPrinter getPekerjaanPrinter() {
+        return jobPrinter;
     }
 
     public int getUang() {
@@ -156,6 +160,18 @@ public class Sim implements AksiAktif, AksiPasif {
 
     public int getTotalWaktuKerja(){
         return totalWaktuKerja;
+    }
+
+    public int getBonusInc() {
+        return bonusInc;
+    }
+
+    public void setMinusUang(int mines) {
+        uang -= mines;
+    }
+
+    public void setTotalWaktuKerjaZero() {
+        totalWaktuKerja = 0;
     }
 
     public BufferedImage getCharacter() {
@@ -250,6 +266,7 @@ public class Sim implements AksiAktif, AksiPasif {
             for (int i = 0; i < 30; i++) {
                 Waktu.addSecond();
             }
+            status = "";
             kekenyangan += m.getKekenyangan();
         }
     }
@@ -264,6 +281,7 @@ public class Sim implements AksiAktif, AksiPasif {
             for (int i = 0; i < 30; i++) {
                 Waktu.addSecond();
             }
+            status = "";
             kekenyangan -= time;
             mood += time;
         }
@@ -280,14 +298,11 @@ public class Sim implements AksiAktif, AksiPasif {
                 for (int i = 0; i < 30; i++) {
                     Waktu.addSecond();
                 }
+                status = "";
                 kekenyangan -= 20;
                 mood += 10;
             }
         }
-    }
-
-    public int getBonusInc() {
-        return bonusInc;
     }
 
     // aksi pasif khusus
@@ -387,7 +402,6 @@ public class Sim implements AksiAktif, AksiPasif {
             try {
                 if (rumah.getRoomBuild().get(x, y) == 2) { // meriksa kalau 2 artinya ruangan available untuk diisi
                     uang -= 1500;
-                    rumah.createRuangan(x, y, nama);
                     rumah.setUpgradeTimer(1080);
                     rumah.setUpgradeLokasi(x, y);
                     rumah.setUpgradeNama(nama);
