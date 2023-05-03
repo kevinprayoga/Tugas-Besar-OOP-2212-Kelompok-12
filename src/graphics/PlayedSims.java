@@ -1,6 +1,7 @@
 package graphics;
 
 import main.GamePanel;
+import main.GamePanel.GameState;
 import util.UtilityTool;
 
 import java.awt.Graphics2D;
@@ -16,7 +17,7 @@ public class PlayedSims {
 
     // Player settings
     private int speed;
-    private int x, y;
+    public int x, y;
 
     // Image for animation
     private BufferedImage image;
@@ -111,7 +112,6 @@ public class PlayedSims {
     }
 
     public void update() {
-        new Posisi(x * 16, y * 16);
         int tempX = x;
         int tempY = y;
 
@@ -135,10 +135,17 @@ public class PlayedSims {
         if (gamePanel.collisionHandler.isCollide(x, y)) {
             x = tempX;
             y = tempY;
+        } if (gamePanel.isHouseSelected) {
+            reset();
         }
 
         // Update position of played sims
         sims.getPosisi().changeLoc((int) x / gamePanel.getTileSize(),(int) y / gamePanel.getTileSize());
+    }
+
+    public void reset() {
+        this.x = sims.getPosisi().getX() * gamePanel.getTileSize();
+        this.y = sims.getPosisi().getY() * gamePanel.getTileSize();
     }
 
     // Getter
@@ -149,5 +156,10 @@ public class PlayedSims {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public void setPosisi(Posisi posisi) {
+        this.x = posisi.getX() * gamePanel.getTileSize();
+        this.y = posisi.getY() * gamePanel.getTileSize();
     }
 }

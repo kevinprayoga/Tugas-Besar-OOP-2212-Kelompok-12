@@ -5,22 +5,29 @@ import java.util.ArrayList;
 public class Ruangan {
     private Dimensi dimensi;
     private Matrix<NonMakanan> petaBarang;
-    private Matrix<Boolean> anchor;
+    private Matrix<Boolean> collisionMap;
     private ArrayList<Sim> simList;
 
     public Ruangan() {
         dimensi = new Dimensi(6, 6);
         petaBarang = new Matrix<NonMakanan> (dimensi.getLength(), dimensi.getWidth());
-        anchor = new Matrix<Boolean> (6, 6);
+        collisionMap = new Matrix<Boolean> (6, 6);
         simList = new ArrayList<> (10);
+
+        // Setting collision map
+        for (int i = 0; i < dimensi.getLength(); i++) {
+            for (int j = 0; j < dimensi.getWidth(); j++) {
+                collisionMap.set(i, j, false);
+            }
+        }
     }
 
     public Matrix<NonMakanan> getPetaBarang() {
         return this.petaBarang;
     }
 
-    public Matrix<Boolean> getAnchor() {
-        return this.anchor;
+    public Matrix<Boolean> getCollisionMap() {
+        return this.collisionMap;
     }
 
     public NonMakanan getObjek(Posisi loc) {
@@ -37,33 +44,34 @@ public class Ruangan {
         
         int x = loc.getX();
         int y = loc.getY();
-        this.anchor.set(x, y, true);
+
+        this.petaBarang.set(x, y, objek);
 
         switch (objek.getOrientasi()) {
             case "Down":
                 for (int i = x; i < x + a; i++) {
                     for (int j = y; j < y + b; j++) {
-                        this.petaBarang.set(i, j, objek);
+                        this.collisionMap.set(i, j, true);
                     }
                 }
                 break;
             case "Up":
                 for (int i = x; i > x - a; i++) {
                     for (int j = y; j < y - b; j++) {
-                        this.petaBarang.set(i, j, objek);
+                        this.collisionMap.set(i, j, true);
                     }
                 }
                 break;
             case "Left":
                 for (int i = x; i < x + a; i++) {
                     for (int j = y; j < y - b; j++) {
-                        this.petaBarang.set(i, j, objek);
+                        this.collisionMap.set(i, j, true);
                     }
                 }
             case "Right":
                 for (int i = x; i < x - a; i++) {
                     for (int j = y; j < y + b; j++) {
-                        this.petaBarang.set(i, j, objek);
+                        this.collisionMap.set(i, j, true);
                     }
                 }
                 break;
@@ -80,7 +88,7 @@ public class Ruangan {
         
         int x = loc.getX();
         int y = loc.getY();
-        this.anchor.set(x, y, true);
+        this.collisionMap.set(x, y, true);
 
         switch (objek.getOrientasi()) {
             case "Down":

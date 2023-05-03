@@ -38,6 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
     public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN};
     private GameState gameState; 
     private boolean isStoreOpened = false;
+
+    // Flicker handling
     private boolean isEnteredHouse = false;
     public boolean isHouseSelected = false;
     public Stack<GameState> leastRecentlyUsed = new Stack<>();
@@ -116,6 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
                 ui.draw(graphics2D);
                 break;
             case HOUSE_GAME_SCREEN:
+                if (isHouseSelected) playedSims.reset();
                 housePainter.draw(graphics2D);
                 ui.draw(graphics2D);
                 break;
@@ -140,6 +143,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.playableSims = new ArrayList<>();
         this.world = World.getWorld();
         this.worldPainter = new WorldPainter(world, this);
+        this.housePainter = null;
     }
 
     public GameState getGameState() {

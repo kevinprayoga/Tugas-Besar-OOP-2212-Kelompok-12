@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import entity.Matrix;
 import main.GamePanel;
+import main.GamePanel.GameState;
 
 public class CollisionHandler {
     private final GamePanel gamePanel;
@@ -36,22 +37,39 @@ public class CollisionHandler {
     }
     
     public boolean isCollideWorld(int x, int y) {
-        if (x < 0 || y < 0 || x / gamePanel.getTileSize() >= world.getWidth() - 1 || y / gamePanel.getTileSize() >= world.getLength() - 1) {
-            return true;
-        }
-        if (worldTiles.get((x + 8) / gamePanel.getTileSize(), (y + 16) / gamePanel.getTileSize()) == 2) {
-            return true;
-        }
-        if (houseMap.get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize())) {
-            System.out.println("Collide with house");
-            world.getSimList().remove(sims);
-            gamePanel.setHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
-            gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
-            sims.setCurrentPosition("Rumah");
-            gamePanel.leastRecentlyUsed.push(GamePanel.GameState.HOUSE_GAME_SCREEN);
-            System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
-            gamePanel.isHouseSelected = true;
-            return true;
+        if (gamePanel.getGameState() == GameState.WORLD_GAME_SCREEN) {
+            if (x < 0 || y < 0 || x / gamePanel.getTileSize() >= world.getWidth() - 1 || y / gamePanel.getTileSize() >= world.getLength() - 1) {
+                System.out.println("Collide with border");
+                return true;
+            }
+            if (worldTiles.get((x + 8) / gamePanel.getTileSize(), (y + 16) / gamePanel.getTileSize()) == 2) {
+                System.out.println("Collide with tree");
+                return true;
+            }
+            if (houseMap.get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize())) {
+                System.out.println("Collide with house");
+    
+                // Removing the sim from world
+                world.getSimList().remove(sims);
+    
+                // Setting game to the house screen
+                gamePanel.setHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
+                gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GamePanel.GameState.HOUSE_GAME_SCREEN);
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                gamePanel.isHouseSelected = true;
+                
+                // Moving sim
+                sims.setCurrentPosition("Rumah");
+                gamePanel.getHouse().addSim(sims);
+                System.out.println(sims.getPosisi().getX() + ", " + sims.getPosisi().getY());
+                gamePanel.getPlayedSims().reset();
+                System.out.println(gamePanel.getPlayedSims().x + ", " + gamePanel.getPlayedSims().y);
+                
+                return true;
+            }
+        } else {
+            
         }
         return false;
     }

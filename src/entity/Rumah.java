@@ -4,6 +4,9 @@ import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+
+import main.GamePanel;
+
 import java.util.ArrayList;
 
 public class Rumah {
@@ -69,6 +72,7 @@ public class Rumah {
         matRoom = new Matrix<>(9, 9);
         roomBuild = new Matrix<>(9, 9);
         ruangan = new HashMap<>(9 * 9);
+        simList = new ArrayList<>();
 
         // Set Default Value to EMPTY, which means EMPTY SPACE
         for (int i = 0; i < 9; i++) {
@@ -78,6 +82,11 @@ public class Rumah {
         }
 
         createRuangan(4, 4, "center");
+        roomBuild.set(4, 4, 2);
+        roomBuild.set(4, 3, 1);
+        roomBuild.set(4, 5, 1);
+        roomBuild.set(3, 4, 1);
+        roomBuild.set(5, 4, 1);
     }
 
     public BufferedImage getImage(){
@@ -165,6 +174,16 @@ public class Rumah {
 
     public void addSim(Sim sim) {
         simList.add(sim);
+        Ruangan utama = matRoom.get(4, 4);
+        for (int i = 0; i < utama.getCollisionMap().getRow(); i++) {
+            for (int j = 0; j < utama.getCollisionMap().getColumn(); j++) {
+                if (!utama.getCollisionMap().get(i, j)) {
+                    System.out.println("Posisi Sim: " + i + " " + j);
+                    sim.getPosisi().changeLoc(i + 29, j + 29);
+                    return;  
+                }
+            }
+        }
     }
 
     public void removeSim(Sim sim) {

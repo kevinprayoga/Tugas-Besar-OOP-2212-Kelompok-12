@@ -4,33 +4,70 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JLabel;
+
 import entity.Rumah;
+import entity.Ruangan;
+import entity.Matrix;
 import main.GamePanel;
 import util.UtilityTool;
 
 public class HousePainter {
     private final GamePanel gamePanel;
     private Rumah house;
+    private Matrix<Ruangan> matRoom;
+    private Matrix<Integer> roomBuild;
+
     private final BufferedImage addRoom = UtilityTool.loadImage("res/image/house/Add Room.png");
-    private final BufferedImage hoverTiles = UtilityTool.loadImage("res/image/house/Hover Tiles.png");
-    private final BufferedImage roomTiles = UtilityTool.loadImage("res/image/house/Room Tiles.png");
     private final BufferedImage sideUpperWall = UtilityTool.loadImage("res/image/house/Side Upper Wall.png");
     private final BufferedImage wall = UtilityTool.loadImage("res/image/house/Wall.png");
 
     public HousePainter(Rumah house, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.house = house;
+        this.matRoom = house.getMatRoom();
+        this.roomBuild = house.getRoomBuild();
     }
 
     public void draw(Graphics2D graphics2d) {
+
+        // Creating build button
+        class BuildButton {
+            public void draw(Graphics2D graphics2d, int x, int y) {
+                graphics2d.drawImage(addRoom, x, y, gamePanel);
+
+                JLabel buildButton = new JLabel("Build");
+                buildButton.setBounds(x, y, addRoom.getWidth(), addRoom.getHeight());
+                gamePanel.add(buildButton);
+
+                buildButton.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        System.out.println("Building room");
+                        // Code
+                        gamePanel.removeAll();
+                    }
+                });
+            }
+        }
+
+
+        int initX = 60, initY = 68;
         gamePanel.setBackground(Color.decode("#211F1B"));
-        // BufferedImage house.getImage();
         // Draw The Room
         for (int i = 0; i < house.getDimensi().getLength(); i++) {
             for (int j = 0; j < house.getDimensi().getWidth(); j++) {
-                
+                if (house.getRoomBuild().get(i, j) == 2) {
+                    RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), gamePanel);
+                    roomPainter.draw(graphics2d, initX + j * 100, initY + i * 96);
+                } else {
+                    if (house.isBuildMode() && house.getOwner().equals(gamePanel.getPlayedSims().getSims())) {
+                        if (roomBuild.get(i, j) == 1) {
+                            BuildButton buildButton = new BuildButton();
+                            buildButton.draw(graphics2d, initX + j * 100 + 30, initY + i * 96 + 50);
+                        }
+                    }
+                }
             }
         }
     }
-    
 }
