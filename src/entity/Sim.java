@@ -254,8 +254,19 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void berkunjung(Rumah r) {
-
+    public void berkunjung(Rumah homeVisit) throws NotEnoughKesejahteraan, InterruptedException {
+        double timeCost = Math.sqrt(((homeVisit.getPosisi().getX())-(rumah.getPosisi().getX()))^2 + ((homeVisit.getPosisi().getY())-(rumah.getPosisi().getY()))^2);
+        int time = (int) timeCost/30 * 10;
+        if (kekenyangan - (time) <= 0) {
+            throw new NotEnoughKesejahteraan("Tidak cukup kekenyangan untuk berkunjung!");
+        } else {
+            status = "berkunjung";
+            for (int i = 0; i < 30; i++) {
+                Waktu.addSecond();
+            }
+            kekenyangan -= time;
+            mood += time;
+        }
     }
 
     public void buangAir() throws ItemError, NotEnoughKesejahteraan, InterruptedException {
@@ -369,16 +380,20 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     // Implementasi aksi pasif
-    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException{
+    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem{
         if (uang < 1500) {
             throw new TidakCukupItem("Tidak cukup uang untuk Upgrade Rumah!");
         } else {
-            if (rumah.getRoomBuild().get(x, y) == 2) { // meriksa kalau 2 artinya ruangan available untuk diisi
-                uang -= 1500;
-                rumah.createRuangan(x, y, nama);
-                rumah.setUpgradeTimer(1080);
-                rumah.setUpgradeLokasi(x, y);
-                rumah.setUpgradeNama(nama);
+            try {
+                if (rumah.getRoomBuild().get(x, y) == 2) { // meriksa kalau 2 artinya ruangan available untuk diisi
+                    uang -= 1500;
+                    rumah.createRuangan(x, y, nama);
+                    rumah.setUpgradeTimer(1080);
+                    rumah.setUpgradeLokasi(x, y);
+                    rumah.setUpgradeNama(nama);
+                }
+            } catch (Exception e) {
+                System.out.println("Ruangan tidak dapat ditempati!");
             }
         }
     }
