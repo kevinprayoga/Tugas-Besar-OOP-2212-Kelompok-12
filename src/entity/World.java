@@ -116,10 +116,14 @@ public class World {
         }
 
         int x, y;
-        if (houseX > getLength() - 1) x = getLength() - 1;
+        if (houseX > getLength() - 1) x = houseX - 1;
         else x = houseX + 1;
-        if (houseY > getWidth() - 1) y = getWidth() - 1;
+        if (houseY > getWidth() - 1) y = houseY - 1;
         else y = houseY + 1;
+
+        while (mapWorld.get(x, y) == 2) {
+            x--;
+        }
 
         sim.getPosisi().changeLoc(x, y);
         System.out.println(sim.getNamaLengkap() + " is at " + x + ", " + y);

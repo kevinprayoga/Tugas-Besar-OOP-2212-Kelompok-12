@@ -13,8 +13,6 @@ import javax.swing.*;
 
 import entity.Sim;
 import entity.Waktu;
-import entity.World;
-import exceptions.NameNotValidException;
 import util.UtilityTool;
 import main.CharacterSelector;
 import main.GameLoader;
@@ -544,7 +542,6 @@ public class UI {
             public void mouseClicked(MouseEvent e) {
                 try {
                     Sim sims = new Sim(nameField, optionSelected);
-                    gamePanel.getWorld().addSim(sims);
                     gamePanel.addPlayableSims(sims);
                     gamePanel.menuGame.setSimCD(Waktu.getDay());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
@@ -633,10 +630,10 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
-                gamePanel.setHouse(null);
-                gamePanel.getPlayedSims().getSims().setCurrentPosition("House");
+                gamePanel.getPlayedSims().getSims().setCurrentPosition("World");
                 System.out.println("World screen");
                 gamePanel.getWorld().addSim((gamePanel.getPlayedSims().getSims()));
+                gamePanel.getPlayedSims().reset();
                 gamePanel.removeAll();
             }
         });

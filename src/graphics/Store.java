@@ -105,6 +105,7 @@ public class Store {
                             System.out.println("Berhasil beli coyy: " + produk.getNamaProduk());
                         } catch (Exception e) {
                             System.out.println("Gagal beli coyy: " + produk.getNamaProduk());
+                            System.out.println(e.getMessage());
                         }
                     }
                 });

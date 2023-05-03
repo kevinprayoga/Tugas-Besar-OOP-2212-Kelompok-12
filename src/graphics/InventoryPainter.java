@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 
@@ -14,7 +16,7 @@ import util.UtilityTool;
 public class InventoryPainter {
     private GamePanel gamePanel;
     private Inventory inventory;
-    private int iterator = 0;
+    private static int iterator = 0;
 
     private BufferedImage placeholder = UtilityTool.loadImage("res/image/ui/object placeholder.png");
     private BufferedImage ammountPlaceholder = UtilityTool.loadImage("res/image/ui/object ammount.png");
@@ -25,6 +27,10 @@ public class InventoryPainter {
     public InventoryPainter (GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.inventory = gamePanel.getPlayedSims().getSims().getInventory();
+
+        if (inventory.getInventoryList().size() <= 12) {
+            iterator = 0;
+        }
     }
 
     public void draw(Graphics2D graphics2d) {
@@ -64,9 +70,9 @@ public class InventoryPainter {
                     label.setBounds(x, y, placeholder.getWidth(), placeholder.getHeight());
                     gamePanel.add(label);
 
-                    label.addMouseListener(new java.awt.event.MouseAdapter() {
+                    label.addMouseListener(new MouseAdapter() {
                         @Override
-                        public void mouseClicked(java.awt.event.MouseEvent e) {
+                        public void mouseClicked(MouseEvent e) {
                             if (inventory.listbahanmakanan.contains(nama)) {
                                 // Consume
                                 System.out.println("Consume");
@@ -94,14 +100,12 @@ public class InventoryPainter {
         graphics2d.drawImage(upArrow, 954, 885, gamePanel);
 
         JLabel upArrow = new JLabel("Up");
-        upArrow.setBounds(954, 885, upArrow.getWidth(), upArrow.getHeight());
+        upArrow.setBounds(954, 885, 20, 51);
         gamePanel.add(upArrow);
 
-        System.out.println(iterator + " " + inventoryList.size());
-
-        upArrow.addMouseListener(new java.awt.event.MouseAdapter() {
+        upArrow.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 System.out.println("Up");
                 if (iterator > 0) {
                     iterator--;
@@ -113,12 +117,12 @@ public class InventoryPainter {
         graphics2d.drawImage(downArrow, 954, 941, gamePanel);
 
         JLabel downArrow = new JLabel("Down");
-        downArrow.setBounds(954, 941, downArrow.getWidth(), downArrow.getHeight());
+        downArrow.setBounds(954, 941, 20, 51);
         gamePanel.add(downArrow);
 
-        downArrow.addMouseListener(new java.awt.event.MouseAdapter() {
+        downArrow.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 System.out.println("Down");
                 if (12 < inventoryList.size() - iterator * 12) {
                     iterator++;
