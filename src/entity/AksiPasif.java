@@ -1,12 +1,13 @@
 package entity;
 
+import exceptions.ExistingOrder;
 import exceptions.ItemError;
 import exceptions.TidakCukupItem;
 
 public interface AksiPasif {
-    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException;
+    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException,ExistingOrder;
 
-    public void beliObjek(Produk o) throws ItemError,TidakCukupItem;
+    public void beliObjek(Produk o) throws ItemError,TidakCukupItem,ExistingOrder;
 
     public void displayInventory();
 
