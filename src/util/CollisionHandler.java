@@ -66,10 +66,8 @@ public class CollisionHandler {
             // Moving sim
             sims.setCurrentPosition("Rumah");
             gamePanel.getHouse().addSim(sims);
-            System.out.println(sims.getPosisi().getX() + ", " + sims.getPosisi().getY());
             gamePanel.getPlayedSims().reset();
             roomX = 4; roomY = 4;
-            System.out.println(gamePanel.getPlayedSims().x + ", " + gamePanel.getPlayedSims().y);
             
             return true;
         }
@@ -78,18 +76,16 @@ public class CollisionHandler {
     }
 
     public boolean isCollideHouse(int x, int y) {
-        System.out.println(x + " " + y);
         int initX = 64 + roomX * 100;
-        int initY = 92 + roomY * 96;
+        int initY = 92 + roomY * 96 - 12;
 
-        System.out.println(roomX + " " + roomY);
         roomMap = gamePanel.getHouse().getMatRoom().get(roomX, roomY).getCollisionMap();
 
-        if (roomMap.get((x - initX) / gamePanel.getTileSize(), (y - initY) / gamePanel.getTileSize())) {
+        if (roomMap.get((x - initX) / gamePanel.getTileSize(), (y - initY - 12) / gamePanel.getTileSize())) {
             System.out.println("Collide with room object");
             return true;
         }
-        if (x < initX || y < initY || x > initX + 96 || y > initY + 96) {
+        if (x < initX || y < initY || x > initX + 80 || y > initY + 96) {
             System.out.println("Collide with border");
             return true;
         }

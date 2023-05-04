@@ -67,7 +67,7 @@ public class World {
         return this.houseMap;
     }
 
-    public static Matrix<Rumah> getPerumahan() {
+    public Matrix<Rumah> getPerumahan() {
         return perumahan;
     }
 

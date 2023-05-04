@@ -5,8 +5,6 @@ import util.UtilityTool;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-import main.GamePanel;
-
 import java.util.ArrayList;
 
 public class Rumah {
@@ -111,10 +109,6 @@ public class Rumah {
         return roomBuild;
     }
 
-    public Posisi getPosisi() {
-        return posisi;
-    }
-
     public Ruangan getRuangan(String roomName) {
         return ruangan.get(roomName);
     }
@@ -163,27 +157,23 @@ public class Rumah {
 
     private void setBuildAvailable(int x, int y) {
         if (x > 0) {
-            if (y > 0) {
-                if (roomBuild.get(x - 1, y - 1) == 0) {
-                    roomBuild.set(x - 1, y - 1, 1);
-                }
-            }
-            if (y < 9) {
-                if (roomBuild.get(x - 1, y + 1) == 0) {
-                    roomBuild.set(x - 1, y + 1, 1);
-                }
+            if (roomBuild.get(x - 1, y) == 0) {
+                roomBuild.set(x - 1, y, 1);
             }
         }
         if (x < 9) {
-            if (y > 0) {
-                if (roomBuild.get(x + 1, y - 1) == 0) {
-                    roomBuild.set(x + 1, y - 1, 1);
-                }
+            if (roomBuild.get(x + 1, y) == 0) {
+                roomBuild.set(x + 1, y, 1);
             }
-            if (y < 9) {
-                if (roomBuild.get(x + 1, y + 1) == 0) {
-                    roomBuild.set(x + 1, y + 1, 1);
-                }
+        }
+        if (y > 0) {
+            if (roomBuild.get(x, y - 1) == 0) {
+                roomBuild.set(x, y - 1, 1);
+            }
+        }
+        if (y < 9) {
+            if (roomBuild.get(x, y + 1) == 0) {
+                roomBuild.set(x, y + 1, 1);
             }
         }
     }

@@ -57,7 +57,6 @@ public class HousePainter {
         for (int i = 0; i < house.getDimensi().getLength(); i++) {
             for (int j = 0; j < house.getDimensi().getWidth(); j++) {
                 if (house.getRoomBuild().get(i, j) == 2) {
-                    System.out.println(" - " + i + " " + j + " -");
                     RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), new Posisi(i, j), gamePanel);
                     roomPainter.draw(graphics2d, initX + j * 100, initY + i * 96);
                 } else {
