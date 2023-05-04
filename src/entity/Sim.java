@@ -159,6 +159,10 @@ public class Sim implements AksiAktif, AksiPasif {
         return bonusInc;
     }
 
+    public int getWood() {
+        return wood;
+    }
+
     public void setMinusUang(int mines) {
         uang -= mines;
     }
