@@ -16,6 +16,7 @@ import javax.security.auth.kerberos.KeyTab;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI.KeyHandler;
 
+import entity.Pekerjaan;
 import entity.Sim;
 import entity.Waktu;
 import util.UtilityTool;

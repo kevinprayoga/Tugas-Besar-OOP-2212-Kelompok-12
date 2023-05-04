@@ -3,11 +3,16 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.PekerjaanError;
 import exceptions.TidakCukupItem;
 
 public class PekerjaanPrinter {
     private List<Pekerjaan> jobList = new ArrayList<Pekerjaan>();
     private Pekerjaan testPekerjaan;
+
+    public PekerjaanPrinter(){
+        setJob(Pekerjaan.getRandomJob());
+    }
 
     public List<Pekerjaan> getPekerjaanList() {
         return jobList;
@@ -34,9 +39,11 @@ public class PekerjaanPrinter {
         }
     }
 
-    public int costGajiNewJob(String newJob, int uang) throws TidakCukupItem{
+    public int costGajiNewJob(String newJob, int uang, int totalWaktuKerja) throws TidakCukupItem, PekerjaanError{
         if(uang < testPekerjaan.getGaji()/2){
             throw new TidakCukupItem("Tidak cukup uang untuk mengganti pekerjaan!");
+        } else if(totalWaktuKerja < 720){
+            throw new PekerjaanError("Tidak cukup waktu bekerja untuk mengganti pekerjaan!");
         } else {
             if (newJob.equals("BadutSulap")){
                 testPekerjaan = new BadutSulap();

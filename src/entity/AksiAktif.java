@@ -3,9 +3,10 @@ package entity;
 import exceptions.ItemError;
 import exceptions.TidakCukupItem;
 import exceptions.NotEnoughKesejahteraan;
+import exceptions.PekerjaanError;
 
 public interface AksiAktif {
-    public void kerja(int time) throws NotEnoughKesejahteraan,InterruptedException;
+    public void kerja(int time) throws NotEnoughKesejahteraan,InterruptedException,PekerjaanError;
 
     public void olahraga(int time) throws NotEnoughKesejahteraan,InterruptedException;
 
