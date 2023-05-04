@@ -30,6 +30,7 @@ public class Rumah {
     
     public Rumah(Sim owner){
         this.owner = owner;
+        owner.setRumah(this);
         int type = (int) (Math.random() * 11) + 1;
         switch (type) {
             case 1:
