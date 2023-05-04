@@ -10,6 +10,10 @@ public class PekerjaanPrinter {
     private List<Pekerjaan> jobList = new ArrayList<Pekerjaan>();
     private Pekerjaan testPekerjaan;
 
+    public PekerjaanPrinter(){
+        setJob(Pekerjaan.getRandomJob());
+    }
+
     public List<Pekerjaan> getPekerjaanList() {
         return jobList;
     }

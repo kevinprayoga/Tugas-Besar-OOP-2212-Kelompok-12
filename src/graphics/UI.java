@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import javax.swing.*;
 
+import entity.Pekerjaan;
 import entity.Sim;
 import entity.Waktu;
 import util.UtilityTool;
