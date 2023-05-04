@@ -18,7 +18,6 @@ public class Rumah {
     private HashMap<String, Ruangan> ruangan;
     private Matrix<Ruangan> matRoom;
     private Matrix<Integer> roomBuild; // 0 = EMPTY, 1 = BUILDABLE, 2 = BUILT
-    private Posisi posisi;
     private ArrayList<Sim> simList;
 
     private int timerUpgrade = -1;
@@ -73,9 +72,6 @@ public class Rumah {
         roomBuild = new Matrix<>(9, 9);
         ruangan = new HashMap<>(9 * 9);
         simList = new ArrayList<>();
-
-        posisi.setAbsis(World.getPerumahan().getRow());
-        posisi.setOrdinat(World.getPerumahan().getColumn());
 
         // Set Default Value to EMPTY, which means EMPTY SPACE
         for (int i = 0; i < 9; i++) {
