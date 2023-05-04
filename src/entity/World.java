@@ -5,8 +5,6 @@ import util.Noise;
 
 public class World {
 
-    private static World single = null;
-
     // Attributes
     private Dimensi dimensi;
     private Matrix<Integer> mapWorld;
@@ -15,7 +13,7 @@ public class World {
     private ArrayList<Sim> simList;
 
     // Constructor
-    private World() {
+    public World() {
         dimensi = new Dimensi(64, 64);
         this.mapWorld = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
         this.houseMap = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
@@ -49,15 +47,6 @@ public class World {
                 }
             }
         }
-    }
-
-    // Static method to create the world class
-    public static synchronized World getWorld() {
-        if (single == null) {
-            single = new World();
-        }
-
-        return single;
     }
 
     // Methods
