@@ -103,6 +103,7 @@ public class Store {
                         try {
                             sim.beliObjek(produk);
                             System.out.println("Berhasil beli coyy: " + produk.getNamaProduk());
+                            System.out.println(sim.getTimerPembelian());
                         } catch (Exception e) {
                             System.out.println("Gagal beli coyy: " + produk.getNamaProduk());
                             System.out.println(e.getMessage());
