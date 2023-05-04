@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
 import entity.Sim;
+import exceptions.NotEnoughKesejahteraan;
 import main.GamePanel;
 import util.UtilityTool;
 
@@ -64,7 +65,13 @@ public class ActionButton {
         eatLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi pergi kerja
+                try{
+                    sim.kerja(120);
+                    sim.update(120);
+                } catch(Exception ex){
+                    System.out.println(ex.getMessage());
+                    
+                }
             }
         });
 
