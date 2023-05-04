@@ -137,6 +137,7 @@ public class World {
 
         // Create new house
         Rumah house = new Rumah(owner);
+        house.setPosisi(x, y);
         setNewHouse(x, y, house);
         houseMap.set(x, y, true);
         return house;

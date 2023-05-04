@@ -14,6 +14,7 @@ public class Rumah {
     private BufferedImage image;
 
     private Dimensi dimensi;
+    private Posisi posisi;
 
     private HashMap<String, Ruangan> ruangan;
     private Matrix<Ruangan> matRoom;
@@ -113,6 +114,10 @@ public class Rumah {
 
     public Posisi getPosisi() {
         return posisi;
+    }
+
+    public void setPosisi(int x, int y) {
+        posisi = new Posisi(x, y);
     }
 
     public Ruangan getRuangan(String roomName) {
