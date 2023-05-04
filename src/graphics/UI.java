@@ -27,7 +27,7 @@ import main.GamePanel.GameState;
 
 public class UI {
     // Screen settings
-    private static GamePanel gamePanel;
+    private GamePanel gamePanel;
     private Graphics2D graphics2d;
     private Font pixolletta_general, upheavtt_title;
 
@@ -49,7 +49,7 @@ public class UI {
     private static int increment = 10;
     private static int actionTime = 0;
 
-    public UI (GamePanel gp) {
+    public UI (GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
         try {
@@ -86,17 +86,17 @@ public class UI {
             case HOUSE_GAME_SCREEN:
                 drawHouseGameScreen();
                 break;
-            case LOADING_SCREEN:
-                drawLoadingScreen();
-                break;
+            // case LOADING_SCREEN:
+            //     drawLoadingScreen();
+            //     break;
             default:
                 break;
         }
-        if (isActionPopUpOpen) {
-            drawActionPopUp();
-        } else {
-            actionTime = 0;
-        }
+        // if (isActionPopUpOpen) {
+        //     drawActionPopUp();
+        // } else {
+        //     actionTime = 0;
+        // }
     }
 
     private void drawTitleScreen() {
@@ -699,16 +699,16 @@ public class UI {
     }
 
     // Laoding screen
-    private static void drawLoadingScreen() {
-        gamePanel.setBackground(ColorPalette.dark_grey);
-        graphics2d.setColor(Color.decode("#39352B"));
-        graphics2d.setFont(upheavtt_title.deriveFont(61f));
-        graphics2d.drawString(loadingText, UtilityTool.getXForCenterOfText(loadingText, gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText, gamePanel, graphics2d));
-    }
+    // private static void drawLoadingScreen() {
+    //     gamePanel.setBackground(ColorPalette.dark_grey);
+    //     graphics2d.setColor(Color.decode("#39352B"));
+    //     graphics2d.setFont(upheavtt_title.deriveFont(61f));
+    //     graphics2d.drawString(loadingText, UtilityTool.getXForCenterOfText(loadingText, gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText, gamePanel, graphics2d));
+    // }
 
-    public static void setLoadingMessage(String message) {
-        this.loadingText = message;
-    }
+    // public static void setLoadingMessage(String message) {
+    //     this.loadingText = message;
+    // }
 
     // Action setter pop-up
     private void drawActionPopUp() {
