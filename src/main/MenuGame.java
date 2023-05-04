@@ -73,7 +73,7 @@ public class MenuGame{
         if (playedSim.getTotalWaktuKerja() <= 720) {
             throw new  PekerjaanError("Belum bisa mengganti pekerjaan menjadi " + newJob);
         } else {
-            int costJob = playedSim.getPekerjaanPrinter().costGajiNewJob(newJob, playedSim.getUang());
+            int costJob = playedSim.getPekerjaanPrinter().costGajiNewJob(newJob, playedSim.getUang(),playedSim.getTotalWaktuKerja());
             playedSim.setMinusUang(costJob);
             playedSim.setTotalWaktuKerjaZero();
         }
