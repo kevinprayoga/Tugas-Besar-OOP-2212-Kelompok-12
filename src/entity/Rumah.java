@@ -74,6 +74,9 @@ public class Rumah {
         ruangan = new HashMap<>(9 * 9);
         simList = new ArrayList<>();
 
+        posisi.setAbsis(World.getPerumahan().getRow());
+        posisi.setOrdinat(World.getPerumahan().getColumn());
+
         // Set Default Value to EMPTY, which means EMPTY SPACE
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -112,9 +115,7 @@ public class Rumah {
         return roomBuild;
     }
 
-    public Posisi getPosisi(World world) {
-        posisi.setAbsis(world.getPerumahan().getRow());
-        posisi.setOrdinat(world.getPerumahan().getColumn());
+    public Posisi getPosisi() {
         return posisi;
     }
 

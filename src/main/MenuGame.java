@@ -1,5 +1,6 @@
 package main;
 
+import entity.BadutSulap;
 import entity.Sim;
 import entity.Waktu;
 import entity.World;
@@ -67,6 +68,17 @@ public class MenuGame{
         }
     }
     */
+
+    public void setPekerjaan(Sim playedSim, String newJob) throws PekerjaanError, TidakCukupItem{
+        if (playedSim.getTotalWaktuKerja() <= 720) {
+            throw new  PekerjaanError("Belum bisa mengganti pekerjaan menjadi " + newJob);
+        } else {
+            int costJob = playedSim.getPekerjaanPrinter().costGajiNewJob(newJob, playedSim.getUang());
+            playedSim.setMinusUang(costJob);
+            playedSim.setTotalWaktuKerjaZero();
+        }
+    }
+
     public void viewSimInfo(Sim s){
         System.out.println("Nama Sim: "+s.getNamaLengkap());
         System.out.println("Pekerjaan: " +s.getPekerjaan());
