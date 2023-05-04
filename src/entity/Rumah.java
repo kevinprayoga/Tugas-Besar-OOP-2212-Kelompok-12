@@ -18,7 +18,6 @@ public class Rumah {
     private HashMap<String, Ruangan> ruangan;
     private Matrix<Ruangan> matRoom;
     private Matrix<Integer> roomBuild; // 0 = EMPTY, 1 = BUILDABLE, 2 = BUILT
-    private Posisi posisi;
     private ArrayList<Sim> simList;
 
     private int timerUpgrade = -1;
@@ -112,9 +111,7 @@ public class Rumah {
         return roomBuild;
     }
 
-    public Posisi getPosisi(World world) {
-        posisi.setAbsis(world.getPerumahan().getRow());
-        posisi.setOrdinat(world.getPerumahan().getColumn());
+    public Posisi getPosisi() {
         return posisi;
     }
 

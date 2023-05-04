@@ -5,21 +5,19 @@ import util.Noise;
 
 public class World {
 
-    private static World single = null;
-
     // Attributes
     private Dimensi dimensi;
     private Matrix<Integer> mapWorld;
     private Matrix<Boolean> houseMap;
-    private Matrix<Rumah> perumahan;
+    private static Matrix<Rumah> perumahan;
     private ArrayList<Sim> simList;
 
     // Constructor
-    private World() {
+    public World() {
         dimensi = new Dimensi(64, 64);
         this.mapWorld = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
         this.houseMap = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
-        this.perumahan = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
+        perumahan = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
         simList = new ArrayList<Sim>();
 
         // Set Default Value to EMPTY, which means EMPTY SPACE
@@ -51,15 +49,6 @@ public class World {
         }
     }
 
-    // Static method to create the world class
-    public static synchronized World getWorld() {
-        if (single == null) {
-            single = new World();
-        }
-
-        return single;
-    }
-
     // Methods
     // Getter
     public int getLength() {
@@ -78,14 +67,14 @@ public class World {
         return this.houseMap;
     }
 
-    public Matrix<Rumah> getPerumahan() {
-        return this.perumahan;
+    public static Matrix<Rumah> getPerumahan() {
+        return perumahan;
     }
 
     public Rumah getHouse(int x, int y) {
         // Due to the difference between Cartesian Diagram mapping & Matrix mapping,
         // the Matrix is turned into Cartesian Diagram;
-        return this.perumahan.get(x, y);
+        return perumahan.get(x, y);
     }
 
     public ArrayList<Sim> getSimList() {
@@ -94,7 +83,7 @@ public class World {
 
     // Setter
     public void setNewHouse(int x, int y, Rumah house) {
-        this.perumahan.set(x, y, house);
+        perumahan.set(x, y, house);
     }
 
     // Adder
