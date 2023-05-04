@@ -369,9 +369,11 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     // Implementasi aksi pasif
-    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException{
+    public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException,ExistingOrder{
         if (uang < 1500) {
             throw new TidakCukupItem("Tidak cukup uang untuk Upgrade Rumah!");
+        } else if(rumah.getUpgradeTimer() != -1){
+            throw new ExistingOrder("Sudah ada proses upgrade rumah pada rumah ini!");
         } else {
             if (rumah.getRoomBuild().get(x, y) == 2) {
                 uang -= 1500;
@@ -383,12 +385,14 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void beliObjek(Produk o) throws ItemError, TidakCukupItem {
+    public void beliObjek(Produk o) throws ItemError, TidakCukupItem, ExistingOrder{
         if (o instanceof Makanan) {
             throw new ItemError("Makanan hanya dapat dimasak menggunakan bahan makanan!");
         } else if (o instanceof NonMakanan) {
             if (uang - ((NonMakanan) o).getHarga() < 0) {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
+            } else if(timerPembelian != -1){
+                throw new ExistingOrder("Sudah ada order pemesanan barang!");
             } else {
                 timerPembelian= (rand.nextInt(5) + 1) * 30;
                 uang -= ((NonMakanan) o).getHarga();
@@ -397,6 +401,8 @@ public class Sim implements AksiAktif, AksiPasif {
         } else if (o instanceof BahanMakanan) {
             if (uang - ((BahanMakanan) o).getHarga() < 0) {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
+            } else if(timerPembelian != -1){
+                throw new ExistingOrder("Sudah ada order pemesanan barang!");
             } else {
                 timerPembelian= (rand.nextInt(5) + 1) * 30;
                 uang -= ((BahanMakanan) o).getHarga();
