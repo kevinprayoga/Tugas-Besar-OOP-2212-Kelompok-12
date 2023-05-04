@@ -424,11 +424,11 @@ public class Sim implements AksiAktif, AksiPasif {
                 pembelianProduk = o;
             }
         } else if (o instanceof BahanMakanan) {
-            if (uang - ((NonMakanan) o).getHarga() < 0) {
+            if (uang - ((BahanMakanan) o).getHarga() < 0) {
                 throw new TidakCukupItem("Tidak cukup uang untuk membeli item tersebut!");
             } else {
                 timerPembelian= (rand.nextInt(5) + 1) * 30;
-                uang -= ((NonMakanan) o).getHarga();
+                uang -= ((BahanMakanan) o).getHarga();
                 pembelianProduk = o;
             }
         }

@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import entity.Rumah;
 import entity.Ruangan;
 import entity.Matrix;
+import entity.Posisi;
 import main.GamePanel;
 import util.UtilityTool;
 
@@ -20,7 +21,6 @@ public class HousePainter {
 
     private final BufferedImage addRoom = UtilityTool.loadImage("res/image/house/Add Room.png");
     private final BufferedImage sideUpperWall = UtilityTool.loadImage("res/image/house/Side Upper Wall.png");
-    private final BufferedImage wall = UtilityTool.loadImage("res/image/house/Wall.png");
 
     public HousePainter(Rumah house, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -57,7 +57,8 @@ public class HousePainter {
         for (int i = 0; i < house.getDimensi().getLength(); i++) {
             for (int j = 0; j < house.getDimensi().getWidth(); j++) {
                 if (house.getRoomBuild().get(i, j) == 2) {
-                    RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), gamePanel);
+                    System.out.println(" - " + i + " " + j + " -");
+                    RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), new Posisi(i, j), gamePanel);
                     roomPainter.draw(graphics2d, initX + j * 100, initY + i * 96);
                 } else {
                     if (house.isBuildMode() && house.getOwner().equals(gamePanel.getPlayedSims().getSims())) {
@@ -69,5 +70,14 @@ public class HousePainter {
                 }
             }
         }
+
+        // for (int i = 0; i < house.getDimensi().getLength(); i++) {
+        //     for (int j = 0; j < house.getDimensi().getWidth(); j++) {
+        //         if (house.getRoomBuild().get(i, j) == 2) {
+        //             graphics2d.drawImage(sideUpperWall, initX + j * 100, initY + i * 96, gamePanel);
+        //             graphics2d.drawImage(sideUpperWall, initX + (j + 1) * 100, initY + i * 96, gamePanel);
+        //         }
+        //     }
+        // }
     }
 }

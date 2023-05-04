@@ -34,6 +34,10 @@ public class Ruangan {
         return this.petaBarang.get(loc.getX(), loc.getY());
     }
 
+    public ArrayList<Sim> getSimList() {
+        return this.simList;
+    }
+
     public boolean nonMakananExist(Posisi loc) {
         return (this.getObjek(loc) != null);
     }
