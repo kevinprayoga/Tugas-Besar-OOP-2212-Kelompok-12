@@ -170,6 +170,10 @@ public class Sim implements AksiAktif, AksiPasif {
         totalWaktuKerja = 0;
     }
 
+    public int getTimerPembelian(){
+        return timerPembelian;
+    }
+
     public BufferedImage getCharacter() {
         BufferedImage character;
         switch (charType) {

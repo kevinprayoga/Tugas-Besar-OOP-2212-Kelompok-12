@@ -4,9 +4,14 @@ public class Waktu {
     private static int time = 0;
     private static int remainTime = 720;
     private static int day = 0;
+    private static int timeDelay = 100;
 
     public static int getTime() {
         return time;
+    }
+
+    public static void setTimeDelay(int time){
+        timeDelay = time;
     }
 
     public static int getRemainTime(){
@@ -18,7 +23,7 @@ public class Waktu {
     }
 
     public static void addSecond() throws InterruptedException{
-        Thread.sleep(1000);
+        Thread.sleep(timeDelay);
         time += 1;
         day += time/720;
         time = time %720;
