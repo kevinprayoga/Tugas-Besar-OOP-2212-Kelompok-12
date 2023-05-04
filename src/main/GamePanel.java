@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
 
     // Game state
-    public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN};
+    public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN, LOADING_SCREEN};
     private GameState gameState; 
     private boolean isStoreOpened = false;
 
@@ -129,6 +129,9 @@ public class GamePanel extends JPanel implements Runnable {
                 ui.draw(graphics2D);
                 break;
             case HELP_SCREEN:
+                ui.draw(graphics2D);
+                break;
+            case LOADING_SCREEN:
                 ui.draw(graphics2D);
                 break;
         }

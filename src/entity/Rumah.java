@@ -17,7 +17,7 @@ public class Rumah {
 
     private HashMap<String, Ruangan> ruangan;
     private Matrix<Ruangan> matRoom;
-    private Matrix<Integer> roomBuild;
+    private Matrix<Integer> roomBuild; // 0 = EMPTY, 1 = BUILDABLE, 2 = BUILT
     private Posisi posisi;
     private ArrayList<Sim> simList;
 
@@ -82,11 +82,6 @@ public class Rumah {
         }
 
         createRuangan(4, 4, "center");
-        roomBuild.set(4, 4, 2);
-        roomBuild.set(4, 3, 1);
-        roomBuild.set(4, 5, 1);
-        roomBuild.set(3, 4, 1);
-        roomBuild.set(5, 4, 1);
     }
 
     public BufferedImage getImage(){
@@ -155,12 +150,9 @@ public class Rumah {
     public Ruangan createRuangan(int x, int y, String roomName) {
         Ruangan room = new Ruangan();
         setNewRuangan(x, y, room);
-        roomBuild.set(x, y, 1); // jika terisi ruangan
+        roomBuild.set(x, y, 2); // jika terisi ruangan
         ruangan.put(roomName, room);
-        if (roomBuild.get(x + 1, y) == 0 && x < 9) roomBuild.set(x + 1, y, 2); // jika ruangan available diisi
-        if (roomBuild.get(x, y + 1) == 0 && y < 9) roomBuild.set(x, y + 1, 2); // jika ruangan available diisi
-        if (roomBuild.get(x - 1, y) == 0 && x >= 0) roomBuild.set(x - 1, y, 2); // jika ruangan available diisi
-        if (roomBuild.get(x, y - 1) == 0 && y >= 0) roomBuild.set(x, y - 1, 2); // jika ruangan available diisi
+        setBuildAvailable(x, y);
         return room;
     }
 
@@ -170,6 +162,33 @@ public class Rumah {
 
     public void setNewRuangan(int x, int y, Ruangan room) {
         matRoom.set(x, y, room);
+    }
+
+    private void setBuildAvailable(int x, int y) {
+        if (x > 0) {
+            if (y > 0) {
+                if (roomBuild.get(x - 1, y - 1) == 0) {
+                    roomBuild.set(x - 1, y - 1, 1);
+                }
+            }
+            if (y < 9) {
+                if (roomBuild.get(x - 1, y + 1) == 0) {
+                    roomBuild.set(x - 1, y + 1, 1);
+                }
+            }
+        }
+        if (x < 9) {
+            if (y > 0) {
+                if (roomBuild.get(x + 1, y - 1) == 0) {
+                    roomBuild.set(x + 1, y - 1, 1);
+                }
+            }
+            if (y < 9) {
+                if (roomBuild.get(x + 1, y + 1) == 0) {
+                    roomBuild.set(x + 1, y + 1, 1);
+                }
+            }
+        }
     }
 
     public void addSim(Sim sim) {

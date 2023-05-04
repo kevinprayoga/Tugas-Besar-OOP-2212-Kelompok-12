@@ -8,21 +8,29 @@ import java.util.ArrayList;
 
 import entity.Matrix;
 import entity.NonMakanan;
+import entity.Posisi;
 import entity.Ruangan;
+import entity.Sim;
 
 public class RoomPainter {
     private GamePanel gamePanel;
     private Ruangan ruangan;
+    private Posisi posisi;
     private Matrix<NonMakanan> matObjek;
     private Matrix<Boolean> collisionMap;
+    private Matrix<Boolean> roomWall;
+    private ArrayList<Sim> sims;
 
     private final BufferedImage roomTiles = UtilityTool.loadImage("res/image/house/Room Tiles.png");
+    private final BufferedImage wall = UtilityTool.loadImage("res/image/house/Wall.png"); 
 
-    public RoomPainter(Ruangan ruangan, GamePanel gamePanel) {
+    public RoomPainter(Ruangan ruangan, Posisi posisi, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.ruangan = ruangan;
+        this.posisi = posisi;
         matObjek = ruangan.getPetaBarang();
         collisionMap = ruangan.getCollisionMap();
+        sims = ruangan.getSimList();
     }
 
     public void draw(Graphics2D graphics2d, int x, int y) {
@@ -36,11 +44,31 @@ public class RoomPainter {
             }
         }
 
+        // Drawing upper wall
+        if (posisi.getY() == 0) {
+            graphics2d.drawImage(wall, x + 4, y, gamePanel);
+        } else if (gamePanel.getHouse().getMatRoom().get(posisi.getX(), posisi.getY() - 1) == null) {
+            graphics2d.drawImage(wall, x + 4, y, gamePanel);
+        }
+
+        // Drawing Sims
+        for (Sim sim : sims) {
+            if (!sim.equals(gamePanel.getPlayedSims().getSims())) {
+                graphics2d.drawImage(sim.getCharacter(), x + sim.getPosisi().getX() * 16 + 4, y + sim.getPosisi().getY() * 16 + 24, gamePanel);
+            }
+        }
+
         // PlayedSims playedSims = gamePanel.getPlayedSims();
         PlayedSims playedSims = gamePanel.getPlayedSims();
         playedSims.draw(graphics2d);
 
-        System.out.println("x: " + playedSims.getSims().getPosisi().getX() + " y: " + playedSims.getSims().getPosisi().getY());
+        // Drawing lower wall
+        if (sims.contains(gamePanel.getPlayedSims().getSims())) {
+            graphics2d.drawImage(wall, x + 4, y + 16 * 6, gamePanel);
+        }
+
+        // Debugger
+        // System.out.println("x: " + playedSims.getSims().getPosisi().getX() + " y: " + playedSims.getSims().getPosisi().getY());
     }
     
 }

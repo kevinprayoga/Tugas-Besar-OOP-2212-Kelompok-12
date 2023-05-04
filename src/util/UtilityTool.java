@@ -27,6 +27,17 @@ public class UtilityTool {
         return gamePanel.getScreenWidth() / 2 - length / 2;
     }
 
+    /* Mengembalikan ukuran pixel bagian tengah dari text terhadap layar
+     * @param text text yang akan diukur dan ditampilkan ke layar
+     * @param gamePanel panel game utama
+     * @param graphics2D graphics2D yang akan digunakan untuk menggambar text
+     * @return ukuran pixel bagian tengah dari text terhadap layar
+     */
+    public static int getYForCenterOfText(String text, GamePanel gamePanel, Graphics2D graphics2D) {
+        int height = (int) graphics2D.getFontMetrics().getStringBounds(text, graphics2D).getHeight();
+        return gamePanel.getScreenHeight() / 2 - height / 2;
+    }
+
     public static BufferedImage loadImage(String path) {
         BufferedImage image = null;
         try {
@@ -46,8 +57,6 @@ public class UtilityTool {
         graphics2D.dispose();
         return scaledImage;
     }
-
-    public static BufferedImage scaleDownImage; 
 
     public static BufferedImage flipImageVertically(BufferedImage image) {
         BufferedImage flippedImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());

@@ -1,11 +1,16 @@
 package graphics;
 
+import main.GameLoader;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
 
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+
+import javax.swing.JLabel;
 
 import entity.Sim;
 import entity.Posisi;
@@ -26,6 +31,10 @@ public class PlayedSims {
     private int frameRate = 32;
     private int frame = 0;
     
+    // Sims state
+    private boolean isStatic = false;
+    private boolean isActionPanelOpened = false;
+
     String file = "res/image/sims/";
     
     public PlayedSims(GamePanel gamePanel, Sim sims) {
@@ -72,9 +81,12 @@ public class PlayedSims {
 
         if (!keyHandler.upPressed && !keyHandler.downPressed && !keyHandler.leftPressed && !keyHandler.rightPressed) {
             frame = 0;
+            isStatic = true;
         } else {
             frame++;
             if (frame >= frameRate) frame = 0;
+            isStatic = false;
+            isActionPanelOpened = false;
         }
         
         if (faceDown) {
@@ -94,6 +106,27 @@ public class PlayedSims {
         update();
         graphics2d.drawImage(image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), gamePanel);
         drawSimsStatus(graphics2d);
+
+        JLabel simBox = new JLabel();
+        if (isStatic) {
+            simBox.setBounds(x, y, 16, 16);
+            gamePanel.add(simBox);
+
+            simBox.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    isActionPanelOpened = !isActionPanelOpened;
+                    gamePanel.remove(simBox);
+                }
+            });
+        } else {
+            gamePanel.remove(simBox);
+        }
+
+        if (isActionPanelOpened) {
+            ActionButton actionButton = new ActionButton(gamePanel);
+            actionButton.drawSimsButton(graphics2d, x + 32, y);
+        }
     }
 
     private void drawSimsStatus(Graphics2D graphics2d) {

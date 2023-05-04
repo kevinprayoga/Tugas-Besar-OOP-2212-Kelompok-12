@@ -88,7 +88,6 @@ public class CharacterSelector {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             gamePanel.setGameState(GameState.NEW_CHAR_SCREEN);
-                            gamePanel.leastRecentlyUsed.push(GameState.NEW_CHAR_SCREEN);
                             System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                             gamePanel.removeAll();
                         }

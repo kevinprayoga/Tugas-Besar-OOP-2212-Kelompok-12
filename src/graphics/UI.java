@@ -29,6 +29,9 @@ public class UI {
     private String nameField;
     private int optionSelected = 0;
 
+    // Loading screen text
+    private String loadingText = "Loading...";
+
     class RectangleButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("UI.RectangleButtonListener.actionPerformed()");
@@ -71,6 +74,9 @@ public class UI {
                 break;
             case HOUSE_GAME_SCREEN:
                 drawHouseGameScreen();
+                break;
+            case LOADING_SCREEN:
+                drawLoadingScreen();
                 break;
             default:
                 break;
@@ -629,7 +635,10 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.setGameState(GameState.WORLD_GAME_SCREEN);
+                gamePanel.leastRecentlyUsed.pop();
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                GameState previousState = gamePanel.leastRecentlyUsed.peek();
+                gamePanel.setGameState(previousState);
                 gamePanel.getPlayedSims().getSims().setCurrentPosition("World");
                 System.out.println("World screen");
                 gamePanel.getWorld().addSim((gamePanel.getPlayedSims().getSims()));
@@ -658,6 +667,18 @@ public class UI {
         // Drawing Dashboard
         Dashboard dashboard = new Dashboard(gamePanel);
         dashboard.draw(graphics2d);
+    }
+
+    private void drawLoadingScreen() {
+        gamePanel.setBackground(ColorPalette.dark_grey);
+        graphics2d.setColor(Color.decode("#39352B"));
+        graphics2d.setFont(upheavtt_title.deriveFont(61f));
+        graphics2d.drawString(loadingText, UtilityTool.getXForCenterOfText(loadingText, gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText, gamePanel, graphics2d));
+    }
+
+    // Laoding message setter
+    public void setLoadingMessage(String message) {
+        this.loadingText = message;
     }
 
     // Font getter
