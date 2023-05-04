@@ -3,13 +3,18 @@ package graphics;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.ObjectInputStream.GetField;
 import java.util.Arrays;
 
+import javax.security.auth.kerberos.KeyTab;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxUI.KeyHandler;
 
 import entity.Pekerjaan;
 import entity.Sim;
@@ -22,7 +27,7 @@ import main.GamePanel.GameState;
 
 public class UI {
     // Screen settings
-    private final GamePanel gamePanel;
+    private GamePanel gamePanel;
     private Graphics2D graphics2d;
     private Font pixolletta_general, upheavtt_title;
 
@@ -31,13 +36,18 @@ public class UI {
     private int optionSelected = 0;
 
     // Loading screen text
-    private String loadingText = "Loading...";
+    private static String loadingText = "Loading...";
 
     class RectangleButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("UI.RectangleButtonListener.actionPerformed()");
         }
     }
+
+    // Action time button
+    private static boolean isActionPopUpOpen = false;
+    private static int increment = 10;
+    private static int actionTime = 0;
 
     public UI (GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -76,12 +86,17 @@ public class UI {
             case HOUSE_GAME_SCREEN:
                 drawHouseGameScreen();
                 break;
-            case LOADING_SCREEN:
-                drawLoadingScreen();
-                break;
+            // case LOADING_SCREEN:
+            //     drawLoadingScreen();
+            //     break;
             default:
                 break;
         }
+        // if (isActionPopUpOpen) {
+        //     drawActionPopUp();
+        // } else {
+        //     actionTime = 0;
+        // }
     }
 
     private void drawTitleScreen() {
@@ -560,6 +575,19 @@ public class UI {
             }
         });
 
+        if (keyHandler.code == KeyEvent.VK_ENTER) {
+            try {
+                Sim sims = new Sim(nameField, optionSelected);
+                gamePanel.addPlayableSims(sims);
+                gamePanel.menuGame.setSimCD(Waktu.getDay());
+                gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
+                gamePanel.removeAll();
+                System.out.println("Load game screen");
+            } catch (Exception e1) {
+                e1.printStackTrace();               
+            }
+        }
+
         // Back button
         BufferedImage backButtonImage = UtilityTool.loadImage("res/image/ui/back button.png");
         graphics2d.drawImage(backButtonImage, 12, 12, gamePanel);
@@ -670,16 +698,82 @@ public class UI {
         dashboard.draw(graphics2d);
     }
 
-    private void drawLoadingScreen() {
-        gamePanel.setBackground(ColorPalette.dark_grey);
-        graphics2d.setColor(Color.decode("#39352B"));
-        graphics2d.setFont(upheavtt_title.deriveFont(61f));
-        graphics2d.drawString(loadingText, UtilityTool.getXForCenterOfText(loadingText, gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText, gamePanel, graphics2d));
+    // Laoding screen
+    // private static void drawLoadingScreen() {
+    //     gamePanel.setBackground(ColorPalette.dark_grey);
+    //     graphics2d.setColor(Color.decode("#39352B"));
+    //     graphics2d.setFont(upheavtt_title.deriveFont(61f));
+    //     graphics2d.drawString(loadingText, UtilityTool.getXForCenterOfText(loadingText, gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText, gamePanel, graphics2d));
+    // }
+
+    // public static void setLoadingMessage(String message) {
+    //     this.loadingText = message;
+    // }
+
+    // Action setter pop-up
+    private void drawActionPopUp() {
+        util.KeyHandler keyHandler = gamePanel.getKeyHandler();
+        if (keyHandler.code == KeyEvent.VK_ESCAPE) {
+            isActionPopUpOpen = false;
+        }
+        if (keyHandler.code == KeyEvent.VK_UP) {
+            actionTime += increment;
+        }
+        if (keyHandler.code == KeyEvent.VK_DOWN) {
+            if (actionTime >= increment) {
+                actionTime -= increment;
+            }
+        }
+        
+        BufferedImage popUpPanel = UtilityTool.loadImage("res/image/ui/action pop up.png");
+        graphics2d.drawImage(popUpPanel, 324, 426, gamePanel);
+
+        String timeText = actionTime + " sec";
+        graphics2d.setColor(ColorPalette.dark_grey);
+        graphics2d.setFont(pixolletta_general.deriveFont(30f));
+        graphics2d.drawString(timeText, 592 - UtilityTool.getTextWidth(timeText, graphics2d), 529);
+
+        JLabel set = new JLabel("Set Action");
+        set.setBounds(633, 428, 53, 67);
+        gamePanel.add(set);
+
+        JLabel cancel = new JLabel("Cancel");
+        cancel.setBounds(633, 497, 53, 69);
+        gamePanel.add(cancel);
+
+        set.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                isActionPopUpOpen = false;
+                System.out.println("Action setter");
+                gamePanel.removeAll();
+            }
+        });
+
+        cancel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                actionTime = -1;
+                isActionPopUpOpen = false;
+                gamePanel.removeAll();
+            }
+        });
     }
 
-    // Laoding message setter
-    public void setLoadingMessage(String message) {
-        this.loadingText = message;
+    public static void openActionPopUp() {
+        isActionPopUpOpen = true;
+    }
+
+    public static boolean isActionPopUpOpen() {
+        return isActionPopUpOpen;
+    }
+
+    public static void setIncrement(int inc) {
+        increment = inc;
+    }
+
+    public static int getActionTime() {
+        return actionTime;
     }
 
     // Font getter
