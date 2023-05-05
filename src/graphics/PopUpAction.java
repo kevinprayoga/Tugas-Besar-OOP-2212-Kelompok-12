@@ -95,21 +95,35 @@ public class PopUpAction {
     }
 
     private void executeAction(String text) {
+        for (Sim s : gamePanel.getPlayableSims()) {
+            s.update(actionTime);
+        }
         switch (text) {
             case "kerja":
                 try{
                     sim.kerja(actionTime);
-                    sim.update(actionTime);
                 } catch(Exception ex){
                     System.out.println(ex.getMessage());
                     
                 }
             case "olahraga":
-
+                try {
+                    sim.olahraga(actionTime);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             case "tidur":
-
+                try {
+                    sim.tidur(actionTime);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             case "meditate":
-
+                try {
+                    sim.meditate(actionTime);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
         }
     }
 }
