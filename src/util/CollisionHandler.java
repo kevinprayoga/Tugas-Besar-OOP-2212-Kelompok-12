@@ -57,6 +57,12 @@ public class CollisionHandler {
             try {
                 Rumah visited = world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize());
                 sims.berkunjung(visited);
+                
+                gamePanel.getGameUI().setLoadingMessage("Sedang berkunjung... ");
+                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                System.out.println("Sedang berkunjung... ");
+
                 // Removing the sim from world
                 world.getSimList().remove(sims);
     

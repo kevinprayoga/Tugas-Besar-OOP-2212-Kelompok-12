@@ -45,7 +45,7 @@ public class Dashboard {
         }
 
         if (gamePanel.getStoreOpened()) {
-            Store store = new Store(gamePanel);
+            StorePainter store = new StorePainter(gamePanel);
             store.draw(graphics2D);
         }
     }

@@ -11,6 +11,7 @@ import entity.Sim;
 import exceptions.NotEnoughKesejahteraan;
 import graphics.UI;
 import main.GamePanel;
+import main.GamePanel.GameState;
 import util.UtilityTool;
 
 public class ActionButton {
@@ -97,7 +98,6 @@ public class ActionButton {
         // Workout button
         text = "Olahraga";
         CustomButton workoutButton = new CustomButton(text);
-        xOffset = 0;    
         workoutButton.draw(graphics2d, x - xOffset, y - yOffset + eatButton.getHeight(graphics2d) + switchJobButton.getHeight(graphics2d) + 20);
 
         JLabel workoutLabel = new JLabel(text);
@@ -108,6 +108,23 @@ public class ActionButton {
             @Override
             public void mouseClicked(MouseEvent e) {
                 UI.setActionText("olahraga");
+            }
+        });
+
+        // Woodworking button
+        text = "Woodworking";
+        CustomButton woodworkingButton = new CustomButton(text);
+        xOffset = 0;
+        woodworkingButton.draw(graphics2d, x - xOffset, y - yOffset + eatButton.getHeight(graphics2d) + switchJobButton.getHeight(graphics2d) + workoutButton.getHeight(graphics2d) + 30);
+
+        JLabel woodworkingLabel = new JLabel(text);
+        woodworkingLabel.setBounds(x - xOffset, y - yOffset + eatButton.getHeight(graphics2d) + switchJobButton.getHeight(graphics2d) + workoutButton.getHeight(graphics2d) + 30, woodworkingButton.getWidth(graphics2d),  woodworkingButton.getHeight(graphics2d));
+        gamePanel.add(woodworkingLabel);
+
+        woodworkingLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Fungsi woodworking
             }
         });
 
@@ -160,6 +177,23 @@ public class ActionButton {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // Fungsi pesta
+                try {
+                    System.out.println("Pesta");
+                    sim.party();
+                    UI.setActionText("pesta");
+                    gamePanel.getGameUI().setLoadingMessage("Sedang Pesta ... ");
+                    gamePanel.setGameState(GameState.LOADING_SCREEN);
+                    gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                    System.out.println("Sedang ... ");
+                    gamePanel.removeAll();
+
+                    // Updating
+                    for (Sim s : gamePanel.getPlayableSims()) {
+                        s.update(120);
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 

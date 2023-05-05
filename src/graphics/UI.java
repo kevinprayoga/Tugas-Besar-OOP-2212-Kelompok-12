@@ -706,10 +706,6 @@ public class UI {
 
     // Laoding screen
     private void drawLoadingScreen() {
-        gamePanel.setBackground(ColorPalette.white);
-        graphics2d.setColor(ColorPalette.dark_grey);
-        graphics2d.setFont(upheavtt_title.deriveFont(61f));
-        graphics2d.drawString(loadingText + Integer.toString(Waktu.getActionTimer()), UtilityTool.getXForCenterOfText(loadingText + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText + " " + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d));
         if (Waktu.getActionTimer() == 0) {
             gamePanel.leastRecentlyUsed.pop();
             System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
@@ -718,6 +714,10 @@ public class UI {
             System.out.println("World screen");
             gamePanel.removeAll();
         } else {
+            gamePanel.setBackground(ColorPalette.white);
+            graphics2d.setColor(ColorPalette.dark_grey);
+            graphics2d.setFont(upheavtt_title.deriveFont(61f));
+            graphics2d.drawString(loadingText + Integer.toString(Waktu.getActionTimer()), UtilityTool.getXForCenterOfText(loadingText + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText + " " + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d));
         }
     }
 

@@ -94,10 +94,6 @@ public class PopUpAction {
     }
 
     private void executeAction(String text) throws Exception{
-        System.out.println(text);
-        for (Sim s : gamePanel.getPlayableSims()) {
-            s.update(actionTime);
-        }
         switch (text) {
             case "kerja":
                 System.out.println("kerja");
@@ -107,15 +103,19 @@ public class PopUpAction {
                 System.out.println("olahraga");
                 sim.olahraga(actionTime);
                 break;
-            case "tidur":
+                case "tidur":
                 System.out.println("tidur");
                 sim.tidur(actionTime);
                 break;
-            case "meditasi":
+                case "meditasi":
                 System.out.println("meditasi");
                 sim.meditate(actionTime);
                 break;
+            }
+            System.out.println(text);
+            for (Sim s : gamePanel.getPlayableSims()) {
+                s.update(actionTime);
+            }
         }
-    }
 }
 
