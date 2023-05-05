@@ -202,13 +202,15 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     // Implementasi aksi aktif
-    public void kerja(int time) throws NotEnoughKesejahteraan, InterruptedException, PekerjaanError {
+    public void kerja(int time) throws NotEnoughKesejahteraan, InterruptedException, PekerjaanError, TimeError {
         if (mood - (time / 30 * 10) <= 0) {
             throw new NotEnoughKesejahteraan("Sim tidak cukup mood untuk bekerja selama itu!");
         } else if (kekenyangan - (time / 30 * 10) <= 0) {
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bekerja selama itu!");
         } else if(timeEmployed < 720 && Waktu.getDay() != 0){
             throw new PekerjaanError("Sim belum cukup lama berada dalam pekerjaan ini untuk mulai bekerja!");
+        } else if(time %120 != 0){
+            throw new TimeError("Waktu harus kelipatan 120!");
         } else {
             status = "kerja";
             Waktu.setActionTimer(time);
