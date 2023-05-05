@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
 import entity.Sim;
-import exceptions.NotEnoughKesejahteraan;
 import main.GamePanel;
 import util.UtilityTool;
 
@@ -74,7 +73,9 @@ public class ActionButton {
             public void mouseClicked(MouseEvent e) {
                 try{
                     sim.kerja(120);
-                    sim.update(120);
+                    for(Sim s:gamePanel.getPlayableSims()){
+                        s.update(120);
+                    }
                 } catch(Exception ex){
                     System.out.println(ex.getMessage());
                     
