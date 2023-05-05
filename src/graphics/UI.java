@@ -569,7 +569,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    Sim sims = new Sim(nameField, optionSelected);
+                    Sim sims = new Sim(nameField, optionSelected, false);
                     gamePanel.addPlayableSims(sims);
                     gamePanel.menuGame.setSimCD(Waktu.getDay());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
@@ -583,7 +583,7 @@ public class UI {
 
         if (keyHandler.code == KeyEvent.VK_ENTER) {
             try {
-                Sim sims = new Sim(nameField, optionSelected);
+                Sim sims = new Sim(nameField, optionSelected, false);
                 gamePanel.addPlayableSims(sims);
                 gamePanel.menuGame.setSimCD(Waktu.getDay());
                 gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
@@ -724,72 +724,6 @@ public class UI {
     public void setLoadingMessage(String message) {
         this.loadingText = message;
     }
-
-    // Action setter pop-up
-    // private void drawActionPopUp() {
-    //     util.KeyHandler keyHandler = gamePanel.getKeyHandler();
-    //     if (keyHandler.code == KeyEvent.VK_ESCAPE) {
-    //         isActionPopUpOpen = false;
-    //     }
-    //     if (keyHandler.code == KeyEvent.VK_UP) {
-    //         actionTime += increment;
-    //     }
-    //     if (keyHandler.code == KeyEvent.VK_DOWN) {
-    //         if (actionTime >= increment) {
-    //             actionTime -= increment;
-    //         }
-    //     }
-        
-    //     BufferedImage popUpPanel = UtilityTool.loadImage("res/image/ui/action pop up.png");
-    //     graphics2d.drawImage(popUpPanel, 324, 426, gamePanel);
-
-    //     String timeText = actionTime + " sec";
-    //     graphics2d.setColor(ColorPalette.dark_grey);
-    //     graphics2d.setFont(pixolletta_general.deriveFont(30f));
-    //     graphics2d.drawString(timeText, 592 - UtilityTool.getTextWidth(timeText, graphics2d), 529);
-
-    //     JLabel set = new JLabel("Set Action");
-    //     set.setBounds(633, 428, 53, 67);
-    //     gamePanel.add(set);
-
-    //     JLabel cancel = new JLabel("Cancel");
-    //     cancel.setBounds(633, 497, 53, 69);
-    //     gamePanel.add(cancel);
-
-    //     set.addMouseListener(new MouseAdapter() {
-    //         @Override
-    //         public void mouseClicked(MouseEvent e) {
-    //             isActionPopUpOpen = false;
-    //             System.out.println("Action setter");
-    //             gamePanel.removeAll();
-    //         }
-    //     });
-
-    //     cancel.addMouseListener(new MouseAdapter() {
-    //         @Override
-    //         public void mouseClicked(MouseEvent e) {
-    //             actionTime = -1;
-    //             isActionPopUpOpen = false;
-    //             gamePanel.removeAll();
-    //         }
-    //     });
-    // }
-
-    // public static void openActionPopUp() {
-    //     isActionPopUpOpen = true;
-    // }
-
-    // public static boolean isActionPopUpOpen() {
-    //     return isActionPopUpOpen;
-    // }
-
-    // public static void setIncrement(int inc) {
-    //     increment = inc;
-    // }
-
-    // public static int getActionTime() {
-    //     return actionTime;
-    // }
 
     public static void setActionText(String text) {
         actionText = text;

@@ -22,6 +22,8 @@ public class HousePainter {
     private final BufferedImage addRoom = UtilityTool.loadImage("res/image/house/Add Room.png");
     private final BufferedImage sideUpperWall = UtilityTool.loadImage("res/image/house/Side Upper Wall.png");
 
+    private int initX = 60, initY = 68;
+
     public HousePainter(Rumah house, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.house = house;
@@ -34,10 +36,10 @@ public class HousePainter {
         // Creating build button
         class BuildButton {
             public void draw(Graphics2D graphics2d, int x, int y) {
-                graphics2d.drawImage(addRoom, x, y, gamePanel);
+                graphics2d.drawImage(addRoom, initX + x * 100 + 30, initY + y * 96 + 50, gamePanel);
 
                 JLabel buildButton = new JLabel("Build");
-                buildButton.setBounds(x, y, addRoom.getWidth(), addRoom.getHeight());
+                buildButton.setBounds(initX + x * 100 + 30, initY + y * 96 + 50, addRoom.getWidth(), addRoom.getHeight());
                 gamePanel.add(buildButton);
 
                 buildButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -51,7 +53,6 @@ public class HousePainter {
         }
 
 
-        int initX = 60, initY = 68;
         gamePanel.setBackground(Color.decode("#211F1B"));
         // Draw The Room
         for (int i = 0; i < house.getDimensi().getLength(); i++) {
@@ -63,7 +64,7 @@ public class HousePainter {
                     if (house.isBuildMode() && house.getOwner().equals(gamePanel.getPlayedSims().getSims())) {
                         if (roomBuild.get(i, j) == 1) {
                             BuildButton buildButton = new BuildButton();
-                            buildButton.draw(graphics2d, initX + j * 100 + 30, initY + i * 96 + 50);
+                            buildButton.draw(graphics2d, i, j);
                         }
                     }
                 }

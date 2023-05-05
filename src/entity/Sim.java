@@ -52,7 +52,7 @@ public class Sim implements AksiAktif, AksiPasif {
     private Produk pembelianProduk;
 
     // Konstruktor
-    public Sim(String nama, int charType) throws NameNotFoundException {
+    public Sim(String nama, int charType, boolean isFromLoader) throws NameNotFoundException {
 
         if (nama.length() < 3) {
             throw new NameNotFoundException("Name can not be null!");
@@ -71,6 +71,13 @@ public class Sim implements AksiAktif, AksiPasif {
 
         inventory = new Inventory();
         this.jobPrinter = new PekerjaanPrinter();
+
+        if (!isFromLoader) {
+            inventory.addItem(new NonMakanan("Kasur Single Size"));
+            inventory.addItem(new NonMakanan("Toilet"));
+            inventory.addItem(new NonMakanan("Kompor Gas"));
+            inventory.addItem(new NonMakanan("Meja dan Kursi"));
+        }
     }
 
     // Setter
