@@ -126,9 +126,18 @@ public class PopUpAction {
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
-            } else if (text.equals("meditasi")){
+            } else if (text.equals("meditate")){
                 try {
                     sim.meditate(actionTime);
+                    for(Sim s: gamePanel.getPlayableSims()){
+                        s.update(actionTime);
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            } else if (text.equals("party")){
+                try {
+                    sim.party();
                     for(Sim s: gamePanel.getPlayableSims()){
                         s.update(actionTime);
                     }
