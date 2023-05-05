@@ -4,7 +4,7 @@ public class Waktu {
     private static int time = 0;
     private static int remainTime = 720;
     private static int day = 0;
-    private static int timeDelay = 10;
+    private static int timeDelay = 100;
     private static int actionTimer;
 
     public static int getTime() {
