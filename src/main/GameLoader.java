@@ -14,6 +14,10 @@ public class GameLoader {
     }
 
     public void loadGame(int opt) {
+        System.out.println("Load Game");
+
+        gamePanel.reset();
+
         gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
         gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
         System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
