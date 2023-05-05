@@ -148,7 +148,7 @@ public class Rumah {
         nameUpgrade = nama;
     }
 
-    public Ruangan createRuangan(int x, int y, String roomName) {
+    public Ruangan createRuangan(int y, int x, String roomName) {
         Ruangan room = new Ruangan();
         setNewRuangan(x, y, room);
         roomBuild.set(x, y, 2); // jika terisi ruangan

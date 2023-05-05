@@ -413,15 +413,15 @@ public class Sim implements AksiAktif, AksiPasif {
 
     // Implementasi aksi pasif
     public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException,ExistingOrder{
-        if (uang < 1500) {
+        if (uang < 10) {
             throw new TidakCukupItem("Tidak cukup uang untuk Upgrade Rumah!");
         } else if(myRumah.getUpgradeTimer() != -1){
             throw new ExistingOrder("Sudah ada proses upgrade rumah pada rumah ini!");
         } else {
             try {
-                if (myRumah.getRoomBuild().get(x, y) == 2) { // meriksa kalau 2 artinya ruangan available untuk diisi
-                    uang -= 1500;
-                    myRumah.setUpgradeTimer(1080);
+                if (myRumah.getRoomBuild().get(x, y) == 1) { // meriksa kalau 2 artinya ruangan available untuk diisi
+                    uang -= 10;
+                    myRumah.setUpgradeTimer(120);
                     myRumah.setUpgradeLokasi(x, y);
                     myRumah.setUpgradeNama(nama);
                 }
