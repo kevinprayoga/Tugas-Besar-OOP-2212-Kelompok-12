@@ -46,6 +46,7 @@ public class Waktu {
                 }
             }
         });
+        thread.start();
         
     }
 }
