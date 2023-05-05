@@ -6,9 +6,14 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public int arrowCode;
     public int code;
+    
     private String input = "";
     private int inputLimit;
+    private int read;
+
+    private boolean isPressed = false;
 
     public KeyHandler(int inputLimit) {
         this.inputLimit = inputLimit;
@@ -21,54 +26,70 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
     }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
-        code = e.getKeyCode();
+        read = e.getKeyCode();
         char keyChar = e.getKeyChar();
+        
+        if (!isPressed) {
+            arrowCode = e.getKeyCode();
+            isPressed = true;
+        }
+
+        code = read;
+        if (read == KeyEvent.VK_UP || read == KeyEvent.VK_DOWN || read == KeyEvent.VK_LEFT || read == KeyEvent.VK_RIGHT) {
+            arrowCode = read;
+        }
+
         if ((Character.isLetter(keyChar) || keyChar == ' ') && input.length() < inputLimit && !Character.isISOControl(keyChar)) {
             input += keyChar;
         }
-        if (code == 8 && input.length() > 0) {
+        if (read == 8 && input.length() > 0) {
             input = input.substring(0, input.length() - 1);
         }
 
-        // System.out.println(code); // Key debugger
+        // System.out.println(read); // Key debugger
 
-        if (code == KeyEvent.VK_W) {
+        if (read == KeyEvent.VK_W) {
             upPressed = true;
         }
 
-        if (code == KeyEvent.VK_S) {
+        if (read == KeyEvent.VK_S) {
             downPressed = true;
         }
 
-        if (code == KeyEvent.VK_A) {
+        if (read == KeyEvent.VK_A) {
             leftPressed = true;
         }
 
-        if (code == KeyEvent.VK_D) {
+        if (read == KeyEvent.VK_D) {
             rightPressed = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int code = e.getKeyCode();
+        int read = e.getKeyCode();
+        arrowCode = 0;
 
-        if (code == KeyEvent.VK_W) {
+        if (read == code) {
+            code = KeyEvent.VK_UNDEFINED;
+        }
+
+        if (read == KeyEvent.VK_W) {
             upPressed = false;
         }
 
-        if (code == KeyEvent.VK_S) {
+        if (read == KeyEvent.VK_S) {
             downPressed = false;
         }
 
-        if (code == KeyEvent.VK_A) {
+        if (read == KeyEvent.VK_A) {
             leftPressed = false;
         }
 
-        if (code == KeyEvent.VK_D) {
+        if (read == KeyEvent.VK_D) {
             rightPressed = false;
         }
     }

@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import entity.Rumah;
 import entity.Sim;
+import entity.Waktu;
 import entity.World;
 import graphics.HousePainter;
 import graphics.PlayedSims;
