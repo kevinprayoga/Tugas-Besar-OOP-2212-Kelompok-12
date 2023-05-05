@@ -395,7 +395,7 @@ public class Sim implements AksiAktif, AksiPasif {
         if (uang < 100) {
             throw new TidakCukupItem("Tidak cukup uang untuk party!");
         } else {
-            uang -= 500;
+            uang -= 200;
             status = "party";
             Waktu.setActionTimer(120);
             Waktu.addTime();
