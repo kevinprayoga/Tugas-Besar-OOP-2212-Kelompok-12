@@ -98,32 +98,44 @@ public class PopUpAction {
         for (Sim s : gamePanel.getPlayableSims()) {
             s.update(actionTime);
         }
-        switch (text) {
-            case "kerja":
+        if (text.equals("kerja")){
                 try{
                     sim.kerja(actionTime);
+                    for(Sim s: gamePanel.getPlayableSims()){
+                        s.update(actionTime);
+                    }
                 } catch(Exception ex){
                     System.out.println(ex.getMessage());
                     
                 }
-            case "olahraga":
+        } else if (text.equals("olahraga")){
                 try {
                     sim.olahraga(actionTime);
+                    for(Sim s: gamePanel.getPlayableSims()){
+                        s.update(actionTime);
+                    }
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
-            case "tidur":
+            } else if (text.equals("tidur")){
                 try {
                     sim.tidur(actionTime);
+                    for(Sim s: gamePanel.getPlayableSims()){
+                        s.update(actionTime);
+                    }
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
-            case "meditate":
+            } else if (text.equals("meditasi")){
                 try {
                     sim.meditate(actionTime);
+                    for(Sim s: gamePanel.getPlayableSims()){
+                        s.update(actionTime);
+                    }
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
+            }
         }
     }
-}
+
