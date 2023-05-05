@@ -211,12 +211,13 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new PekerjaanError("Sim belum cukup lama berada dalam pekerjaan ini untuk mulai bekerja!");
         } else {
             status = "kerja";
+            Waktu.setActionTimer(time);
             for (int i = 0; i < time; i++) {
                 Waktu.addSecond();
             }
             status = "";
-            mood -= (time / 30 * 10);
-            kekenyangan -= (time / 30 * 10);
+            mood += (time / 30 * 10);
+            kekenyangan += (time / 30 * 10);
             gajiBank += time;
             uang += ((gajiBank / 240) * (jobPrinter.getTestPekerjaan().getGaji())) * ((100 + getBonusInc()) / 100);
             gajiBank = gajiBank % 240;
