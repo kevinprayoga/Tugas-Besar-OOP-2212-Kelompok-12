@@ -107,7 +107,7 @@ public class ActionButton {
         workoutLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi olahraga
+                UI.setActionText("olahraga");
             }
         });
 
@@ -142,7 +142,7 @@ public class ActionButton {
         meditationLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi meditasi
+                UI.setActionText("meditate");
             }
         });
 

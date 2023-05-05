@@ -228,9 +228,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk berolahraga selama itu!");
         } else {
             status = "olahraga";
-            for (int i = 0; i < time; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             status = "";
             mood += (time / 20 * 10);
             kekenyangan -= (time / 20 * 5);
@@ -243,9 +241,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new ItemError("Sim tidak sedang berada di depan tempat tidur!");
         } else {
             status = "tidur";
-            for (int i = 0; i < time; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             status = "";
             mood += (time / 240 * 30);
             kesehatan += (time / 240 * 20);
@@ -260,9 +256,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new ItemError("Sim tidak sedang berada di depan meja kursi!");
         } else {
             status = "makan";
-            for (int i = 0; i < 30; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             status = "";
             kekenyangan += m.getKekenyangan();
         }
@@ -275,9 +269,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new NotEnoughKesejahteraan("Tidak cukup kekenyangan untuk berkunjung!");
         } else {
             status = "berkunjung";
-            for (int i = 0; i < 30; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             status = "";
             kekenyangan -= time;
             mood += time;
@@ -292,9 +284,7 @@ public class Sim implements AksiAktif, AksiPasif {
                 throw new NotEnoughKesejahteraan("Sim tidak cukup makan untuk buang air!");
             } else {
                 status = "buang air";
-                for (int i = 0; i < 30; i++) {
-                    Waktu.addTime();
-                }
+                Waktu.addTime();
                 status = "";
                 kekenyangan -= 20;
                 mood += 10;
@@ -326,9 +316,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             wood -= item.getHarga();
             status = "woodworking";
-            for (int i = 0; i < item.getHarga() / 2; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             mood += 10;
             inventory.addItem(item);
         }
@@ -339,9 +327,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new ItemError("Sim sedang tidak di shower!");
         } else {
             status = "bath";
-            for (int i = 0; i < 10; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             mood += 5;
             kesehatan += 5;
         }
@@ -352,9 +338,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bermeditasi selama itu!");
         } else {
             status = "meditasi";
-            for (int i = 0; i < time; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             mood += (time / 30 * 10);
             kesehatan += (time / 30 * 5);
             kekenyangan -= (time / 30 * 5);
@@ -366,9 +350,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new ItemError("Sim sedang tidak di depan rak buku!");
         } else {
             status = "read";
-            for (int i = 0; i < 20; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             int randomnum = rand.nextInt(5);
             if (randomnum == 4) {
                 bonusInc += 10;
@@ -383,9 +365,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             uang -= 500;
             status = "party";
-            for (int i = 0; i < 120; i++) {
-                Waktu.addTime();
-            }
+            Waktu.addTime();
             kekenyangan += 80;
             mood += 80;
         }
