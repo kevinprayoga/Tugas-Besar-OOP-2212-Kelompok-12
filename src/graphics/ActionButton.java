@@ -37,7 +37,7 @@ public class ActionButton {
             graphics2d.fillRect(x, y, UtilityTool.getTextWidth(text, graphics2d) + 2 * (sideMargin + stroke), UtilityTool.getTextHeight(text, graphics2d) + 2 * (topMargin + stroke));
             graphics2d.setColor(Color.WHITE);
             graphics2d.fillRect(x + stroke, y + stroke, UtilityTool.getTextWidth(text, graphics2d) + 2 * sideMargin, UtilityTool.getTextHeight(text, graphics2d) + 2 * topMargin);
-            graphics2d.setFont(gamePanel.getGameUI().getGeneralFont().deriveFont(10f));
+            graphics2d.setFont(UI.getGeneralFont().deriveFont(10f));
             graphics2d.setColor(ColorPalette.dark_grey);
             graphics2d.drawString(text, x + sideMargin + stroke, y + topMargin + stroke + UtilityTool.getTextHeight(text, graphics2d));
         }
@@ -142,7 +142,7 @@ public class ActionButton {
         meditationLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("meditate");
+                UI.setActionText("meditasi");
             }
         });
 
