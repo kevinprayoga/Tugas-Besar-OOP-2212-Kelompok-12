@@ -60,7 +60,7 @@ public class ActionButton {
     }
 
     public void drawSimsButton(Graphics2D graphics2d, int x, int y) {
-        int xOffset = 0, yOffset = 40;
+        int xOffset = 0, yOffset = 56;
         // Right side
         // Work Button
         String text = "Pergi Kerja";

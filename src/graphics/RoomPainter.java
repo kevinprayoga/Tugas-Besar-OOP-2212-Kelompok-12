@@ -21,16 +21,20 @@ public class RoomPainter {
     private Matrix<Boolean> roomWall;
     private ArrayList<Sim> sims;
 
+    private boolean isBuildMode;
+
     private final BufferedImage roomTiles = UtilityTool.loadImage("res/image/house/Room Tiles.png");
+    private final BufferedImage availTiles = UtilityTool.loadImage("res/image/house/Hover Tiles.png");
     private final BufferedImage wall = UtilityTool.loadImage("res/image/house/Wall.png"); 
 
-    public RoomPainter(Ruangan ruangan, Posisi posisi, GamePanel gamePanel) {
+    public RoomPainter(Ruangan ruangan, Posisi posisi, GamePanel gamePanel, boolean isBuildMode) {
         this.gamePanel = gamePanel;
         this.ruangan = ruangan;
         this.posisi = posisi;
         matObjek = ruangan.getPetaBarang();
         collisionMap = ruangan.getCollisionMap();
         sims = ruangan.getSimList();
+        this.isBuildMode = isBuildMode;
     }
 
     public void draw(Graphics2D graphics2d, int x, int y) {
@@ -40,6 +44,8 @@ public class RoomPainter {
                 if (matObjek.get(i, j) != null) {
                     ObjekPainter objekPainter = new ObjekPainter(matObjek.get(i, j));
                     objekPainter.draw(graphics2d, x + i * 16 + 4, y + j * 16 + 24);
+                } else if (isBuildMode) {
+                    graphics2d.drawImage(availTiles, x + i * 16 + 4, y + j * 16 + 24, gamePanel);
                 }
             }
         }

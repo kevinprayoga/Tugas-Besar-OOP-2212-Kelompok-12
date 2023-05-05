@@ -58,7 +58,7 @@ public class HousePainter {
         for (int i = 0; i < house.getDimensi().getLength(); i++) {
             for (int j = 0; j < house.getDimensi().getWidth(); j++) {
                 if (house.getRoomBuild().get(i, j) == 2) {
-                    RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), new Posisi(i, j), gamePanel);
+                    RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), new Posisi(i, j), gamePanel, house.isBuildMode());
                     roomPainter.draw(graphics2d, initX + j * 100, initY + i * 96);
                 } else {
                     if (house.isBuildMode() && house.getOwner().equals(gamePanel.getPlayedSims().getSims())) {
