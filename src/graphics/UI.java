@@ -40,7 +40,7 @@ public class UI {
     private static String actionText = "";
 
     // Loading screen text
-    private static String loadingText = "Loading...";
+    private String loadingText = "Loading...";
 
     class RectangleButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -90,9 +90,9 @@ public class UI {
             case HOUSE_GAME_SCREEN:
                 drawHouseGameScreen();
                 break;
-            // case LOADING_SCREEN:
-            //     drawLoadingScreen();
-            //     break;
+            case LOADING_SCREEN:
+                drawLoadingScreen();
+                break;
             default:
                 break;
         }
@@ -704,16 +704,25 @@ public class UI {
     }
 
     // Laoding screen
-    // private static void drawLoadingScreen() {
-    //     gamePanel.setBackground(ColorPalette.dark_grey);
-    //     graphics2d.setColor(Color.decode("#39352B"));
-    //     graphics2d.setFont(upheavtt_title.deriveFont(61f));
-    //     graphics2d.drawString(loadingText, UtilityTool.getXForCenterOfText(loadingText, gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText, gamePanel, graphics2d));
-    // }
+    private void drawLoadingScreen() {
+        gamePanel.setBackground(ColorPalette.white);
+        graphics2d.setColor(ColorPalette.dark_grey);
+        graphics2d.setFont(upheavtt_title.deriveFont(61f));
+        graphics2d.drawString(loadingText + Integer.toString(Waktu.getActionTimer()), UtilityTool.getXForCenterOfText(loadingText + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText + " " + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d));
+        if (Waktu.getActionTimer() == 0) {
+            gamePanel.leastRecentlyUsed.pop();
+            System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+            GameState previousState = gamePanel.leastRecentlyUsed.peek();
+            gamePanel.setGameState(previousState);
+            System.out.println("World screen");
+            gamePanel.removeAll();
+        } else {
+        }
+    }
 
-    // public static void setLoadingMessage(String message) {
-    //     this.loadingText = message;
-    // }
+    public void setLoadingMessage(String message) {
+        this.loadingText = message;
+    }
 
     // Action setter pop-up
     // private void drawActionPopUp() {

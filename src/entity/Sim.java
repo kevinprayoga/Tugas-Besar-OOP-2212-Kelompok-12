@@ -212,9 +212,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "kerja";
             Waktu.setActionTimer(time);
-            for (int i = 0; i < time; i++) {
-                Waktu.addSecond();
-            }
+            Waktu.addTime();
             status = "";
             mood += (time / 30 * 10);
             kekenyangan += (time / 30 * 10);
@@ -231,7 +229,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "olahraga";
             for (int i = 0; i < time; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             status = "";
             mood += (time / 20 * 10);
@@ -246,7 +244,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "tidur";
             for (int i = 0; i < time; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             status = "";
             mood += (time / 240 * 30);
@@ -263,7 +261,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "makan";
             for (int i = 0; i < 30; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             status = "";
             kekenyangan += m.getKekenyangan();
@@ -278,7 +276,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "berkunjung";
             for (int i = 0; i < 30; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             status = "";
             kekenyangan -= time;
@@ -295,7 +293,7 @@ public class Sim implements AksiAktif, AksiPasif {
             } else {
                 status = "buang air";
                 for (int i = 0; i < 30; i++) {
-                    Waktu.addSecond();
+                    Waktu.addTime();
                 }
                 status = "";
                 kekenyangan -= 20;
@@ -329,7 +327,7 @@ public class Sim implements AksiAktif, AksiPasif {
             wood -= item.getHarga();
             status = "woodworking";
             for (int i = 0; i < item.getHarga() / 2; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             mood += 10;
             inventory.addItem(item);
@@ -342,7 +340,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "bath";
             for (int i = 0; i < 10; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             mood += 5;
             kesehatan += 5;
@@ -355,7 +353,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "meditasi";
             for (int i = 0; i < time; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             mood += (time / 30 * 10);
             kesehatan += (time / 30 * 5);
@@ -369,7 +367,7 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             status = "read";
             for (int i = 0; i < 20; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             int randomnum = rand.nextInt(5);
             if (randomnum == 4) {
@@ -386,7 +384,7 @@ public class Sim implements AksiAktif, AksiPasif {
             uang -= 500;
             status = "party";
             for (int i = 0; i < 120; i++) {
-                Waktu.addSecond();
+                Waktu.addTime();
             }
             kekenyangan += 80;
             mood += 80;

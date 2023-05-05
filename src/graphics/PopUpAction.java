@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 import entity.Sim;
 import main.GamePanel;
+import main.GamePanel.GameState;
 import util.UtilityTool;
 
 public class PopUpAction {
@@ -34,6 +35,10 @@ public class PopUpAction {
         }
         if (keyHandler.code == KeyEvent.VK_ENTER) {
             UI.setActionText("");
+            gamePanel.getGameUI().setLoadingMessage("Sedang " + text + "... ");
+            gamePanel.setGameState(GameState.LOADING_SCREEN);
+            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+            System.out.println("Sedang " + text + "... ");
             executeAction(text);
             gamePanel.removeAll();
             timeRead = 0;
@@ -70,6 +75,9 @@ public class PopUpAction {
             @Override
             public void mouseClicked(MouseEvent e) {
                 UI.setActionText("");
+                gamePanel.getGameUI().setLoadingMessage("Sedang " + text + "... ");
+                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                System.out.println("Sedang " + text + "... ");
                 executeAction(text);
                 gamePanel.removeAll();
                 timeRead = 0;
