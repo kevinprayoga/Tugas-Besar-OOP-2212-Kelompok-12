@@ -96,10 +96,11 @@ public class UI {
             default:
                 break;
         }
-        if (actionText != "") {
+        if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur") {
             PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
             popUpAction.draw(graphics2d);
-        } else {
+        } else if (actionText != "") {
+            loadingText = "Sedang " + actionText + "... ";
             actionTime = 0;
         }
     }

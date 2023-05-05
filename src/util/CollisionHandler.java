@@ -9,6 +9,7 @@ import javax.swing.plaf.nimbus.State;
 
 import entity.Matrix;
 import entity.Posisi;
+import entity.Rumah;
 import main.GamePanel;
 import main.GamePanel.GameState;
 
@@ -53,21 +54,29 @@ public class CollisionHandler {
         if (houseMap.get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize())) {
             System.out.println("Collide with house");
 
-            // Removing the sim from world
-            world.getSimList().remove(sims);
-
-            // Setting game to the house screen
-            gamePanel.setHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
-            gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
-            gamePanel.leastRecentlyUsed.push(GamePanel.GameState.HOUSE_GAME_SCREEN);
-            System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
-            gamePanel.isHouseSelected = true;
-            
-            // Moving sim
-            sims.setCurrentPosition("Rumah");
-            gamePanel.getHouse().addSim(sims);
-            gamePanel.getPlayedSims().reset();
-            roomX = 4; roomY = 4;
+            try {
+                Rumah visited = world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize());
+                sims.berkunjung(visited);
+                // Removing the sim from world
+                world.getSimList().remove(sims);
+    
+                // Setting game to the house screen
+                gamePanel.setHouse(visited);
+                gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GamePanel.GameState.HOUSE_GAME_SCREEN);
+                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+                gamePanel.isHouseSelected = true;
+                
+                // Moving sim
+                roomX = 4; roomY = 4;
+                sims.setCurrentPosition("Rumah");
+                sims.setCurrentHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
+                sims.setRuangan(visited.getMatRoom().get(roomX, roomY));
+                gamePanel.getHouse().addSim(sims);
+                gamePanel.getPlayedSims().reset();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             
             return true;
         }
