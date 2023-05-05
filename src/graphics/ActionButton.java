@@ -76,19 +76,7 @@ public class ActionButton {
         eatLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-<<<<<<< HEAD
                 UI.setActionText("kerja");
-=======
-                try{
-                    sim.kerja(120);
-                    for(Sim s:gamePanel.getPlayableSims()){
-                        s.update(120);
-                    }
-                } catch(Exception ex){
-                    System.out.println(ex.getMessage());
-                    
-                }
->>>>>>> af3b664472e68f08f780451bf0fb1e60c2e0401c
             }
         });
 
