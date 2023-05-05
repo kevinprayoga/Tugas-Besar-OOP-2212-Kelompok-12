@@ -5,6 +5,7 @@ public class Waktu {
     private static int remainTime = 720;
     private static int day = 0;
     private static int timeDelay = 100;
+    private static int actionTimer;
 
     public static int getTime() {
         return time;
@@ -22,11 +23,33 @@ public class Waktu {
         return day;
     }
 
-    public static void addSecond() throws InterruptedException{
-        Thread.sleep(timeDelay);
-        time += 1;
-        day += time/720;
-        time = time %720;
-        remainTime = 720 - time;
+    public static int getActionTimer(){
+        return actionTimer;
+    }
+
+    public static void setActionTimer(int time){
+        actionTimer = time;
+    }
+
+    public static void addTime() throws InterruptedException{
+        Thread thread = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    while (actionTimer > 0) {
+                        System.out.println(actionTimer);
+                        Thread.sleep(timeDelay);
+                        time += 1;
+                        day += time/720;
+                        time = time %720;
+                        remainTime = 720 - time;
+                        actionTimer -= 1;
+                    }
+                } catch (Exception e){
+                    e.getMessage();
+                }
+            }
+        });
+        thread.start();
+        
     }
 }

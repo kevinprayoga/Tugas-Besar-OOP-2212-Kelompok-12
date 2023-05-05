@@ -2,15 +2,16 @@ package entity;
 
 import exceptions.ItemError;
 import exceptions.TidakCukupItem;
+import exceptions.TimeError;
 import exceptions.NotEnoughKesejahteraan;
 import exceptions.PekerjaanError;
 
 public interface AksiAktif {
-    public void kerja(int time) throws NotEnoughKesejahteraan,InterruptedException,PekerjaanError;
+    public void kerja(int time) throws NotEnoughKesejahteraan,InterruptedException,PekerjaanError, TimeError;
 
-    public void olahraga(int time) throws NotEnoughKesejahteraan,InterruptedException;
+    public void olahraga(int time) throws NotEnoughKesejahteraan,InterruptedException,TimeError;
 
-    public void tidur(int time) throws NotEnoughKesejahteraan,ItemError,InterruptedException;
+    public void tidur(int time) throws NotEnoughKesejahteraan,ItemError,InterruptedException,TimeError;
 
     public void makan(Makanan m) throws ItemError,InterruptedException;
 

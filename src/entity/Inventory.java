@@ -132,6 +132,26 @@ public class Inventory {
         return inventory; // mengembalikan HashMap
     }
 
+    public int getItemValue(String item) {
+        /*
+            * fungsi ini akan mengambil jumlah dari sebuah item dari inventory.
+            * setiap kali fungsi ini dijalankan, banyaknya item yang bersangkutan
+            * dalam inventory akan dikembalikan.
+        */
+        if (!listmakanan.contains(item) && !listbahanmakanan.contains(item) && !listnonmakanan.contains(item)) {
+            // barang yang ingin diambil bukan Produk yang tersedia
+            System.out.println("Item isn't available!");
+            return -1; // mengembalikan nilai negatif yang sebanding dengan null
+        } else {
+            if (!inventory.containsKey(item)) {
+                return 0;
+            } else {
+                return inventory.get(item);
+            }
+        }
+
+    }
+
     public void printInventory() {
         /*
          * fungsi ini akan menampilkan isi dari inventory.
