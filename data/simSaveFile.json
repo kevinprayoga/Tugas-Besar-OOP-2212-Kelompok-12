@@ -1,0 +1,34 @@
+[
+    {
+        "SIM": {
+            "namaLengkap": "Binomo",
+            "charType": 1,
+            "jobPrinter": "BadutSulap",
+            "uang": 100,
+            "inventory": {
+                "KasurSingleBed": 5,
+                "Toilet": 100
+            },
+            "kekenyangan": 60,
+            "mood": 70,
+            "kesehatan": 80,
+            "wood": 69,
+            "totalWaktuKerja": 100,
+            "timeEmployed": 100,
+            "timeTidur": 100,
+            "dayTidur": 100,
+            "kesejahAltTidur": true,
+            "timeMakan": -1,
+            "dayMakan": 100,
+            "kesejahAltBAir": true,
+            "startTimeVacation": 10,
+            "startDayVacation": 20,
+            "bonusInc": 10,
+            "rumah": {
+                "x": 10,
+                "y": 10
+            },
+            "gajiBank": 20
+        }
+    }
+]
