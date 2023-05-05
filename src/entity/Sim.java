@@ -163,6 +163,42 @@ public class Sim implements AksiAktif, AksiPasif {
         return wood;
     }
 
+    public int getTimeTidur() {
+        return timeTidur;
+    }
+
+    public int getDayTidur() {
+        return dayTidur;
+    }
+
+    public boolean getKesejahAltTidur() {
+        return kesejahAltTidur;
+    }
+
+    public int getTimeMakan() {
+        return timeMakan;
+    }
+
+    public int getDayMakan() {
+        return dayMakan;
+    }
+
+    public boolean getKesejahAltBAir() {
+        return kesejahAltBAir;
+    }
+
+    public int getStartTimeVacation() {
+        return startDayVacation;
+    }
+
+    public int getStartDayVacation() {
+        return startDayVacation;
+    }
+
+    public int getGajiBank() {
+        return gajiBank;
+    }
+
     public void setMinusUang(int mines) {
         uang -= mines;
     }
