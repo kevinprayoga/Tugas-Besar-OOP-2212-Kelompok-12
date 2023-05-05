@@ -27,7 +27,7 @@ public interface AksiAktif {
 
     public void bath() throws ItemError,InterruptedException;
 
-    public void meditate(int time) throws NotEnoughKesejahteraan,InterruptedException;
+    public void meditate(int time) throws NotEnoughKesejahteraan,InterruptedException, TimeError;
 
     public void read() throws InterruptedException,ItemError;
 

@@ -347,9 +347,11 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void meditate(int time) throws NotEnoughKesejahteraan, InterruptedException {
+    public void meditate(int time) throws NotEnoughKesejahteraan, InterruptedException, TimeError {
         if (kekenyangan - (time / 30 * 5) <= 0) {
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bermeditasi selama itu!");
+        } else if(time%30 != 0){
+            throw new TimeError("Meditasi harus dilakukan dengan waktu kelipatan 30!");
         } else {
             status = "meditasi";
             Waktu.setActionTimer(time);
