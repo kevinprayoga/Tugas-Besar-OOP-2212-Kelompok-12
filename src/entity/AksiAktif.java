@@ -9,9 +9,9 @@ import exceptions.PekerjaanError;
 public interface AksiAktif {
     public void kerja(int time) throws NotEnoughKesejahteraan,InterruptedException,PekerjaanError, TimeError;
 
-    public void olahraga(int time) throws NotEnoughKesejahteraan,InterruptedException;
+    public void olahraga(int time) throws NotEnoughKesejahteraan,InterruptedException,TimeError;
 
-    public void tidur(int time) throws NotEnoughKesejahteraan,ItemError,InterruptedException;
+    public void tidur(int time) throws NotEnoughKesejahteraan,ItemError,InterruptedException,TimeError;
 
     public void makan(Makanan m) throws ItemError,InterruptedException;
 
@@ -27,7 +27,7 @@ public interface AksiAktif {
 
     public void bath() throws ItemError,InterruptedException;
 
-    public void meditate(int time) throws NotEnoughKesejahteraan,InterruptedException;
+    public void meditate(int time) throws NotEnoughKesejahteraan,InterruptedException, TimeError;
 
     public void read() throws InterruptedException,ItemError;
 
