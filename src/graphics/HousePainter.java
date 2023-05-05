@@ -45,7 +45,11 @@ public class HousePainter {
                 buildButton.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
                         System.out.println("Building room");
-                        // Code
+                        try{
+                        gamePanel.getPlayedSims().getSims().upgradeRumah(x,y,"AAAA");
+                        } catch(Exception e){
+                            e.getMessage();
+                        }
                         gamePanel.removeAll();
                     }
                 });
