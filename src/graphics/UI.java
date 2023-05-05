@@ -29,11 +29,15 @@ public class UI {
     // Screen settings
     private GamePanel gamePanel;
     private Graphics2D graphics2d;
-    private Font pixolletta_general, upheavtt_title;
+    private static Font pixolletta_general;
+    private static Font upheavtt_title;
 
     // Character selection screen
     private String nameField;
     private int optionSelected = 0;
+
+    // Action pop-up
+    private static String actionText = "";
 
     // Loading screen text
     private static String loadingText = "Loading...";
@@ -92,11 +96,12 @@ public class UI {
             default:
                 break;
         }
-        // if (isActionPopUpOpen) {
-        //     drawActionPopUp();
-        // } else {
-        //     actionTime = 0;
-        // }
+        if (actionText != "") {
+            PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
+            popUpAction.draw(graphics2d);
+        } else {
+            actionTime = 0;
+        }
     }
 
     private void drawTitleScreen() {
@@ -711,77 +716,81 @@ public class UI {
     // }
 
     // Action setter pop-up
-    private void drawActionPopUp() {
-        util.KeyHandler keyHandler = gamePanel.getKeyHandler();
-        if (keyHandler.code == KeyEvent.VK_ESCAPE) {
-            isActionPopUpOpen = false;
-        }
-        if (keyHandler.code == KeyEvent.VK_UP) {
-            actionTime += increment;
-        }
-        if (keyHandler.code == KeyEvent.VK_DOWN) {
-            if (actionTime >= increment) {
-                actionTime -= increment;
-            }
-        }
+    // private void drawActionPopUp() {
+    //     util.KeyHandler keyHandler = gamePanel.getKeyHandler();
+    //     if (keyHandler.code == KeyEvent.VK_ESCAPE) {
+    //         isActionPopUpOpen = false;
+    //     }
+    //     if (keyHandler.code == KeyEvent.VK_UP) {
+    //         actionTime += increment;
+    //     }
+    //     if (keyHandler.code == KeyEvent.VK_DOWN) {
+    //         if (actionTime >= increment) {
+    //             actionTime -= increment;
+    //         }
+    //     }
         
-        BufferedImage popUpPanel = UtilityTool.loadImage("res/image/ui/action pop up.png");
-        graphics2d.drawImage(popUpPanel, 324, 426, gamePanel);
+    //     BufferedImage popUpPanel = UtilityTool.loadImage("res/image/ui/action pop up.png");
+    //     graphics2d.drawImage(popUpPanel, 324, 426, gamePanel);
 
-        String timeText = actionTime + " sec";
-        graphics2d.setColor(ColorPalette.dark_grey);
-        graphics2d.setFont(pixolletta_general.deriveFont(30f));
-        graphics2d.drawString(timeText, 592 - UtilityTool.getTextWidth(timeText, graphics2d), 529);
+    //     String timeText = actionTime + " sec";
+    //     graphics2d.setColor(ColorPalette.dark_grey);
+    //     graphics2d.setFont(pixolletta_general.deriveFont(30f));
+    //     graphics2d.drawString(timeText, 592 - UtilityTool.getTextWidth(timeText, graphics2d), 529);
 
-        JLabel set = new JLabel("Set Action");
-        set.setBounds(633, 428, 53, 67);
-        gamePanel.add(set);
+    //     JLabel set = new JLabel("Set Action");
+    //     set.setBounds(633, 428, 53, 67);
+    //     gamePanel.add(set);
 
-        JLabel cancel = new JLabel("Cancel");
-        cancel.setBounds(633, 497, 53, 69);
-        gamePanel.add(cancel);
+    //     JLabel cancel = new JLabel("Cancel");
+    //     cancel.setBounds(633, 497, 53, 69);
+    //     gamePanel.add(cancel);
 
-        set.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                isActionPopUpOpen = false;
-                System.out.println("Action setter");
-                gamePanel.removeAll();
-            }
-        });
+    //     set.addMouseListener(new MouseAdapter() {
+    //         @Override
+    //         public void mouseClicked(MouseEvent e) {
+    //             isActionPopUpOpen = false;
+    //             System.out.println("Action setter");
+    //             gamePanel.removeAll();
+    //         }
+    //     });
 
-        cancel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                actionTime = -1;
-                isActionPopUpOpen = false;
-                gamePanel.removeAll();
-            }
-        });
-    }
+    //     cancel.addMouseListener(new MouseAdapter() {
+    //         @Override
+    //         public void mouseClicked(MouseEvent e) {
+    //             actionTime = -1;
+    //             isActionPopUpOpen = false;
+    //             gamePanel.removeAll();
+    //         }
+    //     });
+    // }
 
-    public static void openActionPopUp() {
-        isActionPopUpOpen = true;
-    }
+    // public static void openActionPopUp() {
+    //     isActionPopUpOpen = true;
+    // }
 
-    public static boolean isActionPopUpOpen() {
-        return isActionPopUpOpen;
-    }
+    // public static boolean isActionPopUpOpen() {
+    //     return isActionPopUpOpen;
+    // }
 
-    public static void setIncrement(int inc) {
-        increment = inc;
-    }
+    // public static void setIncrement(int inc) {
+    //     increment = inc;
+    // }
 
-    public static int getActionTime() {
-        return actionTime;
+    // public static int getActionTime() {
+    //     return actionTime;
+    // }
+
+    public static void setActionText(String text) {
+        actionText = text;
     }
 
     // Font getter
-    public Font getTitleFont() {
+    public static Font getTitleFont() {
         return upheavtt_title;
     }
 
-    public Font getGeneralFont() {
+    public static Font getGeneralFont() {
         return pixolletta_general;
     }
 }
