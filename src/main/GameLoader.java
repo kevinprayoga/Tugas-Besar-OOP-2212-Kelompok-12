@@ -7,23 +7,23 @@ import entity.World;
 import main.GamePanel.GameState;
 
 public class GameLoader {
-    private final GamePanel gamePanel;
+    private static GamePanel gamePanel;
+    private static int fileOpt;
 
-    public GameLoader(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
-    public void loadGame(int opt) {
+    public static void loadGame(int opt) {
+        fileOpt = opt;
         gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
         gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
         System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
     }
 
-    public void saveGame(int opt) {
+    public static void saveGame() {
+        
     }
 
 
-    public void newGame(int opt) {
+    public static void newGame(int opt) {
+        fileOpt = opt;
         System.out.println("New game");
         
         gamePanel.reset();
@@ -31,5 +31,9 @@ public class GameLoader {
         gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
         gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
         System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
+    }
+
+    public static void setGamePanel(GamePanel gamePanel) {
+        GameLoader.gamePanel = gamePanel;
     }
 } 
