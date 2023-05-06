@@ -4,19 +4,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.ObjectInputStream.GetField;
 import java.util.Arrays;
 
-import javax.security.auth.kerberos.KeyTab;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxUI.KeyHandler;
 
-import entity.Pekerjaan;
 import entity.Sim;
 import entity.Waktu;
 import util.UtilityTool;
@@ -96,6 +91,11 @@ public class UI {
             default:
                 break;
         }
+        if (gamePanel.getWoodworkingOpened() && gamePanel.getGameState() != GameState.LOADING_SCREEN) {
+            WoodworkingPainter woodworkingPainter = new WoodworkingPainter(gamePanel);
+            woodworkingPainter.draw(graphics2d);
+        }
+
         if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
             PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
             popUpAction.draw(graphics2d);

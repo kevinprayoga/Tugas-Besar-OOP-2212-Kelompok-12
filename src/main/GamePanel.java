@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
     public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN, LOADING_SCREEN};
     private GameState gameState; 
     private boolean isStoreOpened = false;
+    private boolean isWoodworkingOpened = false;
     private boolean isSomeoneDied = false;
 
     // Flicker handling
@@ -179,6 +180,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void reset() {
         this.isStoreOpened = false;
+        this.isWoodworkingOpened = false;
+        this.isHouseSelected = false;
         this.menuGame.setSimCD(-1);
         this.isEnteredHouse = false;
         this.menuGame = new MenuGame(this);
@@ -232,6 +235,10 @@ public class GamePanel extends JPanel implements Runnable {
         return isStoreOpened;
     }
 
+    public boolean getWoodworkingOpened() {
+        return isWoodworkingOpened;
+    }
+
     public boolean getEnteredHouse() {
         return isEnteredHouse;
     }
@@ -265,6 +272,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setStoreOpened(boolean isStoreOpened) {
         this.isStoreOpened = isStoreOpened;
+    }
+
+    public void setWoodworkingOpened(boolean isWoodworkingOpened) {
+        this.isWoodworkingOpened = isWoodworkingOpened;
     }
 
     public void setEnteredHouse(boolean isEnteredHouse) {
