@@ -8,15 +8,15 @@ import java.util.ArrayList;
 
 import entity.Matrix;
 import entity.NonMakanan;
-import entity.Posisi;
 import entity.Ruangan;
 import entity.Sim;
 
-public class RoomPainter {
+public class RoomPainter extends Painter {
     private GamePanel gamePanel;
     private Ruangan ruangan;
-    // private Posisi posisi; // Posisi not working
+    
     private int row, col;
+    private int x, y;
 
     private Matrix<NonMakanan> matObjek;
     private Matrix<Boolean> collisionMap;
@@ -29,11 +29,13 @@ public class RoomPainter {
     private final BufferedImage availTiles = UtilityTool.loadImage("res/image/house/Hover Tiles.png");
     private final BufferedImage wall = UtilityTool.loadImage("res/image/house/Wall.png"); 
 
-    public RoomPainter(Ruangan ruangan, int row, int col, GamePanel gamePanel, boolean isBuildMode) {
+    public RoomPainter(Ruangan ruangan, int row, int col, GamePanel gamePanel, boolean isBuildMode, int x, int y) {
         this.gamePanel = gamePanel;
         this.ruangan = ruangan;
         this.row = row;
         this.col = col;
+        this.x = x;
+        this.y = y;
         
         matObjek = ruangan.getPetaBarang();
         collisionMap = ruangan.getCollisionMap();
@@ -41,19 +43,19 @@ public class RoomPainter {
         this.isBuildMode = isBuildMode;
     }
 
-    public void draw(Graphics2D graphics2d, int x, int y) {
+    public void draw(Graphics2D graphics2d) {
         graphics2d.drawImage(roomTiles, x, y, gamePanel);
 
         if (gamePanel.getHoveredObject() != null && sims.contains(gamePanel.getPlayedSims().getSims())) {
-            HoveredObjectPainter hoveredObjectPainter = new HoveredObjectPainter(gamePanel.getHoveredObject(), gamePanel);
-            hoveredObjectPainter.draw(graphics2d, x, y);
+            HoveredObjectPainter hoveredObjectPainter = new HoveredObjectPainter(gamePanel.getHoveredObject(), gamePanel, x, y);
+            hoveredObjectPainter.draw(graphics2d);
         }
 
         for (int i = 0; i < matObjek.getRow(); i++) {
             for (int j = 0; j < matObjek.getColumn(); j++) {
                 if (matObjek.get(i, j) != null) {
-                    ObjekPainter objekPainter = new ObjekPainter(matObjek.get(i, j), gamePanel);
-                    objekPainter.draw(graphics2d, x + j * 16 + 4, y + i * 16 + 24);
+                    ObjekPainter objekPainter = new ObjekPainter(matObjek.get(i, j), gamePanel, x + j * 16 + 4, y + i * 16 + 24);
+                    objekPainter.draw(graphics2d);
                 } else if (isBuildMode && !collisionMap.get(i, j) && ruangan.equals(gamePanel.getPlayedSims().getSims().getRuangan())) {
                     graphics2d.drawImage(availTiles, x + j * 16 + 4, y + i * 16 + 24, gamePanel);
                 }

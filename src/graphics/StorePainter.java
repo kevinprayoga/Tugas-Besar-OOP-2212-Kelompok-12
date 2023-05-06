@@ -16,7 +16,7 @@ import entity.BahanMakanan;
 import main.GamePanel;
 import util.UtilityTool;
 
-public class StorePainter {
+public class StorePainter extends Painter {
     private GamePanel gamePanel;
     private Sim sim;
     
@@ -53,7 +53,7 @@ public class StorePainter {
     public void draw(Graphics2D graphics2d) {
         util.KeyHandler keyHandler = gamePanel.getKeyHandler();
 
-        if (keyHandler.code == KeyEvent.VK_ESCAPE) {
+        if (keyHandler.code == KeyEvent.VK_ESCAPE || keyHandler.code == KeyEvent.VK_W || keyHandler.code == KeyEvent.VK_S || keyHandler.code == KeyEvent.VK_A || keyHandler.code == KeyEvent.VK_D) {
             gamePanel.setStoreOpened(false);
         }
 
@@ -80,11 +80,11 @@ public class StorePainter {
                 graphics2d.drawImage(image, x + 24 - (int) (image.getWidth() / 2), y + 24 - (int) (image.getHeight() / 2) , gamePanel);
 
                 // Nama
-                graphics2d.setFont(UI.getGeneralFont().deriveFont(13f));
+                graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(13f));
                 graphics2d.setColor(ColorPalette.dark_grey);
                 graphics2d.drawString(produk.getNamaProduk(), x + 56, y + 18);
                 graphics2d.setColor(Color.decode("#A2CA93"));
-                graphics2d.setFont(UI.getGeneralFont().deriveFont(11f));
+                graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(11f));
                 
                 
                 if (produk instanceof BahanMakanan) {

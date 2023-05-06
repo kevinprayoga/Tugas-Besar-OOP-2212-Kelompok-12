@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import entity.Sim;
 import graphics.ColorPalette;
 import graphics.PlayedSims;
-import graphics.UI;
+import graphics.UIPainter;
 import main.GamePanel.GameState;
 import util.UtilityTool;
 
@@ -41,12 +41,12 @@ public class CharacterSelector {
                 BufferedImage image = UtilityTool.loadImage("res/image/ui/placeholder.png");
                 graphics2d.drawImage(image, x, y, gamePanel);
 
-                graphics2d.setFont(UI.getGeneralFont().deriveFont(22f));
+                graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(22f));
                 graphics2d.setColor(ColorPalette.dark_grey);
                 graphics2d.drawString(sim.getNamaLengkap(), x + 100, y + 34);
                 
                 graphics2d.setColor(Color.decode("#A2CA93"));
-                graphics2d.setFont(UI.getGeneralFont().deriveFont(15f));
+                graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(15f));
                 graphics2d.fillRoundRect(x + 100, y + 44, UtilityTool.getTextWidth(Integer.toString(sim.getUang()) + 32, graphics2d), 24, 5, 5);
 
                 graphics2d.setColor(Color.decode("#3E814D"));

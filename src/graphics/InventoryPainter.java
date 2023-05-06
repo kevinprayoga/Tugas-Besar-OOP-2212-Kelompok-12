@@ -14,7 +14,7 @@ import entity.NonMakanan;
 import main.GamePanel;
 import util.UtilityTool;
 
-public class InventoryPainter {
+public class InventoryPainter extends Painter {
     private GamePanel gamePanel;
     private Inventory inventory;
     private static int iterator = 0;
@@ -62,7 +62,7 @@ public class InventoryPainter {
                 if (ammount > 64) {
                     graphics2d.drawImage(infinite, x + 48, y + 6, gamePanel);
                 } else {
-                    graphics2d.setFont(UI.getGeneralFont().deriveFont(11f));
+                    graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(11f));
                     graphics2d.setColor(ColorPalette.dark_grey);
                     graphics2d.drawString(Integer.toString(ammount), x + 52 - UtilityTool.getTextWidth(Integer.toString(ammount), graphics2d) / 2, y + 12);
 

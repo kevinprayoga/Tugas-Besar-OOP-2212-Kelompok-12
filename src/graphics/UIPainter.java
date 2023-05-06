@@ -20,7 +20,7 @@ import main.GameLoader;
 import main.GamePanel;
 import main.GamePanel.GameState;
 
-public class UI {
+public class UIPainter extends Painter {
     // Screen settings
     private GamePanel gamePanel;
     private Graphics2D graphics2d;
@@ -30,6 +30,8 @@ public class UI {
     // Character selection screen
     private String nameField;
     private int optionSelected = 0;
+    
+    private int helpScreenPage = 1;
 
     // Action pop-up
     private static String actionText = "";
@@ -48,7 +50,7 @@ public class UI {
     private static int increment = 10;
     private static int actionTime = 0;
 
-    public UI (GamePanel gamePanel) {
+    public UIPainter (GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
         try {
@@ -111,8 +113,15 @@ public class UI {
             eatPainter.draw(graphics2d);
         }
 
+        if (gamePanel.getClockOpened() && gamePanel.getGameState() != GameState.LOADING_SCREEN) {
+            ClockPainter clockPainter = new ClockPainter(gamePanel);
+            clockPainter.draw(graphics2d);
+        }
+
+
+
         if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
-            PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
+            PopUpActionPainter popUpAction = new PopUpActionPainter(actionText, gamePanel);
             popUpAction.draw(graphics2d);
         } else if (actionText != "") {
             loadingText = "Sedang " + actionText + "... ";
@@ -198,7 +207,9 @@ public class UI {
     private void drawHelpScreen() {
         // Background and title
         gamePanel.setBackground(Color.WHITE);
-        
+        BufferedImage helpScreenImage = UtilityTool.loadImage("res/image/ui/Help " + Integer.toString(helpScreenPage) + ".png");
+        graphics2d.drawImage(helpScreenImage, 0, 0, gamePanel);
+
         // Back button
         BufferedImage backButtonImage = UtilityTool.loadImage("res/image/ui/back button.png");
         graphics2d.drawImage(backButtonImage, 12, 12, gamePanel);
@@ -213,6 +224,23 @@ public class UI {
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 System.out.println("Back to title screen");
+                gamePanel.removeAll();
+            }
+        });
+
+        // Next button
+        JLabel nextButton = new JLabel("Next");
+        nextButton.setBounds(48, 48, 976, 976);
+        gamePanel.add(nextButton);
+
+        nextButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (helpScreenPage < 4) {
+                    helpScreenPage++;
+                } else {
+                    helpScreenPage = 1;
+                }
                 gamePanel.removeAll();
             }
         });
@@ -665,7 +693,7 @@ public class UI {
         });
   
         // Drawing Dashboard
-        Dashboard dashboard = new Dashboard(gamePanel);
+        DashboardPainter dashboard = new DashboardPainter(gamePanel);
         dashboard.draw(graphics2d);
     }
 
@@ -720,7 +748,7 @@ public class UI {
         });
 
         // Drawing Dashboard
-        Dashboard dashboard = new Dashboard(gamePanel);
+        DashboardPainter dashboard = new DashboardPainter(gamePanel);
         dashboard.draw(graphics2d);
     }
 

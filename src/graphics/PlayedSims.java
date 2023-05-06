@@ -1,8 +1,6 @@
 package graphics;
 
-import main.GameLoader;
 import main.GamePanel;
-import main.GamePanel.GameState;
 import util.UtilityTool;
 
 import java.awt.Graphics2D;
@@ -14,9 +12,8 @@ import javax.swing.JLabel;
 
 import entity.Sim;
 import entity.Posisi;
-import entity.Waktu;
 
-public class PlayedSims {
+public class PlayedSims extends Painter {
     private final GamePanel gamePanel;
     private Sim sims;
 
@@ -124,8 +121,8 @@ public class PlayedSims {
         }
 
         if (isActionPanelOpened) {
-            ActionButton actionButton = new ActionButton(gamePanel);
-            actionButton.drawSimsButton(graphics2d, x + 32, y);
+            ActionButtonPainter actionButton = new ActionButtonPainter(gamePanel, x + 32, y);
+            actionButton.draw(graphics2d);
         }
     }
 
