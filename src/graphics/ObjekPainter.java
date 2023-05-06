@@ -177,6 +177,18 @@ public class ObjekPainter extends Painter {
                                     s.update(5);
                                 }
 
+                            } else if(objek.getAksi().equals("Buang Air")){
+                                gamePanel.getPlayedSims().getSims().buangAir();
+                                UIPainter.setActionText("Buang Air");
+                                gamePanel.getGameUI().setLoadingMessage("Sedang Buang Air ... ");
+                                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                                gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                                System.out.println("Sedang ... ");
+                                gamePanel.removeAll();
+                                for(Sim s: gamePanel.getPlayableSims()){
+                                    s.update(5);
+                                }
+
                             } else if (objek.getAksi().equals("Melihat Waktu")) {
                                 gamePanel.setClockOpened(true);
                                 
