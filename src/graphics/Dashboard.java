@@ -51,6 +51,13 @@ public class Dashboard {
     }
 
     private void drawDashboard(Graphics2D graphics2D) {
+        util.KeyHandler keyHandler = gamePanel.getKeyHandler();
+
+        if (keyHandler.code == java.awt.event.KeyEvent.VK_ESCAPE) {
+            isDashboardOpen = false;
+            gamePanel.removeAll();
+        }
+
         // Drop Dashboard Button
         BufferedImage button = UtilityTool.loadImage("res/image/ui/drop down button.png");
         button = UtilityTool.flipImageVertically(button);
@@ -115,13 +122,15 @@ public class Dashboard {
                 gamePanel.setStoreOpened(!gamePanel.getStoreOpened());
                 gamePanel.setWoodworkingOpened(false);
                 gamePanel.setCookingOpened(false);
+                gamePanel.setChangeJobOpened(false);
+                gamePanel.setEatPanelOpened(false);
                 gamePanel.removeAll();
             }
         });
 
         // Drawing sims
         // Background
-        double simsStatus = sims.getKekenyangan() + sims.getKesehatan() + sims.getMood() / 3.0;
+        double simsStatus = (sims.getKekenyangan() + sims.getKesehatan() + sims.getMood()) / 3.0;
         BufferedImage simsBackground;
         if (simsStatus > 75) {
             simsBackground = UtilityTool.loadImage("res/image/ui/player backdrop green.png");
@@ -193,6 +202,7 @@ public class Dashboard {
     }
     
     private void drawOpenDashboard(Graphics2D graphics2D) {
+        
         BufferedImage button = UtilityTool.loadImage("res/image/ui/drop down button.png");
         graphics2D.drawImage(button, 8, 990, gamePanel);
 

@@ -13,7 +13,7 @@ public interface AksiAktif {
 
     public void tidur(int time) throws NotEnoughKesejahteraan,ItemError,InterruptedException,TimeError;
 
-    public void makan(Makanan m) throws ItemError,InterruptedException;
+    public <P extends Produk> void makan(P m) throws ItemError,InterruptedException;
 
     public void berkunjung(Rumah r) throws NotEnoughKesejahteraan, InterruptedException;
 

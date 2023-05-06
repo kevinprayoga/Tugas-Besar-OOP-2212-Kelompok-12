@@ -132,8 +132,12 @@ public class ObjekPainter {
                             clicked = null;
                             // Program methods here
                             if(objek.getAksi().equals("Makan")){
-                                // Makanannnnnnnnnnn
-                                gamePanel.getPlayedSims().getSims().makan(null);
+                                gamePanel.setEatPanelOpened(true);
+                                
+                                gamePanel.setStoreOpened(false);
+                                gamePanel.setWoodworkingOpened(false);
+                                gamePanel.setCookingOpened(false);
+                                gamePanel.setChangeJobOpened(false);
                             } else if(objek.getAksi().equals("Tidur")){
                                 UI.setActionText("tidur");
                             } else if(objek.getAksi().equals("Read")){
@@ -146,8 +150,11 @@ public class ObjekPainter {
                                 gamePanel.removeAll();
                             } else if (objek.getAksi().equals("Memasak")) {
                                 gamePanel.setCookingOpened(true);
+                                
                                 gamePanel.setStoreOpened(false);
                                 gamePanel.setWoodworkingOpened(false);
+                                gamePanel.setChangeJobOpened(false);
+                                gamePanel.setEatPanelOpened(false);
                             }
                         } catch (Exception ex){
                             ex.getMessage();

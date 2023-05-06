@@ -101,6 +101,16 @@ public class UI {
             cookingPainter.draw(graphics2d);
         }
 
+        if (gamePanel.getChangeJobOpened() && gamePanel.getGameState() != GameState.LOADING_SCREEN) {
+            ChangeJobPainter changeJobPainter = new ChangeJobPainter(gamePanel);
+            changeJobPainter.draw(graphics2d);
+        }
+
+        if (gamePanel.getEatPanelOpened() && gamePanel.getGameState() != GameState.LOADING_SCREEN) {
+            EatPanelPainter eatPainter = new EatPanelPainter(gamePanel);
+            eatPainter.draw(graphics2d);
+        }
+
         if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
             PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
             popUpAction.draw(graphics2d);
