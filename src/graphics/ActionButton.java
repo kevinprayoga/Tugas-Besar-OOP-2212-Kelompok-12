@@ -135,10 +135,10 @@ public class ActionButton {
         holidayLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Pesta");
+                System.out.println("Nubes");
                     try{
                     sim.nubes();
-                    UI.setActionText("pesta");
+                    UI.setActionText("nubes");
                     gamePanel.getGameUI().setLoadingMessage("Sedang Nubes ... ");
                     gamePanel.setGameState(GameState.LOADING_SCREEN);
                     gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);

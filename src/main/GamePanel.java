@@ -9,6 +9,7 @@ import javax.swing.*;
 import entity.NonMakanan;
 import entity.Rumah;
 import entity.Sim;
+import entity.Waktu;
 import entity.World;
 import graphics.HousePainter;
 import graphics.PlayedSims;
@@ -39,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
     public enum GameState {TITLE_SCREEN, LOAD_GAME_SCREEN, WORLD_GAME_SCREEN, HOUSE_GAME_SCREEN, CHARACTER_SELECTION_SCREEN, NEW_CHAR_SCREEN, HELP_SCREEN, LOADING_SCREEN};
     private GameState gameState; 
     private boolean isStoreOpened = false;
+    private boolean isSomeoneDied = false;
 
     // Flicker handling
     private boolean isEnteredHouse = false;
@@ -93,6 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                 // 2: Draw the screen with updated information
                 repaint(); // Calls the paintComponent() method
+                update();
 
                 // Debugging
                 // if (this.gameState == GameState.WORLD_GAME_SCREEN || this.gameState == GameState.HOUSE_GAME_SCREEN) {
@@ -101,6 +104,37 @@ public class GamePanel extends JPanel implements Runnable {
                 delta--;
             }
 
+        }
+    }
+
+    public synchronized void update() {
+        if (Waktu.getActionTimer() == 0) {
+            for (int i = 0; i < playableSims.size(); i++) {
+                Sim sims = playableSims.get(i);
+                if (sims.getStatus() == "dead") {
+                    world.getSimList().remove(sims);
+                    for (int j = 0; j < 64; j++) {
+                        for (int k = 0; k < 64; k++) {
+                            world.getPerumahan().get(j, k).removeSim(sims);
+                        }
+                    }
+                    playableSims.remove(sims);
+                    isSomeoneDied = true;
+                }
+            }
+            if (isSomeoneDied) {
+                if (playableSims.size() == 0) {
+                    this.gameState = GameState.TITLE_SCREEN;
+                    this.leastRecentlyUsed.empty();
+                    this.leastRecentlyUsed.push(GameState.TITLE_SCREEN);
+                } else {
+                    while (leastRecentlyUsed.peek() != GameState.CHARACTER_SELECTION_SCREEN) {
+                        leastRecentlyUsed.pop();
+                    }
+                    gameState = leastRecentlyUsed.peek();
+                }
+                isSomeoneDied = false;  
+            }
         }
     }
 

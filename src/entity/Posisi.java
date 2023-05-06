@@ -5,8 +5,8 @@ public class Posisi{
     private int ordinat;
 
     public Posisi(int x, int y){
-        x = absis;
-        y = ordinat;
+        absis = x;
+        ordinat = y;
     }
     
     public void setAbsis(int absis){
