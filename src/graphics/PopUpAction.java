@@ -21,6 +21,9 @@ public class PopUpAction {
     private static int increment = 10;
     private Sim sim;
 
+    private boolean isClosed = false;
+    private boolean isSubmitted = false;
+
     public PopUpAction(String text, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.text = text;
@@ -29,19 +32,23 @@ public class PopUpAction {
     
     public void draw(Graphics2D graphics2d) {
         util.KeyHandler keyHandler = gamePanel.getKeyHandler();
-        if (keyHandler.code == KeyEvent.VK_ESCAPE) {
+        if (keyHandler.code == KeyEvent.VK_ESCAPE || isClosed) {
             UI.setActionText("");
             timeRead = 0;
         }
-        if (keyHandler.code == KeyEvent.VK_ENTER) {
-            UI.setActionText("");
-            gamePanel.getGameUI().setLoadingMessage("Sedang " + text + "... ");
-            gamePanel.setGameState(GameState.LOADING_SCREEN);
-            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
-            System.out.println("Sedang " + text + "... ");
-            executeAction(text);
-            gamePanel.removeAll();
-            timeRead = 0;
+        if (keyHandler.code == KeyEvent.VK_ENTER || isSubmitted) {
+            try {
+                executeAction(text);
+                UI.setActionText("");
+                gamePanel.getGameUI().setLoadingMessage("Sedang " + text + "... ");
+                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                System.out.println("Sedang " + text + "... ");
+                gamePanel.removeAll();
+                timeRead = 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         
@@ -74,56 +81,41 @@ public class PopUpAction {
         set.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("");
-                gamePanel.getGameUI().setLoadingMessage("Sedang " + text + "... ");
-                gamePanel.setGameState(GameState.LOADING_SCREEN);
-                System.out.println("Sedang " + text + "... ");
-                executeAction(text);
-                gamePanel.removeAll();
-                timeRead = 0;
+                isSubmitted = true;
             }
         });
 
         cancel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("");
-                gamePanel.removeAll();
-                timeRead = 0;
+                isClosed = true;
             }
         });
     }
 
-    private void executeAction(String text) {
-        for (Sim s : gamePanel.getPlayableSims()) {
-            s.update(actionTime);
-        }
+    private void executeAction(String text) throws Exception{
         switch (text) {
             case "kerja":
-                try{
-                    sim.kerja(actionTime);
-                } catch(Exception ex){
-                    System.out.println(ex.getMessage());
-                    
-                }
+                System.out.println("kerja");
+                sim.kerja(actionTime);
+                break;
             case "olahraga":
-                try {
-                    sim.olahraga(actionTime);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-            case "tidur":
-                try {
-                    sim.tidur(actionTime);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-            case "meditate":
-                try {
-                    sim.meditate(actionTime);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
+                System.out.println("olahraga");
+                sim.olahraga(actionTime);
+                break;
+                case "tidur":
+                System.out.println("tidur");
+                sim.tidur(actionTime);
+                break;
+                case "meditasi":
+                System.out.println("meditasi");
+                sim.meditate(actionTime);
+                break;
+            }
+            System.out.println(text);
+            for (Sim s : gamePanel.getPlayableSims()) {
+                s.update(actionTime);
+            }
         }
-    }
 }
+

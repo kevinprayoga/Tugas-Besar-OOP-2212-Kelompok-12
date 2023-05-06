@@ -43,42 +43,15 @@ public class Ruangan {
     }
 
     public void addObjek(Posisi loc, NonMakanan objek) {
-        int a = objek.getDimensi().getLength();
-        int b = objek.getDimensi().getWidth();
-        
-        int x = loc.getX();
-        int y = loc.getY();
+        this.petaBarang.set(loc.getX(), loc.getY(), objek);
 
-        this.petaBarang.set(x, y, objek);
+        int width = objek.getDimensi().getWidth(); // y
+        int length = objek.getDimensi().getLength(); // x
 
-        switch (objek.getOrientasi()) {
-            case "Down":
-                for (int i = x; i < x + a; i++) {
-                    for (int j = y; j < y + b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-                break;
-            case "Up":
-                for (int i = x; i > x - a; i++) {
-                    for (int j = y; j < y - b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-                break;
-            case "Left":
-                for (int i = x; i < x + a; i++) {
-                    for (int j = y; j < y - b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-            case "Right":
-                for (int i = x; i < x - a; i++) {
-                    for (int j = y; j < y + b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-                break;
+        for (int i = loc.getX(); i < loc.getX() + length; i++) {
+            for (int j = loc.getY(); j < loc.getY() + width; j++) {
+                this.collisionMap.set(i, j, true);
+            }
         }
 
         objek.setPosisi(loc);

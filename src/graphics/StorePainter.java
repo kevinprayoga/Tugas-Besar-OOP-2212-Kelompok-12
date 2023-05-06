@@ -15,7 +15,7 @@ import entity.BahanMakanan;
 import main.GamePanel;
 import util.UtilityTool;
 
-public class Store {
+public class StorePainter {
     private GamePanel gamePanel;
     private Sim sim;
     
@@ -44,7 +44,7 @@ public class Store {
         "Jam"
     };
 
-    public Store(GamePanel gamePanel) {
+    public StorePainter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.sim = gamePanel.getPlayedSims().getSims();
     }

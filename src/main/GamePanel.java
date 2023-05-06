@@ -6,9 +6,9 @@ import java.util.Stack;
 
 import javax.swing.*;
 
+import entity.NonMakanan;
 import entity.Rumah;
 import entity.Sim;
-import entity.Waktu;
 import entity.World;
 import graphics.HousePainter;
 import graphics.PlayedSims;
@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public MenuGame menuGame;
     private World world;
     private Rumah visitedHouse;
+    private NonMakanan hoveredObject;
     private WorldPainter worldPainter;
     private HousePainter housePainter;
     private ArrayList<Sim> playableSims;
@@ -198,6 +199,10 @@ public class GamePanel extends JPanel implements Runnable {
         return isEnteredHouse;
     }
 
+    public NonMakanan getHoveredObject() {
+        return hoveredObject;
+    }
+
     // Setter
 
     public void setGameState(GameState gameState) {
@@ -212,6 +217,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setPlayedSims(PlayedSims playedSims) {
         this.playedSims = playedSims;
+        this.visitedHouse = playedSims.getSims().getMyRumah();
         collisionHandler = new CollisionHandler(this, playedSims.getSims());
     }
 
@@ -226,6 +232,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setEnteredHouse(boolean isEnteredHouse) {
         this.isEnteredHouse = isEnteredHouse;
+    }
+
+    public void setHoveredObject(NonMakanan hoveredObject) {
+        this.hoveredObject = hoveredObject;
     }
 
     // Adder

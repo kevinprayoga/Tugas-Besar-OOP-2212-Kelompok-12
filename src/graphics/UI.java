@@ -96,10 +96,11 @@ public class UI {
             default:
                 break;
         }
-        if (actionText != "") {
+        if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur") {
             PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
             popUpAction.draw(graphics2d);
-        } else {
+        } else if (actionText != "") {
+            loadingText = "Sedang " + actionText + "... ";
             actionTime = 0;
         }
     }
@@ -568,7 +569,7 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    Sim sims = new Sim(nameField, optionSelected);
+                    Sim sims = new Sim(nameField, optionSelected, false);
                     gamePanel.addPlayableSims(sims);
                     gamePanel.menuGame.setSimCD(Waktu.getDay());
                     gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
@@ -582,7 +583,7 @@ public class UI {
 
         if (keyHandler.code == KeyEvent.VK_ENTER) {
             try {
-                Sim sims = new Sim(nameField, optionSelected);
+                Sim sims = new Sim(nameField, optionSelected, false);
                 gamePanel.addPlayableSims(sims);
                 gamePanel.menuGame.setSimCD(Waktu.getDay());
                 gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
@@ -669,12 +670,18 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.leastRecentlyUsed.pop();
+                while (gamePanel.leastRecentlyUsed.peek() != GameState.WORLD_GAME_SCREEN) {
+                    gamePanel.leastRecentlyUsed.pop();
+                }
                 System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 gamePanel.getPlayedSims().getSims().setCurrentPosition("World");
                 System.out.println("World screen");
+
+                gamePanel.getHouse().setBuildMode(false);
+                gamePanel.setHoveredObject(null);
+                gamePanel.getHouse().removeSim(gamePanel.getPlayedSims().getSims());
                 gamePanel.getWorld().addSim((gamePanel.getPlayedSims().getSims()));
                 gamePanel.getPlayedSims().reset();
                 gamePanel.removeAll();
@@ -705,10 +712,6 @@ public class UI {
 
     // Laoding screen
     private void drawLoadingScreen() {
-        gamePanel.setBackground(ColorPalette.white);
-        graphics2d.setColor(ColorPalette.dark_grey);
-        graphics2d.setFont(upheavtt_title.deriveFont(61f));
-        graphics2d.drawString(loadingText + Integer.toString(Waktu.getActionTimer()), UtilityTool.getXForCenterOfText(loadingText + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText + " " + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d));
         if (Waktu.getActionTimer() == 0) {
             gamePanel.leastRecentlyUsed.pop();
             System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
@@ -717,78 +720,16 @@ public class UI {
             System.out.println("World screen");
             gamePanel.removeAll();
         } else {
+            gamePanel.setBackground(ColorPalette.white);
+            graphics2d.setColor(ColorPalette.dark_grey);
+            graphics2d.setFont(upheavtt_title.deriveFont(61f));
+            graphics2d.drawString(loadingText + Integer.toString(Waktu.getActionTimer()), UtilityTool.getXForCenterOfText(loadingText + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d), UtilityTool.getYForCenterOfText(loadingText + " " + Integer.toString(Waktu.getActionTimer()), gamePanel, graphics2d));
         }
     }
 
     public void setLoadingMessage(String message) {
         this.loadingText = message;
     }
-
-    // Action setter pop-up
-    // private void drawActionPopUp() {
-    //     util.KeyHandler keyHandler = gamePanel.getKeyHandler();
-    //     if (keyHandler.code == KeyEvent.VK_ESCAPE) {
-    //         isActionPopUpOpen = false;
-    //     }
-    //     if (keyHandler.code == KeyEvent.VK_UP) {
-    //         actionTime += increment;
-    //     }
-    //     if (keyHandler.code == KeyEvent.VK_DOWN) {
-    //         if (actionTime >= increment) {
-    //             actionTime -= increment;
-    //         }
-    //     }
-        
-    //     BufferedImage popUpPanel = UtilityTool.loadImage("res/image/ui/action pop up.png");
-    //     graphics2d.drawImage(popUpPanel, 324, 426, gamePanel);
-
-    //     String timeText = actionTime + " sec";
-    //     graphics2d.setColor(ColorPalette.dark_grey);
-    //     graphics2d.setFont(pixolletta_general.deriveFont(30f));
-    //     graphics2d.drawString(timeText, 592 - UtilityTool.getTextWidth(timeText, graphics2d), 529);
-
-    //     JLabel set = new JLabel("Set Action");
-    //     set.setBounds(633, 428, 53, 67);
-    //     gamePanel.add(set);
-
-    //     JLabel cancel = new JLabel("Cancel");
-    //     cancel.setBounds(633, 497, 53, 69);
-    //     gamePanel.add(cancel);
-
-    //     set.addMouseListener(new MouseAdapter() {
-    //         @Override
-    //         public void mouseClicked(MouseEvent e) {
-    //             isActionPopUpOpen = false;
-    //             System.out.println("Action setter");
-    //             gamePanel.removeAll();
-    //         }
-    //     });
-
-    //     cancel.addMouseListener(new MouseAdapter() {
-    //         @Override
-    //         public void mouseClicked(MouseEvent e) {
-    //             actionTime = -1;
-    //             isActionPopUpOpen = false;
-    //             gamePanel.removeAll();
-    //         }
-    //     });
-    // }
-
-    // public static void openActionPopUp() {
-    //     isActionPopUpOpen = true;
-    // }
-
-    // public static boolean isActionPopUpOpen() {
-    //     return isActionPopUpOpen;
-    // }
-
-    // public static void setIncrement(int inc) {
-    //     increment = inc;
-    // }
-
-    // public static int getActionTime() {
-    //     return actionTime;
-    // }
 
     public static void setActionText(String text) {
         actionText = text;

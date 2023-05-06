@@ -39,7 +39,8 @@ public class Sim implements AksiAktif, AksiPasif {
 
     private int bonusInc;
 
-    private Rumah rumah;
+    private Rumah myRumah;
+    private Rumah currentHouse;
     private Ruangan ruangan;
     private Posisi posisi;
     private String currentPosition; // "World" atau "Rumah"
@@ -51,7 +52,7 @@ public class Sim implements AksiAktif, AksiPasif {
     private Produk pembelianProduk;
 
     // Konstruktor
-    public Sim(String nama, int charType) throws NameNotFoundException {
+    public Sim(String nama, int charType, boolean isFromLoader) throws NameNotFoundException {
 
         if (nama.length() < 3) {
             throw new NameNotFoundException("Name can not be null!");
@@ -70,6 +71,13 @@ public class Sim implements AksiAktif, AksiPasif {
 
         inventory = new Inventory();
         this.jobPrinter = new PekerjaanPrinter();
+
+        if (!isFromLoader) {
+            inventory.addItem(new NonMakanan("Kasur Single Size"));
+            inventory.addItem(new NonMakanan("Toilet"));
+            inventory.addItem(new NonMakanan("Kompor Gas"));
+            inventory.addItem(new NonMakanan("Meja dan Kursi"));
+        }
     }
 
     // Setter
@@ -77,8 +85,9 @@ public class Sim implements AksiAktif, AksiPasif {
         this.posisi = posisi;
     }
 
-    public void setRumah(Rumah rumah){
-        this.rumah = rumah;
+    public void setMyRumah(Rumah rumah){
+        this.myRumah = rumah;
+        this.currentHouse = rumah;
     }
 
     public void setCurrentPosition(String currentPosition) {
@@ -87,6 +96,14 @@ public class Sim implements AksiAktif, AksiPasif {
 
     public void setCurrentActivity(String currentActivity) {
         this.status = currentActivity;
+    }
+
+    public void setCurrentHouse(Rumah currentHouse) {
+        this.currentHouse = currentHouse;
+    }
+
+    public void setRuangan(Ruangan ruangan) {
+        this.ruangan = ruangan;
     }
 
     // Getter
@@ -126,8 +143,12 @@ public class Sim implements AksiAktif, AksiPasif {
         return status;
     }
 
-    public Rumah getRumah() {
-        return rumah;
+    public Rumah getMyRumah() {
+        return myRumah;
+    }
+
+    public Rumah getCurrentHouse() {
+        return currentHouse;
     }
 
     public Ruangan getRuangan() {
@@ -312,7 +333,7 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void berkunjung(Rumah homeVisit) throws NotEnoughKesejahteraan, InterruptedException {
-        double timeCost = Math.sqrt(((homeVisit.getPosisi().getX())-(rumah.getPosisi().getX()))^2 + ((homeVisit.getPosisi().getY())-(rumah.getPosisi().getY()))^2);
+        double timeCost = Math.sqrt(((homeVisit.getPosisi().getX())-(currentHouse.getPosisi().getX()))^2 + ((homeVisit.getPosisi().getY())-(currentHouse.getPosisi().getY()))^2);
         int time = (int) timeCost/30 * 10;
         int timeBerkunjung = (int) timeCost;
         if (kekenyangan - (time) <= 0) {
@@ -387,9 +408,11 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void meditate(int time) throws NotEnoughKesejahteraan, InterruptedException {
+    public void meditate(int time) throws NotEnoughKesejahteraan, InterruptedException, TimeError {
         if (kekenyangan - (time / 30 * 5) <= 0) {
             throw new NotEnoughKesejahteraan("Sim tidak cukup kenyang untuk bermeditasi selama itu!");
+        } else if(time%30 != 0){
+            throw new TimeError("Meditasi harus dilakukan dengan waktu kelipatan 30!");
         } else {
             status = "meditasi";
             Waktu.setActionTimer(time);
@@ -419,7 +442,7 @@ public class Sim implements AksiAktif, AksiPasif {
         if (uang < 100) {
             throw new TidakCukupItem("Tidak cukup uang untuk party!");
         } else {
-            uang -= 500;
+            uang -= 200;
             status = "party";
             Waktu.setActionTimer(120);
             Waktu.addTime();
@@ -430,17 +453,17 @@ public class Sim implements AksiAktif, AksiPasif {
 
     // Implementasi aksi pasif
     public void upgradeRumah(int x, int y, String nama) throws TidakCukupItem, InterruptedException,ExistingOrder{
-        if (uang < 1500) {
+        if (uang < 10) {
             throw new TidakCukupItem("Tidak cukup uang untuk Upgrade Rumah!");
-        } else if(rumah.getUpgradeTimer() != -1){
+        } else if(myRumah.getUpgradeTimer() != -1){
             throw new ExistingOrder("Sudah ada proses upgrade rumah pada rumah ini!");
         } else {
             try {
-                if (rumah.getRoomBuild().get(x, y) == 2) { // meriksa kalau 2 artinya ruangan available untuk diisi
-                    uang -= 1500;
-                    rumah.setUpgradeTimer(1080);
-                    rumah.setUpgradeLokasi(x, y);
-                    rumah.setUpgradeNama(nama);
+                if (myRumah.getRoomBuild().get(y, x) == 1) { // meriksa kalau 2 artinya ruangan available untuk diisi
+                    uang -= 10;
+                    myRumah.setUpgradeTimer(120);
+                    myRumah.setUpgradeLokasi(x, y);
+                    myRumah.setUpgradeNama(nama);
                 }
             } catch (Exception e) {
                 System.out.println("Ruangan tidak dapat ditempati!");
@@ -479,8 +502,8 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void installObject(NonMakanan o, Posisi loc) {
-        NonMakanan barang = (NonMakanan) inventory.getItem(o.getNamaProduk());
-        this.ruangan.addObjek(loc, barang);
+        this.ruangan.addObjek(loc, o);
+        inventory.getItem(o.getNamaProduk());
     }
 
     public int getTime() throws ItemError {
@@ -563,23 +586,23 @@ public class Sim implements AksiAktif, AksiPasif {
             inventory.addItem((pembelianProduk));
         }
 
-        if(rumah.getUpgradeTimer() != -1){
-            rumah.setUpgradeTimer(rumah.getUpgradeTimer()-time);
-            if(rumah.getUpgradeTimer()<=0){
-                rumah.setUpgradeTimer(0);
+        if(myRumah.getUpgradeTimer() != -1){
+            myRumah.setUpgradeTimer(myRumah.getUpgradeTimer()-time);
+            if(myRumah.getUpgradeTimer()<=0){
+                myRumah.setUpgradeTimer(0);
             }
         }
 
-        if(rumah.getUpgradeTimer() == 0){
-            rumah.setUpgradeTimer(-1);
-            rumah.createRuangan(rumah.getUpgradeLokasi()[0], rumah.getUpgradeLokasi()[1], rumah.getUpgradeNama());
+        if(myRumah.getUpgradeTimer() == 0){
+            myRumah.setUpgradeTimer(-1);
+            myRumah.createRuangan(myRumah.getUpgradeLokasi()[0], myRumah.getUpgradeLokasi()[1], myRumah.getUpgradeNama());
         }
 
         timeEmployed += time;
     }
 
     public void moveRuangan(String namaRuangan) {
-        Ruangan r = this.rumah.getRuangan(namaRuangan);
+        Ruangan r = this.myRumah.getRuangan(namaRuangan);
         this.ruangan.removeSim(this);
         this.ruangan = r;
         this.ruangan.addSim(this);
