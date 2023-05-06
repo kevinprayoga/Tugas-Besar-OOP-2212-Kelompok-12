@@ -96,6 +96,11 @@ public class UI {
             woodworkingPainter.draw(graphics2d);
         }
 
+        if (gamePanel.isCookingOpened() && gamePanel.getGameState() != GameState.LOADING_SCREEN) {
+            CookingPainter cookingPainter = new CookingPainter(gamePanel);
+            cookingPainter.draw(graphics2d);
+        }
+
         if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
             PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
             popUpAction.draw(graphics2d);

@@ -113,6 +113,8 @@ public class Dashboard {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.out.println("Store Button Clicked");
                 gamePanel.setStoreOpened(!gamePanel.getStoreOpened());
+                gamePanel.setWoodworkingOpened(false);
+                gamePanel.setCookingOpened(false);
                 gamePanel.removeAll();
             }
         });

@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.time.OffsetDateTime;
 
 import javax.swing.JLabel;
 
@@ -21,7 +20,7 @@ public class ObjekPainter {
     private BufferedImage image;
     private NonMakanan objek;
 
-    private static boolean isClicked = false;
+    private static NonMakanan clicked = null;
 
     class CustomButton {
         private final int sideMargin = 10;
@@ -106,94 +105,74 @@ public class ObjekPainter {
             public void mouseClicked(MouseEvent e) {
                 System.out.println(objek.getNamaProduk() + " Clicked");
                 if (gamePanel.getPlayedSims().getSims().getRuangan().getPetaBarang().contains(objek)) {
-                    isClicked = !isClicked;
+                    if (clicked == null) {
+                        clicked = objek;
+                    } else {
+                        clicked = null;
+                    }
                 }
                 gamePanel.remove(label);
             }
         });
 
-        if (isClicked) {
-            CustomButton use = new CustomButton("Gunakan");
-            use.draw(graphics2d, x - 16 - use.getWidth(graphics2d), y);
+        if (clicked != null) {
+            if (clicked.equals(this.objek)) {
 
-            JLabel useLabel = new JLabel();
-            useLabel.setBounds(x - 16 - use.getWidth(graphics2d), y, use.getWidth(graphics2d), use.getHeight(graphics2d));
-            gamePanel.add(useLabel);
-
-            useLabel.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    try{
-                        System.out.println(objek.getNamaProduk() + " Used");
-                        isClicked = !isClicked;
-                        // Program methods here
-                        if(objek.getAksi().equals("Makan")){
-                            // Makanannnnnnnnnnn
-                            gamePanel.getPlayedSims().getSims().makan(null);
-                        } else if(objek.getAksi().equals("Tidur")){
-                            UI.setActionText("tidur");
-                        } else if(objek.getAksi().equals("Baca")){
-                            gamePanel.getPlayedSims().getSims().read();
-                            UI.setActionText("read");
-                            gamePanel.getGameUI().setLoadingMessage("Sedang Baca ... ");
-                            gamePanel.setGameState(GameState.LOADING_SCREEN);
-                            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
-                            System.out.println("Sedang ... ");
-                            gamePanel.removeAll();
-
-                            for (Sim s : gamePanel.getPlayableSims()) {
-                                s.update(10);
+                CustomButton use = new CustomButton("Gunakan");
+                use.draw(graphics2d, x - 16 - use.getWidth(graphics2d), y);
+    
+                JLabel useLabel = new JLabel();
+                useLabel.setBounds(x - 16 - use.getWidth(graphics2d), y, use.getWidth(graphics2d), use.getHeight(graphics2d));
+                gamePanel.add(useLabel);
+    
+                useLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        try{
+                            System.out.println(objek.getNamaProduk() + " Used");
+                            clicked = null;
+                            // Program methods here
+                            if(objek.getAksi().equals("Makan")){
+                                // Makanannnnnnnnnnn
+                                gamePanel.getPlayedSims().getSims().makan(null);
+                            } else if(objek.getAksi().equals("Tidur")){
+                                UI.setActionText("tidur");
+                            } else if(objek.getAksi().equals("Read")){
+                                gamePanel.getPlayedSims().getSims().read();
+                                UI.setActionText("read");
+                                gamePanel.getGameUI().setLoadingMessage("Sedang Membaca ... ");
+                                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                                gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                                System.out.println("Sedang ... ");
+                                gamePanel.removeAll();
+                            } else if (objek.getAksi().equals("Memasak")) {
+                                gamePanel.setCookingOpened(true);
+                                gamePanel.setStoreOpened(false);
+                                gamePanel.setWoodworkingOpened(false);
                             }
-                            
-                        } else if(objek.getAksi().equals("Bath")){
-                            gamePanel.getPlayedSims().getSims().bath();
-                            UI.setActionText("bath");
-                            gamePanel.getGameUI().setLoadingMessage("Sedang Mandi ... ");
-                            gamePanel.setGameState(GameState.LOADING_SCREEN);
-                            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
-                            System.out.println("Sedang ... ");
-                            gamePanel.removeAll();
-
-                            for (Sim s : gamePanel.getPlayableSims()) {
-                                s.update(5);
-                            }
-
-                        } else if(objek.getAksi().equals("Buang Air")){
-                            gamePanel.getPlayedSims().getSims().read();
-                            UI.setActionText("buang air");
-                            gamePanel.getGameUI().setLoadingMessage("Sedang Buang Air ... ");
-                            gamePanel.setGameState(GameState.LOADING_SCREEN);
-                            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
-                            System.out.println("Sedang ... ");
-                            gamePanel.removeAll();
-
-                            for (Sim s : gamePanel.getPlayableSims()) {
-                                s.update(10);
-                            }
-
+                        } catch (Exception ex){
+                            ex.getMessage();
                         }
-                    } catch (Exception ex){
-                        ex.getMessage();
+                        gamePanel.removeAll();
                     }
-                    gamePanel.removeAll();
-                }
-            });
-
-            CustomButton pickUp = new CustomButton("Ambil");
-            pickUp.draw(graphics2d, x - use.getWidth(graphics2d), y + use.getHeight(graphics2d) + 4);
-
-            JLabel pickUpLabel = new JLabel();
-            pickUpLabel.setBounds(x - use.getWidth(graphics2d), y + use.getHeight(graphics2d) + 4, pickUp.getWidth(graphics2d), pickUp.getHeight(graphics2d));
-            gamePanel.add(pickUpLabel);
-
-            pickUpLabel.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    System.out.println(objek.getNamaProduk() + " Picked Up");
-                    gamePanel.getPlayedSims().getSims().getRuangan().removeObjek(objek);
-                    gamePanel.getPlayedSims().getSims().getInventory().addItem(objek);
-                    isClicked = !isClicked;
-                    gamePanel.removeAll();
-                }
-            });
+                });
+    
+                CustomButton pickUp = new CustomButton("Ambil");
+                pickUp.draw(graphics2d, x - use.getWidth(graphics2d), y + use.getHeight(graphics2d) + 4);
+    
+                JLabel pickUpLabel = new JLabel();
+                pickUpLabel.setBounds(x - use.getWidth(graphics2d), y + use.getHeight(graphics2d) + 4, pickUp.getWidth(graphics2d), pickUp.getHeight(graphics2d));
+                gamePanel.add(pickUpLabel);
+    
+                pickUpLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        System.out.println(objek.getNamaProduk() + " Picked Up");
+                        gamePanel.getPlayedSims().getSims().getRuangan().removeObjek(objek);
+                        gamePanel.getPlayedSims().getSims().getInventory().addItem(objek);
+                        clicked = null;
+                        gamePanel.removeAll();
+                    }
+                });
+            }
         }
     }
 

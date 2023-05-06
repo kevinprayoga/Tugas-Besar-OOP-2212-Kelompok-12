@@ -118,6 +118,8 @@ public class ActionButton {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.setWoodworkingOpened(true);
+                gamePanel.setStoreOpened(false);
+                gamePanel.setCookingOpened(false);
             }
         });
 

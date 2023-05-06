@@ -38,12 +38,14 @@ public class HoveredObjectPainter {
                 reset();
                 gamePanel.setHoveredObject(null);
                 gamePanel.getHouse().setBuildMode(false);
+                gamePanel.removeAll();
             }
         }
         
         if (keyHandler.code == KeyEvent.VK_ESCAPE) {
             gamePanel.setHoveredObject(null);
             gamePanel.getHouse().setBuildMode(false);
+            gamePanel.removeAll();
         }
         
         if (keyHandler.code == KeyEvent.VK_R) {
