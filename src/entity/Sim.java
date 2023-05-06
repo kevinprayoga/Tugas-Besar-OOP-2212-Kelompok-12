@@ -337,6 +337,7 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void berkunjung(Rumah homeVisit) throws NotEnoughKesejahteraan, InterruptedException {
+        if (homeVisit.equals(myRumah)) return;
         double timeCost = Math.sqrt(((homeVisit.getPosisi().getX())-(currentHouse.getPosisi().getX()))^2 + ((homeVisit.getPosisi().getY())-(currentHouse.getPosisi().getY()))^2);
         int time = (int) timeCost/30 * 10;
         int timeBerkunjung = (int) timeCost;
@@ -344,6 +345,8 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new NotEnoughKesejahteraan("Tidak cukup kekenyangan untuk berkunjung!");
         } else {
             status = "berkunjung";
+            System.out.println(currentHouse.getPosisi().getX() + " " + currentHouse.getPosisi().getY() + " " + homeVisit.getPosisi().getX() + " " + homeVisit.getPosisi().getY());
+            System.out.println("Sim sedang berkunjung ke rumah " + homeVisit.getOwner().getNamaLengkap() + " dari " + currentHouse.getOwner().getNamaLengkap() + " dengan waktu" + timeCost);
             Waktu.setActionTimer(timeBerkunjung);
             Waktu.addTime();
             status = "";

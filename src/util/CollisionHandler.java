@@ -55,6 +55,12 @@ public class CollisionHandler {
                 Rumah visited = world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize());
                 sims.berkunjung(visited);
                 
+                // Setting game to the house screen
+                gamePanel.setHouse(visited);
+                gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
+                gamePanel.leastRecentlyUsed.push(GamePanel.GameState.HOUSE_GAME_SCREEN);
+                gamePanel.isHouseSelected = true;
+                
                 gamePanel.getGameUI().setLoadingMessage("Sedang berkunjung... ");
                 gamePanel.setGameState(GameState.LOADING_SCREEN);
                 gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
@@ -63,11 +69,6 @@ public class CollisionHandler {
                 // Removing the sim from world
                 world.getSimList().remove(sims);
     
-                // Setting game to the house screen
-                gamePanel.setHouse(visited);
-                gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
-                gamePanel.leastRecentlyUsed.push(GamePanel.GameState.HOUSE_GAME_SCREEN);
-                gamePanel.isHouseSelected = true;
                 
                 // Moving sim
                 roomX = 4; roomY = 4;
@@ -94,7 +95,7 @@ public class CollisionHandler {
         roomMap = gamePanel.getHouse().getMatRoom().get(roomY, roomX).getCollisionMap();
 
         if ((y - initY) / 16 < 6 && (x - initX) / 16 < 6) {
-            if (roomMap.get((x - initX) / gamePanel.getTileSize(), (y - initY) / gamePanel.getTileSize())) {
+            if (roomMap.get((y - initY) / gamePanel.getTileSize(), (x - initX + 6) / gamePanel.getTileSize())) {
                 return true;
             }
         }
