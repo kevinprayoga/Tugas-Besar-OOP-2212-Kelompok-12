@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 
 import entity.NonMakanan;
+import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
@@ -164,7 +165,7 @@ public class ObjekPainter extends Painter {
                                 gamePanel.setEatPanelOpened(false);
                             } else if(objek.getAksi().equals("Bath")){
                                 gamePanel.getPlayedSims().getSims().bath();
-                                UI.setActionText("read");
+                                UIPainter.setActionText("read");
                                 gamePanel.getGameUI().setLoadingMessage("Sedang Mandi ... ");
                                 gamePanel.setGameState(GameState.LOADING_SCREEN);
                                 gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
