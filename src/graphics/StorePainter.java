@@ -2,6 +2,7 @@ package graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +51,12 @@ public class StorePainter {
     }
 
     public void draw(Graphics2D graphics2d) {
+        util.KeyHandler keyHandler = gamePanel.getKeyHandler();
+
+        if (keyHandler.code == KeyEvent.VK_ESCAPE) {
+            gamePanel.setStoreOpened(false);
+        }
+
         class Placeholder {
             private Produk produk;
             private BufferedImage image;
@@ -73,11 +80,11 @@ public class StorePainter {
                 graphics2d.drawImage(image, x + 24 - (int) (image.getWidth() / 2), y + 24 - (int) (image.getHeight() / 2) , gamePanel);
 
                 // Nama
-                graphics2d.setFont(gamePanel.getGameUI().getGeneralFont().deriveFont(13f));
+                graphics2d.setFont(UI.getGeneralFont().deriveFont(13f));
                 graphics2d.setColor(ColorPalette.dark_grey);
                 graphics2d.drawString(produk.getNamaProduk(), x + 56, y + 18);
                 graphics2d.setColor(Color.decode("#A2CA93"));
-                graphics2d.setFont(gamePanel.getGameUI().getGeneralFont().deriveFont(11f));
+                graphics2d.setFont(UI.getGeneralFont().deriveFont(11f));
                 
                 
                 if (produk instanceof BahanMakanan) {

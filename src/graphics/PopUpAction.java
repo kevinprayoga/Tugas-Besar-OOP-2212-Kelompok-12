@@ -12,6 +12,7 @@ import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
+import entity.Waktu;
 
 public class PopUpAction {
     private GamePanel gamePanel;
@@ -103,22 +104,23 @@ public class PopUpAction {
                 System.out.println("olahraga");
                 sim.olahraga(actionTime);
                 break;
-                case "tidur":
+            case "tidur":
                 System.out.println("tidur");
                 sim.tidur(actionTime);
                 break;
-                case "meditasi":
+            case "meditasi":
                 System.out.println("meditasi");
                 sim.meditate(actionTime);
                 break;
-                case "judi":
+            case "judi":
                 System.out.println("judi");
                 sim.gamble(actionTime);         // actionTime hanya nama, tetapi aslinya money
+                break;
             }
             System.out.println(text);
             for (Sim s : gamePanel.getPlayableSims()) {
+                System.out.println(((s.getDayTidur() * 720 + s.getTimeTidur()) - (Waktu.getDay() * 720 + Waktu.getTime())));
                 s.update(actionTime);
             }
         }
 }
-
