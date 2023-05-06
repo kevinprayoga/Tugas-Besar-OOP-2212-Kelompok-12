@@ -70,6 +70,11 @@ public class NonMakanan extends Produk {
         setOrientasi("Down");
     }
 
+    public NonMakanan(String type, String orientation) {
+        this(type);
+        setOrientasi(orientation);
+    }
+
     // DAFTAR GETTER
     public int getHarga() { // getter harga
         return harga;

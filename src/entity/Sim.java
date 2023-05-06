@@ -161,6 +161,10 @@ public class Sim implements AksiAktif, AksiPasif {
         return ruangan;
     }
 
+    public int getTimeEmployed(){
+        return timeEmployed;
+    }
+
     public int getCharType() {
         return charType;
     }

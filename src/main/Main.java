@@ -10,7 +10,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle("Sim-Plicity");
 
-        GamePanel gamePanel = new GamePanel();
+        GamePanel gamePanel = GamePanel.getGamePanel();
         window.add(gamePanel);
         window.pack();
     

@@ -439,7 +439,7 @@ public class UIPainter extends Painter {
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 System.out.println("Back to load screen");
-                GameLoader.saveGame();
+                GameLoader.saveGame(gamePanel.getPlayableSims(), gamePanel.getWorld());
                 
                 gamePanel.removeAll();
             }
