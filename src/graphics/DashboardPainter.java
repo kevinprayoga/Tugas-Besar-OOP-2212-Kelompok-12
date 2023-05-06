@@ -123,6 +123,7 @@ public class DashboardPainter extends Painter {
                 gamePanel.setCookingOpened(false);
                 gamePanel.setChangeJobOpened(false);
                 gamePanel.setEatPanelOpened(false);
+                gamePanel.setClockOpened(false);
                 gamePanel.removeAll();
             }
         });

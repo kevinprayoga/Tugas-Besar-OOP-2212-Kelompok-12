@@ -76,6 +76,8 @@ public class MenuGame{
             int costJob = playedSim.getPekerjaanPrinter().costGajiNewJob(newJob, playedSim.getUang(),playedSim.getTotalWaktuKerja());
             playedSim.setMinusUang(costJob);
             playedSim.setTotalWaktuKerjaZero();
+            playedSim.setTimeEmployed(0);
+            playedSim.setTotalWaktuKerja(0);
         }
     }
 

@@ -94,6 +94,7 @@ public class ActionButtonPainter extends Painter {
                 gamePanel.setWoodworkingOpened(false);
                 gamePanel.setCookingOpened(false);
                 gamePanel.setEatPanelOpened(false);
+                gamePanel.setClockOpened(false);
             }
         });
 
@@ -132,6 +133,7 @@ public class ActionButtonPainter extends Painter {
                 gamePanel.setCookingOpened(false);
                 gamePanel.setChangeJobOpened(false);
                 gamePanel.setEatPanelOpened(false);
+                gamePanel.setClockOpened(false);
             }
         });
 

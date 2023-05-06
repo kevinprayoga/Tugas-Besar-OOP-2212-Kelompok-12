@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isCookingOpened = false;
     private boolean isChangeJobOpened = false;
     private boolean isEatPanetOpened = false;
+    private boolean isClockOpened = false;
     private boolean isSomeoneDied = false;
 
     // Flicker handling
@@ -123,19 +124,23 @@ public class GamePanel extends JPanel implements Runnable {
 
     public synchronized void update() {
         if (Waktu.getActionTimer() == 0) {
+            ArrayList<Sim> dead = new ArrayList<>();
             for (Sim sims : playableSims) {
                 if (sims.getStatus() == "dead") {
-                    world.getSimList().remove(sims);
-                    for (int j = 0; j < 64; j++) {
-                        for (int k = 0; k < 64; k++) {
-                            if (world.getPerumahan().get(j, k) != null) {
-                                world.getPerumahan().get(j, k).removeSim(sims);
-                            }
-                        }
-                    }
-                    playableSims.remove(sims);
+                    dead.add(sims);
                     isSomeoneDied = true;
                 }
+            }
+            for (Sim sims : dead) {
+                world.getSimList().remove(sims);
+                for (int j = 0; j < 64; j++) {
+                    for (int k = 0; k < 64; k++) {
+                        if (world.getPerumahan().get(j, k) != null) {
+                            world.getPerumahan().get(j, k).removeSim(sims);
+                        }
+                    }
+                }
+                playableSims.remove(sims);
             }
             if (isSomeoneDied) {
                 if (playableSims.size() == 0) {
@@ -263,6 +268,10 @@ public class GamePanel extends JPanel implements Runnable {
         return isEatPanetOpened;
     }
 
+    public boolean getClockOpened() {
+        return isClockOpened;
+    }
+
     public boolean getEnteredHouse() {
         return isEnteredHouse;
     }
@@ -312,6 +321,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setEatPanelOpened(boolean isEatPanelOpened) {
         this.isEatPanetOpened = isEatPanelOpened;
+    }
+
+    public void setClockOpened(boolean isClockOpened) {
+        this.isClockOpened = isClockOpened;
     }
 
     public void setEnteredHouse(boolean isEnteredHouse) {

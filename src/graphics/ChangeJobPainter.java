@@ -28,7 +28,7 @@ public class ChangeJobPainter extends Painter {
         
         util.KeyHandler keyHandler = gamePanel.getKeyHandler();
 
-        if (keyHandler.code == KeyEvent.VK_ESCAPE) {
+        if (keyHandler.code == KeyEvent.VK_ESCAPE || keyHandler.code == KeyEvent.VK_W || keyHandler.code == KeyEvent.VK_S || keyHandler.code == KeyEvent.VK_A || keyHandler.code == KeyEvent.VK_D) {
             gamePanel.setChangeJobOpened(false);
         }
         
