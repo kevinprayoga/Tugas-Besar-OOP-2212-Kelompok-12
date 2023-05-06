@@ -12,13 +12,9 @@ import entity.*;
 import main.GamePanel.*;
 
 public class GameLoader {
-    private final GamePanel gamePanel;
+    private static final GamePanel gamePanel = GamePanel.getGamePanel();
 
-    public GameLoader(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
-    public void loadGame(int opt) {
+    public static void loadGame(int opt) {
         System.out.println("Load Game");
 
         gamePanel.reset();
@@ -29,7 +25,7 @@ public class GameLoader {
         System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
     }
 
-    public void saveGame(ArrayList<Sim> playableSims, World world, Waktu waktu) {
+    public static void saveGame(ArrayList<Sim> playableSims, World world) {
         // MAKE SAVE FILE FOR SIM
 
         // Array of sim
@@ -90,7 +86,7 @@ public class GameLoader {
         // MAKE SAVE FILE FOR WORLD
     }
 
-    public void newGame(int opt) {
+    public static void newGame(int opt) {
         System.out.println("New game");
         
         gamePanel.reset();

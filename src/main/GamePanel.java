@@ -56,7 +56,14 @@ public class GamePanel extends JPanel implements Runnable {
     private PlayedSims playedSims;
     public CollisionHandler collisionHandler;
 
-    public GamePanel() {
+    // Design Pattern Singleton
+    private static GamePanel single = null;
+
+    static {
+        getGamePanel();
+    }
+
+    private GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.WHITE);
         this.setDoubleBuffered(true);
@@ -67,7 +74,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.playableSims = new ArrayList<>();
         this.gameState = GameState.TITLE_SCREEN;
         this.leastRecentlyUsed.push(GameState.TITLE_SCREEN);
-        GameLoader.setGamePanel(this);
+        // GameLoader.setGamePanel(getGamePanel());
+    }
+
+    public static synchronized GamePanel getGamePanel() {
+        if (single == null) {
+            single = new GamePanel();
+        }
+        return single;
     }
 
     public void startGameThread() {
