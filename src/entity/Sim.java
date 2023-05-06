@@ -24,7 +24,7 @@ public class Sim implements AksiAktif, AksiPasif {
 
     private int charType;
     private int totalWaktuKerja;
-    private int timeEmployed;
+    private int timeEmployed = 0;
 
     private int timeTidur;
     private int dayTidur;
@@ -67,6 +67,8 @@ public class Sim implements AksiAktif, AksiPasif {
 
         timeTidur = Waktu.getTime();
         dayTidur = Waktu.getDay();
+        kesejahAltBAir = false;
+        kesejahAltTidur = false;
 
         this.charType = charType;
         currentPosition = "World";
@@ -325,15 +327,11 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void makan(Makanan m) throws ItemError, InterruptedException {
-        if (inFrontNonMakanan.getAksi() != "Makan") {
-            throw new ItemError("Sim tidak sedang berada di depan meja kursi!");
-        } else {
-            status = "makan";
-            Waktu.setActionTimer(30);
-            Waktu.addTime();
-            status = "";
-            kekenyangan += m.getKekenyangan();
-        }
+        status = "makan";
+        Waktu.setActionTimer(30);
+        Waktu.addTime();
+        status = "";
+        kekenyangan += m.getKekenyangan();
     }
 
     public void berkunjung(Rumah homeVisit) throws NotEnoughKesejahteraan, InterruptedException {
@@ -356,20 +354,20 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void buangAir() throws ItemError, NotEnoughKesejahteraan, InterruptedException {
-        if (inFrontNonMakanan.getAksi() != "Buang Air") {
-            throw new ItemError("Sim sedang tidak di toilet!");
+        if (kekenyangan - 20 <= 0) {
+            throw new NotEnoughKesejahteraan("Sim tidak cukup makan untuk buang air!");
         } else {
-            if (kekenyangan - 20 <= 0) {
-                throw new NotEnoughKesejahteraan("Sim tidak cukup makan untuk buang air!");
-            } else {
-                status = "buang air";
-                Waktu.setActionTimer(10);
-                Waktu.addTime();
-                status = "";
-                kekenyangan -= 20;
-                mood += 10;
-            }
+            status = "buang air";
+            Waktu.setActionTimer(10);
+            Waktu.addTime();
+            status = "";
+            kekenyangan -= 20;
+            mood += 10;
         }
+    }
+
+    public void masak(Makanan m){
+
     }
 
     // aksi pasif khusus
@@ -395,15 +393,11 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void bath() throws ItemError, InterruptedException {
-        if (inFrontNonMakanan.getAksi() != "Bath") {
-            throw new ItemError("Sim sedang tidak di shower!");
-        } else {
-            status = "bath";
-            Waktu.setActionTimer(5);
-            Waktu.addTime();
-            mood += 5;
-            kesehatan += 5;
-        }
+        status = "bath";
+        Waktu.setActionTimer(5);
+        Waktu.addTime();
+        mood += 5;
+        kesehatan += 5;
     }
 
     public void meditate(int time) throws NotEnoughKesejahteraan, InterruptedException, TimeError {
@@ -422,18 +416,14 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void read() throws ItemError, InterruptedException {
-        if (inFrontNonMakanan.getAksi() != "Read") {
-            throw new ItemError("Sim sedang tidak di depan rak buku!");
-        } else {
-            status = "read";
-            Waktu.setActionTimer(10);
-            Waktu.addTime();
-            int randomnum = rand.nextInt(5);
-            if (randomnum == 4) {
-                bonusInc += 10;
-            }
-            mood += 5;
+        status = "read";
+        Waktu.setActionTimer(10);
+        Waktu.addTime();
+        int randomnum = rand.nextInt(5);
+        if (randomnum == 4) {
+            bonusInc += 10;
         }
+        mood += 5;
     }
 
     public void party() throws TidakCukupItem, InterruptedException {
@@ -526,6 +516,7 @@ public class Sim implements AksiAktif, AksiPasif {
 
     public void update(int time) {
         // Alter berdasarkan waktu sejak buang air dan tidur
+        System.out.println(((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())));
         if (((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())) >= 600 && !kesejahAltTidur) {
             mood -= 5;
             kesehatan -= 5;
@@ -546,6 +537,18 @@ public class Sim implements AksiAktif, AksiPasif {
             kesehatan += 5;
             mood += 5;
             kesejahAltBAir = false;
+        } 
+        if (mood == 100 && kesejahAltBAir){
+            mood = 95;
+        } 
+        if (kesehatan == 100 && kesejahAltBAir){
+            kesehatan = 95;
+        }
+        if (mood == 100 && kesejahAltTidur){
+            mood = 95;
+        } 
+        if (kesehatan == 100 && kesejahAltTidur){
+            kesehatan = 95;
         }
 
         // cekHidup

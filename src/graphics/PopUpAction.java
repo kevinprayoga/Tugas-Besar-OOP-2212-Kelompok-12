@@ -12,6 +12,7 @@ import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
+import entity.Waktu;
 
 public class PopUpAction {
     private GamePanel gamePanel;
@@ -118,8 +119,8 @@ public class PopUpAction {
             }
             System.out.println(text);
             for (Sim s : gamePanel.getPlayableSims()) {
+                System.out.println(((s.getDayTidur() * 720 + s.getTimeTidur()) - (Waktu.getDay() * 720 + Waktu.getTime())));
                 s.update(actionTime);
             }
         }
 }
-

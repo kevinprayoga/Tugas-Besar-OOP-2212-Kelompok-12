@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 
 import entity.NonMakanan;
+import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
