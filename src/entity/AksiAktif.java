@@ -13,7 +13,7 @@ public interface AksiAktif {
 
     public void tidur(int time) throws NotEnoughKesejahteraan,ItemError,InterruptedException,TimeError;
 
-    public void makan(Makanan m) throws ItemError,InterruptedException;
+    public <P extends Produk> void makan(P m) throws ItemError,InterruptedException;
 
     public void berkunjung(Rumah r) throws NotEnoughKesejahteraan, InterruptedException;
 
@@ -21,7 +21,7 @@ public interface AksiAktif {
 
     public int getBonusInc();
 
-    public void vacation() throws TidakCukupItem;
+    public void nubes() throws InterruptedException;
 
     public void woodworking(NonMakanan item) throws InterruptedException,TidakCukupItem;
 
@@ -32,4 +32,6 @@ public interface AksiAktif {
     public void read() throws InterruptedException,ItemError;
 
     public void party() throws TidakCukupItem,InterruptedException;
+    
+    public void masak(Makanan m) throws TidakCukupItem,InterruptedException;
 }

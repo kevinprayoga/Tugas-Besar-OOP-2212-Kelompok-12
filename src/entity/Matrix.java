@@ -38,4 +38,17 @@ public class Matrix<T> {
         }
         return false;
     }
+
+    public void remove(T value) {
+        if (contains(value)) {
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < column; j++) {
+                    T temp = data[i][j];
+                    if (temp != null && temp.equals(value)) {
+                        data[i][j] = null;
+                    }
+                }
+            }
+        }
+    }
 }

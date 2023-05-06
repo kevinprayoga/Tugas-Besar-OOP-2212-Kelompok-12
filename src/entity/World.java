@@ -12,8 +12,11 @@ public class World {
     private static Matrix<Rumah> perumahan;
     private ArrayList<Sim> simList;
 
+    // For World Map Generation (Noise)
+    private int freq;
+
     // Constructor
-    public World() {
+    public World(int freq) {
         dimensi = new Dimensi(64, 64);
         this.mapWorld = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
         this.houseMap = new Matrix<>(dimensi.getWidth(), dimensi.getLength());
@@ -30,10 +33,15 @@ public class World {
         // World map generation
         Noise noise = new Noise(dimensi.getWidth(), dimensi.getLength());
         
-        // Randomizing frequency
-        int frequency = (int) (Math.random() * 5) + 2;
-        System.out.println(frequency);
-        noise.generateNoise(frequency);
+        this.freq = (int) (Math.random() * 5) + 2;
+
+        // For load game purposes
+        if (freq != -1) {
+            this.freq = freq;
+        }
+
+        System.out.println(this.freq);
+        noise.generateNoise(this.freq);
         
         // Mapping noise map into 3 values
         for (int row = 0; row < dimensi.getWidth(); row++) {
@@ -48,6 +56,15 @@ public class World {
             }
         }
     }
+
+    public World() {
+        this(-1);
+    }
+
+    // public World(Posisi[] posisiRumah) {
+    //     this(-1);
+
+    // }
 
     // Methods
     // Getter
@@ -97,7 +114,7 @@ public class World {
             for (int j = 0; j < getWidth(); j++) {
                 if (perumahan.get(i, j) != null) {
                     System.out.println(perumahan.get(i, j).getOwner().getNamaLengkap());
-                    if (perumahan.get(i, j).getOwner().equals(sim)) {
+                    if (perumahan.get(i, j).equals(sim.getCurrentHouse())) {
                             houseX = i; houseY = j;
                     }
                 }
