@@ -117,7 +117,7 @@ public class ActionButton {
         woodworkingLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("woodworking");
+                gamePanel.setWoodworkingOpened(true);
             }
         });
 
