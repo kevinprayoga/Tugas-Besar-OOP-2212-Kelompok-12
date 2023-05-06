@@ -52,13 +52,6 @@ public class ActionButton {
         }
     }
 
-    class PopUp {
-        // Action time button
-        private static boolean isActionPopUpOpen = false;
-        private static int increment = 10;
-        private static int actionTime = 0;
-    }
-
     public void drawSimsButton(Graphics2D graphics2d, int x, int y) {
         int xOffset = 0, yOffset = 56;
         // Right side
@@ -124,7 +117,7 @@ public class ActionButton {
         woodworkingLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi woodworking
+                UI.setActionText("woodworking");
             }
         });
 
@@ -210,7 +203,7 @@ public class ActionButton {
         gamblingLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi judi
+                UI.setActionText("judi");
             }
         });
     }

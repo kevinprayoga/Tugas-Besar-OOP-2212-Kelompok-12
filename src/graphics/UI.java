@@ -96,7 +96,7 @@ public class UI {
             default:
                 break;
         }
-        if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur") {
+        if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
             PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
             popUpAction.draw(graphics2d);
         } else if (actionText != "") {
@@ -263,8 +263,8 @@ public class UI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("Load game 1");
-                    GameLoader gl = new GameLoader(gamePanel);
-                    gl.loadGame(1);
+                    GameLoader.loadGame(1);
+                    gamePanel.removeAll();
                 }
             });
 
@@ -294,8 +294,7 @@ public class UI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("New game 1");
-                    GameLoader gl = new GameLoader(gamePanel);
-                    gl.newGame(1);
+                    GameLoader.newGame(1);
                     gamePanel.removeAll();
                 }
             });
@@ -315,8 +314,8 @@ public class UI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("Load game 2");
-                    GameLoader gl = new GameLoader(gamePanel);
-                    gl.loadGame(2);
+                    GameLoader.loadGame(2);
+                    gamePanel.removeAll();
                 }
             });
 
@@ -346,8 +345,7 @@ public class UI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("New game 2");
-                    GameLoader gl = new GameLoader(gamePanel);
-                    gl.newGame(2);
+                    GameLoader.newGame(2);
                     gamePanel.removeAll();
                 }
             });
@@ -367,8 +365,8 @@ public class UI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("Load game 3");
-                    GameLoader gl = new GameLoader(gamePanel);
-                    gl.loadGame(3);
+                    GameLoader.loadGame(3);
+                    gamePanel.removeAll();
                 }
             });
 
@@ -398,8 +396,7 @@ public class UI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("New game 3");
-                    GameLoader gl = new GameLoader(gamePanel);
-                    gl.newGame(3);
+                    GameLoader.newGame(3);
                     gamePanel.removeAll();
                 }
             });
@@ -427,6 +424,8 @@ public class UI {
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 System.out.println("Back to load screen");
+                GameLoader.saveGame();
+                
                 gamePanel.removeAll();
             }
         });

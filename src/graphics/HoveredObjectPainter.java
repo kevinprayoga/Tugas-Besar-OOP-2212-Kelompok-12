@@ -29,7 +29,7 @@ public class HoveredObjectPainter {
     }
 
     public void draw(Graphics2D graphics2d, int x, int y) {
-        ObjekPainter objekPainter = new ObjekPainter(objek);
+        ObjekPainter objekPainter = new ObjekPainter(objek, gamePanel);
         objekPainter.draw(graphics2d, x + posisi.getX() * 16 + 4, y + posisi.getY() * 16 + 24);
 
         if (keyHandler.code == KeyEvent.VK_ENTER) {
@@ -87,6 +87,6 @@ public class HoveredObjectPainter {
     }
 
     private static void reset() {
-        posisi.changeLoc(0, 0);
+        posisi = new Posisi(0, 0);
     }
 }

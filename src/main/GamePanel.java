@@ -67,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.playableSims = new ArrayList<>();
         this.gameState = GameState.TITLE_SCREEN;
         this.leastRecentlyUsed.push(GameState.TITLE_SCREEN);
+        GameLoader.setGamePanel(this);
     }
 
     public void startGameThread() {
