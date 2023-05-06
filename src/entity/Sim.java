@@ -24,7 +24,7 @@ public class Sim implements AksiAktif, AksiPasif {
 
     private int charType;
     private int totalWaktuKerja;
-    private int timeEmployed;
+    private int timeEmployed = 0;
 
     private int timeTidur;
     private int dayTidur;
@@ -67,6 +67,8 @@ public class Sim implements AksiAktif, AksiPasif {
 
         timeTidur = Waktu.getTime();
         dayTidur = Waktu.getDay();
+        kesejahAltBAir = false;
+        kesejahAltTidur = false;
 
         this.charType = charType;
         currentPosition = "World";
@@ -514,6 +516,7 @@ public class Sim implements AksiAktif, AksiPasif {
 
     public void update(int time) {
         // Alter berdasarkan waktu sejak buang air dan tidur
+        System.out.println(((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())));
         if (((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())) >= 600 && !kesejahAltTidur) {
             mood -= 5;
             kesehatan -= 5;
@@ -534,6 +537,18 @@ public class Sim implements AksiAktif, AksiPasif {
             kesehatan += 5;
             mood += 5;
             kesejahAltBAir = false;
+        } 
+        if (mood == 100 && kesejahAltBAir){
+            mood = 95;
+        } 
+        if (kesehatan == 100 && kesejahAltBAir){
+            kesehatan = 95;
+        }
+        if (mood == 100 && kesejahAltTidur){
+            mood = 95;
+        } 
+        if (kesehatan == 100 && kesejahAltTidur){
+            kesehatan = 95;
         }
 
         // cekHidup
