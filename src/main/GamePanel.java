@@ -115,7 +115,9 @@ public class GamePanel extends JPanel implements Runnable {
                     world.getSimList().remove(sims);
                     for (int j = 0; j < 64; j++) {
                         for (int k = 0; k < 64; k++) {
-                            world.getPerumahan().get(j, k).removeSim(sims);
+                            if (world.getPerumahan().get(j, k) != null) {
+                                world.getPerumahan().get(j, k).removeSim(sims);
+                            }
                         }
                     }
                     playableSims.remove(sims);
