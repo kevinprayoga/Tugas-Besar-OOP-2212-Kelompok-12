@@ -42,6 +42,8 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isStoreOpened = false;
     private boolean isWoodworkingOpened = false;
     private boolean isCookingOpened = false;
+    private boolean isChangeJobOpened = false;
+    private boolean isEatPanetOpened = false;
     private boolean isSomeoneDied = false;
 
     // Flicker handling
@@ -111,8 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public synchronized void update() {
         if (Waktu.getActionTimer() == 0) {
-            for (int i = 0; i < playableSims.size(); i++) {
-                Sim sims = playableSims.get(i);
+            for (Sim sims : playableSims) {
                 if (sims.getStatus() == "dead") {
                     world.getSimList().remove(sims);
                     for (int j = 0; j < 64; j++) {
@@ -244,6 +245,14 @@ public class GamePanel extends JPanel implements Runnable {
         return isCookingOpened;
     }
 
+    public boolean getChangeJobOpened() {
+        return isChangeJobOpened;
+    }
+
+    public boolean getEatPanelOpened() {
+        return isEatPanetOpened;
+    }
+
     public boolean getEnteredHouse() {
         return isEnteredHouse;
     }
@@ -285,6 +294,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setCookingOpened(boolean isCookingOpened) {
         this.isCookingOpened = isCookingOpened;
+    }
+    
+    public boolean setChangeJobOpened(boolean isChangeJobOpened) {
+        return this.isChangeJobOpened = isChangeJobOpened;
+    }
+
+    public void setEatPanelOpened(boolean isEatPanelOpened) {
+        this.isEatPanetOpened = isEatPanelOpened;
     }
 
     public void setEnteredHouse(boolean isEnteredHouse) {

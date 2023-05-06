@@ -326,12 +326,18 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void makan(Makanan m) throws ItemError, InterruptedException {
+    public <P extends Produk> void makan(P m) throws ItemError, InterruptedException {
         status = "makan";
         Waktu.setActionTimer(30);
         Waktu.addTime();
         status = "";
-        kekenyangan += m.getKekenyangan();
+        if (m instanceof Makanan) {
+            kekenyangan += ((Makanan) m).getKekenyangan();
+        } else if (m instanceof BahanMakanan) {
+            kekenyangan += ((BahanMakanan) m).getKekenyangan();
+        } else {
+            throw new ItemError("Item yang dimasukkan bukan makanan!");
+        }
     }
 
     public void berkunjung(Rumah homeVisit) throws NotEnoughKesejahteraan, InterruptedException {

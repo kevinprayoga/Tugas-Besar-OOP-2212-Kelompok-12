@@ -84,7 +84,13 @@ public class ActionButton {
         switchJobLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi ganti pekerjaan
+                System.out.println("Ganti Pekerjaan");
+                gamePanel.setChangeJobOpened(true);
+
+                gamePanel.setStoreOpened(false);
+                gamePanel.setWoodworkingOpened(false);
+                gamePanel.setCookingOpened(false);
+                gamePanel.setEatPanelOpened(false);
             }
         });
 
@@ -118,8 +124,11 @@ public class ActionButton {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gamePanel.setWoodworkingOpened(true);
+                
                 gamePanel.setStoreOpened(false);
                 gamePanel.setCookingOpened(false);
+                gamePanel.setChangeJobOpened(false);
+                gamePanel.setEatPanelOpened(false);
             }
         });
 
