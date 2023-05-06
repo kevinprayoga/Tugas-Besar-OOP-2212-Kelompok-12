@@ -92,6 +92,10 @@ public class WoodworkingPainter {
                             gamePanel.setGameState(GameState.LOADING_SCREEN);
                             gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
                             gamePanel.removeAll();
+
+                            for(Sim s: gamePanel.getPlayableSims()){
+                                s.update(produk.getHarga()/2);
+                            }
                         } catch (Exception e) {
                             System.out.println("Gagal bikin coyy: " + produk.getNamaProduk());
                             System.out.println(e.getMessage());
