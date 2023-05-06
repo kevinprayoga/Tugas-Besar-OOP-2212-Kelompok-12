@@ -7,7 +7,7 @@
                     "owner": "Binomo",
                     "x": 4,
                     "y": 34,
-                    "image": "res/image/world/House (1).png",
+                    "type": 2,
                     "roomMap": [
                         ["0","0","0","0","0","0","0","0","0"],
                         ["0","0","0","0","0","0","0","0","0"],
@@ -19,11 +19,35 @@
                         ["0","0","0","0","0","0","0","0","0"],
                         ["0","0","0","0","0","0","0","0","0"]
                     ],
-                    "rooms": {
-                        "DEF": ["Right,Kasur Single Bed,0,0","Up,Shower,7,7","U,Toilet,5,5"],
-                        "center": ["Down,Jam,0,4"],
-                        "ABC": ["L,Kasur Queen Size,8,8"]
-                    }
+                    "rooms": [
+                        {
+                            "ruangan": {
+                                "namaRuangan": "DEF", 
+                                "orientasi": ["Right", "Up", "Up"],
+                                "namaObjek": ["Kasur Single Bed", "Shower", "Toilet"],
+                                "x": [0, 7, 5],
+                                "y": [0, 7, 6]
+                            }
+                        },
+                        {
+                            "ruangan": {
+                                "namaRuangan": "center",
+                                "orientasi": ["Down"],
+                                "namaObjek": ["Jam"],
+                                "x": [0],
+                                "y": [4]
+                            }
+                        },
+                        {
+                            "ruangan" : {
+                                "namaRuangan": "ABC",
+                                "orientasi": ["Left", "Left"],
+                                "namaObjek": ["Jam", "Kasur Queen Size"],
+                                "x": [2, 8],
+                                "y": [2, 8]
+                            }
+                        }
+                    ]
                 }
             },
             {
@@ -31,7 +55,7 @@
                     "owner": "BMO",
                     "x": 6,
                     "y": 23,
-                    "image": "res/image/world/House (2).png",
+                    "image": 2,
                     "roomMap": [
                         ["0","0","0","0","0","0","0","0","0"],
                         ["0","0","0","0","0","0","0","0","0"],

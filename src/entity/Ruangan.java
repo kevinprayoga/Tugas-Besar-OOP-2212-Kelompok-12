@@ -8,6 +8,8 @@ public class Ruangan {
     private Matrix<Boolean> collisionMap;
     private ArrayList<Sim> simList;
 
+    private Posisi posRoom;
+
     public Ruangan() {
         dimensi = new Dimensi(6, 6);
         petaBarang = new Matrix<NonMakanan> (dimensi.getLength(), dimensi.getWidth());
@@ -40,6 +42,14 @@ public class Ruangan {
 
     public boolean nonMakananExist(Posisi loc) {
         return (this.getObjek(loc) != null);
+    }
+
+    public Posisi getPosisi() {
+        return posRoom;
+    }
+
+    public void setPosisi(int x, int y) {
+        posRoom = new Posisi(x, y);
     }
 
     public void addObjek(Posisi loc, NonMakanan objek) {
