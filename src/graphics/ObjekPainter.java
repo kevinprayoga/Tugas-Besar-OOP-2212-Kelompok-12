@@ -9,16 +9,18 @@ import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 
 import entity.NonMakanan;
-import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
 
-public class ObjekPainter {
+public class ObjekPainter extends Painter {
     private int yOffset = 0;
     private GamePanel gamePanel;
     private BufferedImage image;
     private NonMakanan objek;
+
+    private int x;
+    private int y;
 
     private static NonMakanan clicked = null;
 
@@ -37,7 +39,7 @@ public class ObjekPainter {
             graphics2d.fillRect(x, y, UtilityTool.getTextWidth(text, graphics2d) + 2 * (sideMargin + stroke), UtilityTool.getTextHeight(text, graphics2d) + 2 * (topMargin + stroke));
             graphics2d.setColor(Color.WHITE);
             graphics2d.fillRect(x + stroke, y + stroke, UtilityTool.getTextWidth(text, graphics2d) + 2 * sideMargin, UtilityTool.getTextHeight(text, graphics2d) + 2 * topMargin);
-            graphics2d.setFont(UI.getGeneralFont().deriveFont(10f));
+            graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(10f));
             graphics2d.setColor(ColorPalette.dark_grey);
             graphics2d.drawString(text, x + sideMargin + stroke, y + topMargin + stroke + UtilityTool.getTextHeight(text, graphics2d));
         }
@@ -51,9 +53,11 @@ public class ObjekPainter {
         }
     }
 
-    public ObjekPainter(NonMakanan objek, GamePanel gamePanel) {
+    public ObjekPainter(NonMakanan objek, GamePanel gamePanel, int x, int y) {
         this.objek = objek;
         this.gamePanel = gamePanel;
+        this.x = x;
+        this.y = y;
         switch (objek.getNamaProduk()) {     
             case "Kasur King Size":
                 if (objek.getOrientasi() == "Up" || objek.getOrientasi() == "Down") {
@@ -95,7 +99,7 @@ public class ObjekPainter {
         image = UtilityTool.loadImage("res/image/object/" + objek.getNamaProduk() + " " + objek.getOrientasi() + ".png");
     }
 
-    public void draw(Graphics2D graphics2d, int x, int y) {
+    public void draw(Graphics2D graphics2d) {
         graphics2d.drawImage(image, x, y - yOffset, null);
 
         JLabel label = new JLabel();
@@ -139,10 +143,10 @@ public class ObjekPainter {
                                 gamePanel.setCookingOpened(false);
                                 gamePanel.setChangeJobOpened(false);
                             } else if(objek.getAksi().equals("Tidur")){
-                                UI.setActionText("tidur");
+                                UIPainter.setActionText("tidur");
                             } else if(objek.getAksi().equals("Read")){
                                 gamePanel.getPlayedSims().getSims().read();
-                                UI.setActionText("read");
+                                UIPainter.setActionText("read");
                                 gamePanel.getGameUI().setLoadingMessage("Sedang Membaca ... ");
                                 gamePanel.setGameState(GameState.LOADING_SCREEN);
                                 gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);

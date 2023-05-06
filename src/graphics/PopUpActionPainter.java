@@ -14,7 +14,7 @@ import main.GamePanel.GameState;
 import util.UtilityTool;
 import entity.Waktu;
 
-public class PopUpAction {
+public class PopUpActionPainter extends Painter {
     private GamePanel gamePanel;
     private String text;
     private static int actionTime = 0;
@@ -25,7 +25,7 @@ public class PopUpAction {
     private boolean isClosed = false;
     private boolean isSubmitted = false;
 
-    public PopUpAction(String text, GamePanel gamePanel) {
+    public PopUpActionPainter(String text, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.text = text;
         this.sim = gamePanel.getPlayedSims().getSims();
@@ -34,13 +34,13 @@ public class PopUpAction {
     public void draw(Graphics2D graphics2d) {
         util.KeyHandler keyHandler = gamePanel.getKeyHandler();
         if (keyHandler.code == KeyEvent.VK_ESCAPE || isClosed) {
-            UI.setActionText("");
+            UIPainter.setActionText("");
             timeRead = 0;
         }
         if (keyHandler.code == KeyEvent.VK_ENTER || isSubmitted) {
             try {
                 executeAction(text);
-                UI.setActionText("");
+                UIPainter.setActionText("");
                 gamePanel.getGameUI().setLoadingMessage("Sedang " + text + "... ");
                 gamePanel.setGameState(GameState.LOADING_SCREEN);
                 gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
@@ -68,7 +68,7 @@ public class PopUpAction {
 
         String timeText = actionTime + " sec";
         graphics2d.setColor(ColorPalette.dark_grey);
-        graphics2d.setFont(UI.getGeneralFont().deriveFont(30f));
+        graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(30f));
         graphics2d.drawString(timeText, 592 - UtilityTool.getTextWidth(timeText, graphics2d), 529);
 
         JLabel set = new JLabel("Set Action");

@@ -7,7 +7,7 @@ import util.UtilityTool;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class WorldPainter {
+public class WorldPainter extends Painter {
     private World world;
     private final GamePanel gamePanel;
     private final BufferedImage dirtTiles = UtilityTool.loadImage("res/image/world/Tiles.png");

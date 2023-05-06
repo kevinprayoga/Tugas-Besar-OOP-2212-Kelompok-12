@@ -9,11 +9,10 @@ import javax.swing.JLabel;
 import entity.Rumah;
 import entity.Ruangan;
 import entity.Matrix;
-import entity.Posisi;
 import main.GamePanel;
 import util.UtilityTool;
 
-public class HousePainter {
+public class HousePainter extends Painter {
     private final GamePanel gamePanel;
     private Rumah house;
     private Matrix<Ruangan> matRoom;
@@ -63,8 +62,8 @@ public class HousePainter {
         for (int i = 0; i < house.getDimensi().getLength(); i++) {
             for (int j = 0; j < house.getDimensi().getWidth(); j++) {
                 if (house.getRoomBuild().get(i, j) == 2) {
-                    RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), i, j, gamePanel, house.isBuildMode());
-                    roomPainter.draw(graphics2d, initX + j * 100, initY + i * 96);
+                    RoomPainter roomPainter = new RoomPainter(matRoom.get(i, j), i, j, gamePanel, house.isBuildMode(), initX + j * 100, initY + i * 96);
+                    roomPainter.draw(graphics2d);
                 } else {
                     if (house.isBuildMode() && house.getOwner().equals(gamePanel.getPlayedSims().getSims())) {
                         if (roomBuild.get(i, j) == 1) {

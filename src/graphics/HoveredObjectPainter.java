@@ -3,34 +3,36 @@ package graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import javax.swing.plaf.basic.BasicComboBoxUI.KeyHandler;
-
 import entity.Matrix;
 import entity.NonMakanan;
 import entity.Posisi;
 import entity.Ruangan;
 import main.GamePanel;
 
-public class HoveredObjectPainter {
+public class HoveredObjectPainter extends Painter{
     private GamePanel gamePanel;
     private Ruangan ruangan;
     private Matrix<Boolean> collisionMap;
+    private int x;
+    private int y;
 
     private NonMakanan objek;
     private static Posisi posisi = new Posisi(0, 0);
     private util.KeyHandler keyHandler;
 
-    public HoveredObjectPainter(NonMakanan objek, GamePanel gamePanel) {
+    public HoveredObjectPainter(NonMakanan objek, GamePanel gamePanel, int x, int y) {
         this.gamePanel = gamePanel;
         this.objek = objek;
         this.ruangan = gamePanel.getPlayedSims().getSims().getRuangan();
         this.collisionMap = ruangan.getCollisionMap();
         keyHandler = gamePanel.getKeyHandler();
+        this.x = x;
+        this.y = y;
     }
 
-    public void draw(Graphics2D graphics2d, int x, int y) {
-        ObjekPainter objekPainter = new ObjekPainter(objek, gamePanel);
-        objekPainter.draw(graphics2d, x + posisi.getX() * 16 + 4, y + posisi.getY() * 16 + 24);
+    public void draw(Graphics2D graphics2d) {
+        ObjekPainter objekPainter = new ObjekPainter(objek, gamePanel, x + posisi.getX() * 16 + 4, y + posisi.getY() * 16 + 24);
+        objekPainter.draw(graphics2d);
 
         if (keyHandler.code == KeyEvent.VK_ENTER) {
             if (isPlaceable()) {

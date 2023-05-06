@@ -8,19 +8,21 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
 import entity.Sim;
-import exceptions.NotEnoughKesejahteraan;
-import graphics.UI;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
 
-public class ActionButton {
+public class ActionButtonPainter extends Painter {
     private GamePanel gamePanel;
     private Sim sim;
+    private int x;
+    private int y;
 
-    public ActionButton(GamePanel gamePanel) {
+    public ActionButtonPainter(GamePanel gamePanel, int x, int y) {
         this.gamePanel = gamePanel;
         this.sim = gamePanel.getPlayedSims().getSims();
+        this.x = x;
+        this.y = y;
     }
     
     class CustomButton {
@@ -38,7 +40,7 @@ public class ActionButton {
             graphics2d.fillRect(x, y, UtilityTool.getTextWidth(text, graphics2d) + 2 * (sideMargin + stroke), UtilityTool.getTextHeight(text, graphics2d) + 2 * (topMargin + stroke));
             graphics2d.setColor(Color.WHITE);
             graphics2d.fillRect(x + stroke, y + stroke, UtilityTool.getTextWidth(text, graphics2d) + 2 * sideMargin, UtilityTool.getTextHeight(text, graphics2d) + 2 * topMargin);
-            graphics2d.setFont(UI.getGeneralFont().deriveFont(10f));
+            graphics2d.setFont(graphics.UIPainter.getGeneralFont().deriveFont(10f));
             graphics2d.setColor(ColorPalette.dark_grey);
             graphics2d.drawString(text, x + sideMargin + stroke, y + topMargin + stroke + UtilityTool.getTextHeight(text, graphics2d));
         }
@@ -52,7 +54,8 @@ public class ActionButton {
         }
     }
 
-    public void drawSimsButton(Graphics2D graphics2d, int x, int y) {
+    @Override
+    public void draw(Graphics2D graphics2d) {
         int xOffset = 0, yOffset = 56;
         // Right side
         // Work Button
@@ -67,7 +70,7 @@ public class ActionButton {
         eatLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("kerja");
+                UIPainter.setActionText("kerja");
             }
         });
 
@@ -106,7 +109,7 @@ public class ActionButton {
         workoutLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("olahraga");
+                UIPainter.setActionText("olahraga");
             }
         });
 
@@ -149,7 +152,7 @@ public class ActionButton {
                 System.out.println("Nubes");
                     try{
                     sim.nubes();
-                    UI.setActionText("nubes");
+                    UIPainter.setActionText("nubes");
                     gamePanel.getGameUI().setLoadingMessage("Sedang Nubes ... ");
                     gamePanel.setGameState(GameState.LOADING_SCREEN);
                     gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
@@ -178,7 +181,7 @@ public class ActionButton {
         meditationLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("meditasi");
+                UIPainter.setActionText("meditasi");
             }
         });
 
@@ -199,7 +202,7 @@ public class ActionButton {
                 try {
                     System.out.println("Pesta");
                     sim.party();
-                    UI.setActionText("pesta");
+                    UIPainter.setActionText("pesta");
                     gamePanel.getGameUI().setLoadingMessage("Sedang Pesta ... ");
                     gamePanel.setGameState(GameState.LOADING_SCREEN);
                     gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
@@ -229,7 +232,7 @@ public class ActionButton {
         gamblingLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("judi");
+                UIPainter.setActionText("judi");
             }
         });
     }
