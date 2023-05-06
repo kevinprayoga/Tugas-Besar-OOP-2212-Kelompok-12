@@ -479,8 +479,8 @@ public class Sim implements AksiAktif, AksiPasif {
         } else {
             try {
                 if (myRumah.getRoomBuild().get(y, x) == 1) { // meriksa kalau 2 artinya ruangan available untuk diisi
-                    uang -= 10;
-                    myRumah.setUpgradeTimer(120);
+                    uang -= 1500;
+                    myRumah.setUpgradeTimer(1080);
                     myRumah.setUpgradeLokasi(x, y);
                     myRumah.setUpgradeNama(nama);
                 }
