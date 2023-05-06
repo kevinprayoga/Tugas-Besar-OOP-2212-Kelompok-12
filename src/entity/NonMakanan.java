@@ -26,15 +26,15 @@ public class NonMakanan extends Produk {
         super(type); // tipe ditentukan sesuai masukan
         
         if (type.equals("Kasur King Size")) { // barang Kasur King Size
-            setDimensi(5, 2);
+            setDimensi(2, 5);
             setHarga(150);
             setAksi("Tidur");
         } else if (type.equals("Kasur Queen Size")) { // barang Kasur Queen Size
-            setDimensi(4, 2);
+            setDimensi(2, 4);
             setHarga(100);
             setAksi("Tidur");
         } else if (type.equals("Kasur Single Size")) { // barang Kasur Single Size
-            setDimensi(4, 1);
+            setDimensi(1, 4);
             setHarga(50);
             setAksi("Tidur");
         } else if (type.equals("Shower")) { // barang Shower
@@ -76,7 +76,17 @@ public class NonMakanan extends Produk {
     }
 
     public Dimensi getDimensi() { // getter dimensi
-        return dimensi;
+        if (orientasi.equals("Down")) {
+            return dimensi;
+        } else if (orientasi.equals("Up")) {
+            return new Dimensi(dimensi.getLength(), dimensi.getWidth());
+        } else if (orientasi.equals("Left")) {
+            return new Dimensi(dimensi.getWidth(), dimensi.getLength());
+        } else if (orientasi.equals("Right")) {
+            return new Dimensi(dimensi.getWidth(), dimensi.getLength());
+        } else {
+            return null;
+        }
     }
 
     public String getAksi() { // getter aksi
@@ -106,6 +116,18 @@ public class NonMakanan extends Produk {
 
     public void setOrientasi(String ori) { // setter orientasi
         orientasi = ori;
+    }
+
+    public void setNextOrientasi() { // setter orientasi
+        if (orientasi.equals("Up")) {
+            setOrientasi("Right");
+        } else if (orientasi.equals("Right")) {
+            setOrientasi("Down");
+        } else if (orientasi.equals("Down")) {
+            setOrientasi("Left");
+        } else if (orientasi.equals("Left")) {
+            setOrientasi("Up");
+        }
     }
 
     public void setPosisi(Posisi pos) {
