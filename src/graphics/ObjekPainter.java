@@ -144,7 +144,7 @@ public class ObjekPainter extends Painter {
                                 gamePanel.setChangeJobOpened(false);
                             } else if(objek.getAksi().equals("Tidur")){
                                 UIPainter.setActionText("tidur");
-                            } else if(objek.getAksi().equals("Read")){
+                            } else if(objek.getAksi().equals("Baca")){
                                 gamePanel.getPlayedSims().getSims().read();
                                 UIPainter.setActionText("read");
                                 gamePanel.getGameUI().setLoadingMessage("Sedang Membaca ... ");
@@ -152,6 +152,9 @@ public class ObjekPainter extends Painter {
                                 gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
                                 System.out.println("Sedang ... ");
                                 gamePanel.removeAll();
+                                for(Sim s: gamePanel.getPlayableSims()){
+                                    s.update(10);
+                                }
                             } else if (objek.getAksi().equals("Memasak")) {
                                 gamePanel.setCookingOpened(true);
                                 
@@ -159,6 +162,18 @@ public class ObjekPainter extends Painter {
                                 gamePanel.setWoodworkingOpened(false);
                                 gamePanel.setChangeJobOpened(false);
                                 gamePanel.setEatPanelOpened(false);
+                            } else if(objek.getAksi().equals("Bath")){
+                                gamePanel.getPlayedSims().getSims().bath();
+                                UI.setActionText("read");
+                                gamePanel.getGameUI().setLoadingMessage("Sedang Mandi ... ");
+                                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                                gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                                System.out.println("Sedang ... ");
+                                gamePanel.removeAll();
+                                for(Sim s: gamePanel.getPlayableSims()){
+                                    s.update(5);
+                                }
+
                             }
                         } catch (Exception ex){
                             ex.getMessage();
