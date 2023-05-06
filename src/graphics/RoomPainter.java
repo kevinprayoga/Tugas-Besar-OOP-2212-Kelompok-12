@@ -52,10 +52,10 @@ public class RoomPainter {
         for (int i = 0; i < matObjek.getRow(); i++) {
             for (int j = 0; j < matObjek.getColumn(); j++) {
                 if (matObjek.get(i, j) != null) {
-                    ObjekPainter objekPainter = new ObjekPainter(matObjek.get(i, j));
-                    objekPainter.draw(graphics2d, x + i * 16 + 4, y + j * 16 + 24);
+                    ObjekPainter objekPainter = new ObjekPainter(matObjek.get(i, j), gamePanel);
+                    objekPainter.draw(graphics2d, x + j * 16 + 4, y + i * 16 + 24);
                 } else if (isBuildMode && !collisionMap.get(i, j) && ruangan.equals(gamePanel.getPlayedSims().getSims().getRuangan())) {
-                    graphics2d.drawImage(availTiles, x + i * 16 + 4, y + j * 16 + 24, gamePanel);
+                    graphics2d.drawImage(availTiles, x + j * 16 + 4, y + i * 16 + 24, gamePanel);
                 }
             }
         }
