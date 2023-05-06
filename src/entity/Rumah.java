@@ -164,16 +164,6 @@ public class Rumah {
 
     public void setNewRuangan(int x, int y, Ruangan room) {
         matRoom.set(y, x, room);
-        for (int i = 0; i < dimensi.getLength(); i++) {
-            for (int j = 0; j < dimensi.getWidth(); j++) {
-                if (matRoom.get(i, j) != null) {
-                    System.out.print("X ");
-                } else {
-                    System.out.print("O ");
-                }
-            }
-            System.out.println();
-        }
     }
 
     private void setBuildAvailable(int x, int y) {

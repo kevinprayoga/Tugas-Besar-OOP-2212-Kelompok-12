@@ -93,7 +93,7 @@ public class CollisionHandler {
 
         roomMap = gamePanel.getHouse().getMatRoom().get(roomY, roomX).getCollisionMap();
 
-        if ((y - initY) / 16 < 6) {
+        if ((y - initY) / 16 < 6 && (x - initX) / 16 < 6) {
             if (roomMap.get((x - initX) / gamePanel.getTileSize(), (y - initY) / gamePanel.getTileSize())) {
                 return true;
             }
