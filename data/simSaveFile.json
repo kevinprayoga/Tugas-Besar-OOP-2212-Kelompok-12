@@ -24,7 +24,9 @@
             "startTimeVacation": 10,
             "startDayVacation": 20,
             "bonusInc": 10,
-            "gajiBank": 20
+            "gajiBank": 20,
+            "currentPosition" : "Rumah",
+            "currentHouse" : "homeVisit"
         }
     }
 ]
