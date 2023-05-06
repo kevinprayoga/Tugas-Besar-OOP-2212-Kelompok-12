@@ -517,6 +517,7 @@ public class Sim implements AksiAktif, AksiPasif {
     public void update(int time) {
         // Alter berdasarkan waktu sejak buang air dan tidur
         System.out.println(((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())));
+        wood += rand.nextInt(5);
         if (((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())) >= 600 && !kesejahAltTidur) {
             mood -= 5;
             kesehatan -= 5;
