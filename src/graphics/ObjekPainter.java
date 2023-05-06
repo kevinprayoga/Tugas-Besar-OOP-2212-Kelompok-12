@@ -130,10 +130,11 @@ public class ObjekPainter {
                             gamePanel.getPlayedSims().getSims().makan(null);
                         } else if(objek.getAksi().equals("Tidur")){
                             UI.setActionText("tidur");
-                        } else if(objek.getAksi().equals("Read")){
+                        } else if(objek.getAksi().equals("Baca")){
+                            System.out.println("BACA BACA BACA");
                             gamePanel.getPlayedSims().getSims().read();
                             UI.setActionText("read");
-                            gamePanel.getGameUI().setLoadingMessage("Sedang Membaca ... ");
+                            gamePanel.getGameUI().setLoadingMessage("Sedang Baca ... ");
                             gamePanel.setGameState(GameState.LOADING_SCREEN);
                             gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
                             System.out.println("Sedang ... ");

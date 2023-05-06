@@ -422,18 +422,14 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void read() throws ItemError, InterruptedException {
-        if (inFrontNonMakanan.getAksi() != "Read") {
-            throw new ItemError("Sim sedang tidak di depan rak buku!");
-        } else {
-            status = "read";
-            Waktu.setActionTimer(10);
-            Waktu.addTime();
-            int randomnum = rand.nextInt(5);
-            if (randomnum == 4) {
-                bonusInc += 10;
-            }
-            mood += 5;
+        status = "read";
+        Waktu.setActionTimer(10);
+        Waktu.addTime();
+        int randomnum = rand.nextInt(5);
+        if (randomnum == 4) {
+            bonusInc += 10;
         }
+        mood += 5;
     }
 
     public void party() throws TidakCukupItem, InterruptedException {
