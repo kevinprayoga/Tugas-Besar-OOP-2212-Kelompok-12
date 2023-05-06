@@ -59,10 +59,6 @@ public class GamePanel extends JPanel implements Runnable {
     // Design Pattern Singleton
     private static GamePanel single = null;
 
-    static {
-        getGamePanel();
-    }
-
     private GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.WHITE);
