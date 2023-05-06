@@ -26,7 +26,11 @@
             "bonusInc": 10,
             "gajiBank": 20,
             "currentPosition" : "Rumah",
-            "currentHouse" : "homeVisit"
+            "currentHouse" : "homeVisit",
+            "rumah" : {
+                "x" : 0,
+                "y" : 0
+            }
         }
     }
 ]

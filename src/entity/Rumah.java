@@ -4,6 +4,7 @@ import util.UtilityTool;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.Map;
 
 import java.util.ArrayList;
 
@@ -23,13 +24,15 @@ public class Rumah {
     private Integer[] upgradeLokasi = new Integer[2];
     private String nameUpgrade;
 
+    private int type;
+
     // House state
     private boolean isBuildMode = false;
     
     public Rumah(Sim owner){
         this.owner = owner;
         owner.setMyRumah(this);
-        int type = (int) (Math.random() * 11) + 1;
+        type = (int) (Math.random() * 11) + 1;
         switch (type) {
             case 1:
                 image = UtilityTool.loadImage("res/image/world/House (1).png");
@@ -86,6 +89,10 @@ public class Rumah {
         return image;
     }
 
+    public int getType(){
+        return type;
+    }
+
     public Sim getOwner(){
         return owner;
     }
@@ -122,6 +129,14 @@ public class Rumah {
         return ruangan.get(roomName);
     }
 
+    public ArrayList<String> getRuanganList() {
+        ArrayList<String> list = new ArrayList<String>(); // membuat ArrayList baru
+        for (Map.Entry<String, Ruangan> curr : ruangan.entrySet()) {
+            list.add(curr.getKey()); // menambahkan nama item ke ArrayList
+        }
+        return list; // mengembalikan ArrayList
+    }
+
     public int getUpgradeTimer(){
         return timerUpgrade;
     }
@@ -152,6 +167,7 @@ public class Rumah {
         setNewRuangan(x, y, room);
         roomBuild.set(y, x, 2); // jika terisi ruangan
         ruangan.put(roomName, room);
+        room.setPosisi(x, y);
         setBuildAvailable(x, y);
         System.out.println(x + " " + y);
         return room;
