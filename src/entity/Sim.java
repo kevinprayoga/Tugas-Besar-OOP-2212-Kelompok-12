@@ -372,8 +372,26 @@ public class Sim implements AksiAktif, AksiPasif {
         }
     }
 
-    public void masak(Makanan m){
-
+    public void masak(Makanan m) throws TidakCukupItem,InterruptedException{
+        boolean canCook = true;
+        for(String s: m.getBahan()){
+            if(inventory.getItemValue(s) == 0){
+                canCook = false;
+            }
+        }
+        if(canCook == false){
+            throw new TidakCukupItem("Tidak cukup bahan untuk memasak itu!");
+        } else{
+            status = "memasak";
+            Waktu.setActionTimer((int) 1.5*m.getKekenyangan());
+            Waktu.addTime();
+            status = "";
+            for(String s: m.getBahan()){
+                Produk b = inventory.getItem(s);
+            }
+            inventory.addItem(m);
+            mood += 10;
+        }
     }
 
     // aksi pasif khusus

@@ -33,5 +33,5 @@ public interface AksiAktif {
 
     public void party() throws TidakCukupItem,InterruptedException;
     
-    public void masak(Makanan m);
+    public void masak(Makanan m) throws TidakCukupItem,InterruptedException;
 }

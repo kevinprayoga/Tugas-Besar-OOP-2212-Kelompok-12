@@ -90,12 +90,16 @@ public class CookingPainter {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
                         System.out.println("Makan");
                         try {
-                            // sim.masak(produk);
+                            sim.masak(produk);
                             System.out.println("Berhasil bikin coyy: ");
                             gamePanel.getGameUI().setLoadingMessage("Sedang memasak... ");
                             gamePanel.setGameState(GameState.LOADING_SCREEN);
                             gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
                             gamePanel.removeAll();
+
+                            for(Sim s: gamePanel.getPlayableSims()){
+                                s.update((int)(produk.getKekenyangan()*1.5));
+                            }
                         } catch (Exception e) {
                             System.out.println("Gagal bikin coyy: " + produk.getNamaProduk());
                             System.out.println(e.getMessage());
