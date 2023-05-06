@@ -111,6 +111,9 @@ public class PopUpAction {
                 System.out.println("meditasi");
                 sim.meditate(actionTime);
                 break;
+                case "judi":
+                System.out.println("judi");
+                sim.gamble(actionTime);         // actionTime hanya nama, tetapi aslinya money
             }
             System.out.println(text);
             for (Sim s : gamePanel.getPlayableSims()) {

@@ -96,7 +96,7 @@ public class UI {
             default:
                 break;
         }
-        if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur") {
+        if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
             PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
             popUpAction.draw(graphics2d);
         } else if (actionText != "") {

@@ -124,7 +124,7 @@ public class ActionButton {
         woodworkingLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi woodworking
+                UI.setActionText("woodworking");
             }
         });
 
@@ -210,7 +210,7 @@ public class ActionButton {
         gamblingLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi judi
+                UI.setActionText("judi");
             }
         });
     }
