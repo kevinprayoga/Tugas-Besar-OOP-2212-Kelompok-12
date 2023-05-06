@@ -44,30 +44,7 @@ public class MenuGame{
         String command = sc.nextLine();
         sc.close();
     }
-    /* 
-    public void setPekerjaan(Sim s, String pekerjaanWish) throws PekerjaanError,TidakCukupItem{
-        int randomnum;
-        if(s.getPekerjaan() == null){
-            Random rand = new Random();
-            randomnum = rand.nextInt(7);
-            if(randomnum == 0){
-                s.pekerjaan = ;
-            }
-        } else{
-            if(s.kerjatime > 720){
-                if(s.getMoney() - s.getPekerjaan().getGaji()/2 <= 0){
-                    throw new TidakCukupItem("Uang tidak cukup untuk mengganti pekerjaan!");
-                } else{
-                    s.setMoney(s.getMoney() - s.getPekerjaan().getGaji()/2);
-                    s.pekerjaan = pekerjaanWish;
-                    s.pekerjaanStart = LocalDateTime.now();
-                }
-            } else{
-                throw new PekerjaanError("Belum bisa mengganti pekerjaan.");
-            }
-        }
-    }
-    */
+
 
     public void setPekerjaan(Sim playedSim, String newJob) throws PekerjaanError, TidakCukupItem{
         if (playedSim.getTotalWaktuKerja() <= 720) {
@@ -93,24 +70,6 @@ public class MenuGame{
     public void viewInventory(Sim s){
         s.getInventory().printInventory();
     }
-
-    public void upgradeHouse(){
-        
-    }
-
-    public void editRoom(){}
-
-    public void changeSim(){}
-
-    public void displayObjects(){}
-
-    public void goToObject(){}
-
-    public void action(String aksi){}
-
-    public void save(){}
-
-    public void load(){}
 
     public int getSimCD(){
         return addSimDay;

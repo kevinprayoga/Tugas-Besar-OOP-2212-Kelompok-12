@@ -40,7 +40,7 @@ public class PekerjaanPrinter {
     }
 
     public int costGajiNewJob(String newJob, int uang, int totalWaktuKerja) throws TidakCukupItem, PekerjaanError{
-        if(uang < testPekerjaan.getGaji()/2){
+        if(uang < testPekerjaan.getGaji()*1.5){
             throw new TidakCukupItem("Tidak cukup uang untuk mengganti pekerjaan!");
         } else if(totalWaktuKerja < 720){
             throw new PekerjaanError("Tidak cukup waktu bekerja untuk mengganti pekerjaan!");
@@ -60,7 +60,7 @@ public class PekerjaanPrinter {
             } else if (newJob.equals("Guru")){
                 testPekerjaan = new Guru();
             }
-            return testPekerjaan.getGaji()/2;
+            return (int)(testPekerjaan.getGaji()*1.5);
         }
     }
 }
