@@ -26,4 +26,16 @@ public class Matrix<T> {
     public int getColumn() {
         return column;
     }
+
+    public boolean contains(T value) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                T temp = data[i][j];
+                if (temp != null && temp.equals(value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

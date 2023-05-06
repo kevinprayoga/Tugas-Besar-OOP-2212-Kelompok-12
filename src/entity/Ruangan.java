@@ -43,93 +43,74 @@ public class Ruangan {
     }
 
     public void addObjek(Posisi loc, NonMakanan objek) {
-        int a = objek.getDimensi().getLength();
-        int b = objek.getDimensi().getWidth();
-        
-        int x = loc.getX();
-        int y = loc.getY();
-
-        this.petaBarang.set(x, y, objek);
-
-        switch (objek.getOrientasi()) {
-            case "Down":
-                for (int i = x; i < x + a; i++) {
-                    for (int j = y; j < y + b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-                break;
-            case "Up":
-                for (int i = x; i > x - a; i++) {
-                    for (int j = y; j < y - b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-                break;
-            case "Left":
-                for (int i = x; i < x + a; i++) {
-                    for (int j = y; j < y - b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-            case "Right":
-                for (int i = x; i < x - a; i++) {
-                    for (int j = y; j < y + b; j++) {
-                        this.collisionMap.set(i, j, true);
-                    }
-                }
-                break;
-        }
-
         objek.setPosisi(loc);
-    }
+        this.petaBarang.set(loc.getY(), loc.getX(), objek);
 
-    public void removeObjek(Posisi loc) {
-        NonMakanan objek = this.getObjek(loc);
+        int width = objek.getDimensi().getWidth(); // y
+        int length = objek.getDimensi().getLength(); // x
 
-        int a = objek.getDimensi().getLength();
-        int b = objek.getDimensi().getWidth();
-        
-        int x = loc.getX();
-        int y = loc.getY();
-        this.collisionMap.set(x, y, true);
-
-        switch (objek.getOrientasi()) {
-            case "Down":
-                for (int i = x; i < x + a; i++) {
-                    for (int j = y; j < y + b; j++) {
-                        this.petaBarang.set(i, j, null);
-                    }
-                }
-                break;
-            case "Up":
-                for (int i = x; i > x - a; i++) {
-                    for (int j = y; j < y - b; j++) {
-                        this.petaBarang.set(i, j, null);
-                    }
-                }
-                break;
-            case "Left":
-                for (int i = x; i < x + a; i++) {
-                    for (int j = y; j < y - b; j++) {
-                        this.petaBarang.set(i, j, null);
-                    }
-                }
-            case "Right":
-                for (int i = x; i < x - a; i++) {
-                    for (int j = y; j < y + b; j++) {
-                        this.petaBarang.set(i, j, null);
-                    }
-                }
-                break;
+        for (int i = loc.getY(); i < loc.getY() + width; i++) {
+            for (int j = loc.getX(); j < loc.getX() + length; j++) {
+                this.collisionMap.set(i, j, true);
+            }
         }
-        objek.setPosisi(null);
+        
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (petaBarang.get(i, j) != null) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("O ");
+                }
+            }
+            System.out.println();
+        }
+        
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (collisionMap.get(i, j) != true) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("O ");
+                }
+            }
+            System.out.println();
+        }
+
     }
 
-    public void moveObjek(NonMakanan objek, Posisi loc) {
-        removeObjek(objek.getPosisi());
-        addObjek(loc, objek);
-        objek.getPosisi().changeLoc(loc.getX(), loc.getY());
+    public void removeObjek(NonMakanan objek) {
+        Posisi loc = objek.getPosisi();
+
+        if (loc == null) {
+            System.out.println("Posisi objek null");
+        }
+
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (petaBarang.get(i, j) != null) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("O ");
+                }
+            }
+            System.out.println();
+        }
+
+        System.out.println("Posisi objek: " + loc.getX() + " " + loc.getY());
+
+
+        this.petaBarang.set(loc.getY(), loc.getX(), null);
+
+        int width = objek.getDimensi().getWidth(); // y
+        int length = objek.getDimensi().getLength(); // x
+
+        for (int i = loc.getY(); i < loc.getY() + width; i++) {
+            for (int j = loc.getX(); j < loc.getX() + length; j++) {
+                this.collisionMap.set(i, j, false);
+            }
+        }
     }
 
     public void addSim(Sim sim) {

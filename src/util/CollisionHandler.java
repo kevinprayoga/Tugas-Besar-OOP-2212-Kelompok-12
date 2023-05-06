@@ -44,15 +44,12 @@ public class CollisionHandler {
     
     public boolean isCollideWorld(int x, int y) {
         if (x < 0 || y < 0 || x / gamePanel.getTileSize() >= world.getWidth() - 1 || y / gamePanel.getTileSize() >= world.getLength() - 1) {
-            System.out.println("Collide with border");
             return true;
         }
         if (worldTiles.get((x + 8) / gamePanel.getTileSize(), (y + 16) / gamePanel.getTileSize()) == 2) {
-            System.out.println("Collide with sea");
             return true;
         }
         if (houseMap.get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize())) {
-            System.out.println("Collide with house");
 
             try {
                 Rumah visited = world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize());
@@ -70,7 +67,6 @@ public class CollisionHandler {
                 gamePanel.setHouse(visited);
                 gamePanel.setGameState(GamePanel.GameState.HOUSE_GAME_SCREEN);
                 gamePanel.leastRecentlyUsed.push(GamePanel.GameState.HOUSE_GAME_SCREEN);
-                System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                 gamePanel.isHouseSelected = true;
                 
                 // Moving sim
@@ -79,6 +75,7 @@ public class CollisionHandler {
                 sims.setCurrentHouse(world.getPerumahan().get((x + 8) / gamePanel.getTileSize(), (y + 8) / gamePanel.getTileSize()));
                 sims.setRuangan(visited.getMatRoom().get(roomX, roomY));
                 gamePanel.getHouse().addSim(sims);
+                gamePanel.getHouse().getMatRoom().get(roomX, roomY).addSim(sims);
                 gamePanel.getPlayedSims().reset();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -94,14 +91,95 @@ public class CollisionHandler {
         int initX = 64 + roomX * 100;
         int initY = 92 + roomY * 96 - 12;
 
-        roomMap = gamePanel.getHouse().getMatRoom().get(roomX, roomY).getCollisionMap();
+        roomMap = gamePanel.getHouse().getMatRoom().get(roomY, roomX).getCollisionMap();
 
-        if (roomMap.get((x - initX) / gamePanel.getTileSize(), (y - initY - 12) / gamePanel.getTileSize())) {
-            System.out.println("Collide with room object");
+        if ((y - initY) / 16 < 6 && (x - initX) / 16 < 6) {
+            if (roomMap.get((x - initX) / gamePanel.getTileSize(), (y - initY) / gamePanel.getTileSize())) {
+                return true;
+            }
+        }
+
+        if (roomX < 8) {
+            if (gamePanel.getHouse().getMatRoom().get(roomY, roomX + 1) == null) {
+                if (x > initX + 80) {
+                    return true;
+                }
+            }
+        } else {
+            if (x > initX + 80) {
+                return true;
+            }
+        }
+
+        if ((y - initY < 36 || y - initY > 67) && x > initX + 80 ) {
             return true;
         }
-        if (x < initX || y < initY || x > initX + 80 || y > initY + 96) {
-            System.out.println("Collide with border");
+
+
+        if (x < initX || y < initY || x > initX + 96 || y > initY + 96) {
+            if (x - initX > 32 && x - initX < 48) {
+                if (y - initY < 0) {
+                    roomY--;
+                    if (roomY < 0) {
+                        roomY = 0;
+                        return true;
+                    } else if (gamePanel.getHouse().getMatRoom().get(roomY, roomX) == null) {
+                        roomY++;
+                        return true;
+                    }
+                    sims.getRuangan().removeSim(sims);
+                    sims.setRuangan(gamePanel.getHouse().getMatRoom().get(roomY, roomX));
+                    sims.getRuangan().addSim(sims);
+                    sims.setCurrentPosition("Rumah");
+                    return false;
+                } else {
+                    roomY++;
+                    if (roomY > 8) {
+                        roomY = 8;
+                        return true;
+                    } else if (gamePanel.getHouse().getMatRoom().get(roomY, roomX) == null) {
+                        roomY--;
+                        return true;
+                    }
+                    sims.getRuangan().removeSim(sims);
+                    sims.setRuangan(gamePanel.getHouse().getMatRoom().get(roomY, roomX));
+                    sims.getRuangan().addSim(sims);
+                    sims.setCurrentPosition("Rumah");
+                    return false;
+                }
+            }
+    
+            if (y - initY > 36 && y - initY < 67) {
+                if (x - initX < 0) {
+                    roomX--;
+                    if (roomX < 0) {
+                        roomX = 0;
+                        return true;
+                    } else if (gamePanel.getHouse().getMatRoom().get(roomY, roomX) == null) {
+                        roomX++;
+                        return true;
+                    }
+                    sims.getRuangan().removeSim(sims);
+                    sims.setRuangan(gamePanel.getHouse().getMatRoom().get(roomY, roomX));
+                    sims.getRuangan().addSim(sims);
+                    sims.setCurrentPosition("Rumah");
+                    return false;
+                } else {
+                    roomX++;
+                    if (roomX > 8) {
+                        roomX = 8;
+                        return true;
+                    } else if (gamePanel.getHouse().getMatRoom().get(roomY, roomX) == null) {
+                        roomX--;
+                        return true;
+                    }
+                    sims.getRuangan().removeSim(sims);
+                    sims.setRuangan(gamePanel.getHouse().getMatRoom().get(roomY, roomX));
+                    sims.getRuangan().addSim(sims);
+                    sims.setCurrentPosition("Rumah");
+                    return false;
+                }
+            }
             return true;
         }
         return false;

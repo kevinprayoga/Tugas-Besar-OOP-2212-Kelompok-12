@@ -419,7 +419,7 @@ public class Sim implements AksiAktif, AksiPasif {
             throw new ExistingOrder("Sudah ada proses upgrade rumah pada rumah ini!");
         } else {
             try {
-                if (myRumah.getRoomBuild().get(x, y) == 1) { // meriksa kalau 2 artinya ruangan available untuk diisi
+                if (myRumah.getRoomBuild().get(y, x) == 1) { // meriksa kalau 2 artinya ruangan available untuk diisi
                     uang -= 10;
                     myRumah.setUpgradeTimer(120);
                     myRumah.setUpgradeLokasi(x, y);
@@ -462,8 +462,8 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void installObject(NonMakanan o, Posisi loc) {
-        NonMakanan barang = (NonMakanan) inventory.getItem(o.getNamaProduk());
-        this.ruangan.addObjek(loc, barang);
+        this.ruangan.addObjek(loc, o);
+        inventory.getItem(o.getNamaProduk());
     }
 
     public int getTime() throws ItemError {

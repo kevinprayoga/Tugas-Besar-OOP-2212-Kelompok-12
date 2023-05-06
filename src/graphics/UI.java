@@ -670,12 +670,18 @@ public class UI {
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gamePanel.leastRecentlyUsed.pop();
+                while (gamePanel.leastRecentlyUsed.peek() != GameState.WORLD_GAME_SCREEN) {
+                    gamePanel.leastRecentlyUsed.pop();
+                }
                 System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 gamePanel.getPlayedSims().getSims().setCurrentPosition("World");
                 System.out.println("World screen");
+
+                gamePanel.getHouse().setBuildMode(false);
+                gamePanel.setHoveredObject(null);
+                gamePanel.getHouse().removeSim(gamePanel.getPlayedSims().getSims());
                 gamePanel.getWorld().addSim((gamePanel.getPlayedSims().getSims()));
                 gamePanel.getPlayedSims().reset();
                 gamePanel.removeAll();

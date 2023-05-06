@@ -148,12 +148,13 @@ public class Rumah {
         nameUpgrade = nama;
     }
 
-    public Ruangan createRuangan(int y, int x, String roomName) {
+    public Ruangan createRuangan(int x, int y, String roomName) {
         Ruangan room = new Ruangan();
         setNewRuangan(x, y, room);
-        roomBuild.set(x, y, 2); // jika terisi ruangan
+        roomBuild.set(y, x, 2); // jika terisi ruangan
         ruangan.put(roomName, room);
         setBuildAvailable(x, y);
+        System.out.println(x + " " + y);
         return room;
     }
 
@@ -162,28 +163,29 @@ public class Rumah {
     }
 
     public void setNewRuangan(int x, int y, Ruangan room) {
-        matRoom.set(x, y, room);
+        matRoom.set(y, x, room);
     }
 
     private void setBuildAvailable(int x, int y) {
+        System.out.println(x + " " + y);
         if (x > 0) {
-            if (roomBuild.get(x - 1, y) == 0) {
-                roomBuild.set(x - 1, y, 1);
+            if (roomBuild.get(y, x - 1) == 0) {
+                roomBuild.set(y, x - 1, 1);
             }
         }
-        if (x < 9) {
-            if (roomBuild.get(x + 1, y) == 0) {
-                roomBuild.set(x + 1, y, 1);
+        if (x < 8) {
+            if (roomBuild.get(y, x + 1) == 0) {
+                roomBuild.set(y, x + 1, 1);
             }
         }
         if (y > 0) {
-            if (roomBuild.get(x, y - 1) == 0) {
-                roomBuild.set(x, y - 1, 1);
+            if (roomBuild.get(y - 1, x) == 0) {
+                roomBuild.set(y - 1, x, 1);
             }
         }
-        if (y < 9) {
-            if (roomBuild.get(x, y + 1) == 0) {
-                roomBuild.set(x, y + 1, 1);
+        if (y < 8) {
+            if (roomBuild.get(y + 1, x) == 0) {
+                roomBuild.set(y + 1, x, 1);
             }
         }
     }
@@ -204,6 +206,14 @@ public class Rumah {
 
     public void removeSim(Sim sim) {
         simList.remove(sim);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                Ruangan room = matRoom.get(i, j);
+                if (room != null) {
+                    room.getSimList().remove(sim);
+                }
+            }
+        }
     }
 
 }
