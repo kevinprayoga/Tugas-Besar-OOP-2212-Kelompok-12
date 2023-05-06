@@ -143,6 +143,7 @@ public class ObjekPainter extends Painter {
                                 gamePanel.setWoodworkingOpened(false);
                                 gamePanel.setCookingOpened(false);
                                 gamePanel.setChangeJobOpened(false);
+                                gamePanel.setClockOpened(false);
                             } else if(objek.getAksi().equals("Tidur")){
                                 UIPainter.setActionText("tidur");
                             } else if(objek.getAksi().equals("Baca")){
@@ -163,6 +164,7 @@ public class ObjekPainter extends Painter {
                                 gamePanel.setWoodworkingOpened(false);
                                 gamePanel.setChangeJobOpened(false);
                                 gamePanel.setEatPanelOpened(false);
+                                gamePanel.setClockOpened(false);
                             } else if(objek.getAksi().equals("Bath")){
                                 gamePanel.getPlayedSims().getSims().bath();
                                 UIPainter.setActionText("read");
@@ -175,6 +177,26 @@ public class ObjekPainter extends Painter {
                                     s.update(5);
                                 }
 
+                            } else if(objek.getAksi().equals("Buang Air")){
+                                gamePanel.getPlayedSims().getSims().buangAir();
+                                UIPainter.setActionText("Buang Air");
+                                gamePanel.getGameUI().setLoadingMessage("Sedang Buang Air ... ");
+                                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                                gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                                System.out.println("Sedang ... ");
+                                gamePanel.removeAll();
+                                for(Sim s: gamePanel.getPlayableSims()){
+                                    s.update(5);
+                                }
+
+                            } else if (objek.getAksi().equals("Melihat Waktu")) {
+                                gamePanel.setClockOpened(true);
+                                
+                                gamePanel.setEatPanelOpened(false);
+                                gamePanel.setStoreOpened(false);
+                                gamePanel.setWoodworkingOpened(false);
+                                gamePanel.setCookingOpened(false);
+                                gamePanel.setChangeJobOpened(false);
                             }
                         } catch (Exception ex){
                             ex.getMessage();

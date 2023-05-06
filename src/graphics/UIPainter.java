@@ -30,6 +30,8 @@ public class UIPainter extends Painter {
     // Character selection screen
     private String nameField;
     private int optionSelected = 0;
+    
+    private int helpScreenPage = 1;
 
     // Action pop-up
     private static String actionText = "";
@@ -110,6 +112,13 @@ public class UIPainter extends Painter {
             EatPanelPainter eatPainter = new EatPanelPainter(gamePanel);
             eatPainter.draw(graphics2d);
         }
+
+        if (gamePanel.getClockOpened() && gamePanel.getGameState() != GameState.LOADING_SCREEN) {
+            ClockPainter clockPainter = new ClockPainter(gamePanel);
+            clockPainter.draw(graphics2d);
+        }
+
+
 
         if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
             PopUpActionPainter popUpAction = new PopUpActionPainter(actionText, gamePanel);
@@ -198,7 +207,9 @@ public class UIPainter extends Painter {
     private void drawHelpScreen() {
         // Background and title
         gamePanel.setBackground(Color.WHITE);
-        
+        BufferedImage helpScreenImage = UtilityTool.loadImage("res/image/ui/Help " + Integer.toString(helpScreenPage) + ".png");
+        graphics2d.drawImage(helpScreenImage, 0, 0, gamePanel);
+
         // Back button
         BufferedImage backButtonImage = UtilityTool.loadImage("res/image/ui/back button.png");
         graphics2d.drawImage(backButtonImage, 12, 12, gamePanel);
@@ -213,6 +224,23 @@ public class UIPainter extends Painter {
                 GameState previousState = gamePanel.leastRecentlyUsed.peek();
                 gamePanel.setGameState(previousState);
                 System.out.println("Back to title screen");
+                gamePanel.removeAll();
+            }
+        });
+
+        // Next button
+        JLabel nextButton = new JLabel("Next");
+        nextButton.setBounds(48, 48, 976, 976);
+        gamePanel.add(nextButton);
+
+        nextButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (helpScreenPage < 4) {
+                    helpScreenPage++;
+                } else {
+                    helpScreenPage = 1;
+                }
                 gamePanel.removeAll();
             }
         });

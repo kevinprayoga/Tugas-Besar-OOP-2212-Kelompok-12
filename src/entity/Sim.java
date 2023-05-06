@@ -83,6 +83,7 @@ public class Sim implements AksiAktif, AksiPasif {
             inventory.addItem(new NonMakanan("Toilet"));
             inventory.addItem(new NonMakanan("Kompor Gas"));
             inventory.addItem(new NonMakanan("Meja dan Kursi"));
+            inventory.addItem(new NonMakanan("Meja dan Kursi"));
         }
     }
 
@@ -287,8 +288,8 @@ public class Sim implements AksiAktif, AksiPasif {
             Waktu.setActionTimer(time);
             Waktu.addTime();
             status = "";
-            mood += (time / 30 * 10);
-            kekenyangan += (time / 30 * 10);
+            mood -= (time / 30 * 10);
+            kekenyangan -= (time / 30 * 10);
             gajiBank += time;
             uang += ((gajiBank / 240) * (jobPrinter.getTestPekerjaan().getGaji())) * ((100 + getBonusInc()) / 100);
             gajiBank = gajiBank % 240;
@@ -334,6 +335,8 @@ public class Sim implements AksiAktif, AksiPasif {
         status = "makan";
         Waktu.setActionTimer(30);
         Waktu.addTime();
+        setTimeMakan(Waktu.getTime());
+        setDayMakan(Waktu.getDay());
         status = "";
         if (m instanceof Makanan) {
             kekenyangan += ((Makanan) m).getKekenyangan();
@@ -545,24 +548,32 @@ public class Sim implements AksiAktif, AksiPasif {
     public void update(int time) {
         // Alter berdasarkan waktu sejak buang air dan tidur
         System.out.println(((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())));
+        // kesejahteraan < 100
+        if (kesehatan > 100) {
+            kesehatan = 100;
+        }
+        if (mood >= 100) {
+            mood = 100;
+        }
+        if (kekenyangan >= 100) {
+            kekenyangan = 100;
+        }
         wood += rand.nextInt(5);
-        if (((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())) >= 600 && !kesejahAltTidur) {
+        if ((((Waktu.getDay() * 720 + Waktu.getTime()) - (dayTidur * 720 + timeTidur)) >= 600) && kesejahAltTidur == false) {
             mood -= 5;
             kesehatan -= 5;
             kesejahAltTidur = true;
-        } else if (((dayTidur * 720 + timeTidur) - (Waktu.getDay() * 720 + Waktu.getTime())) <= 600
-                && kesejahAltTidur) {
+        } else if ((((Waktu.getDay() * 720 + Waktu.getTime()) - (dayTidur * 720 + timeTidur)) <= 600) && kesejahAltTidur == true) {
             mood += 5;
             kesehatan += 5;
             kesejahAltTidur = false;
         }
-        if (timeMakan != -1 && ((dayMakan * 720 + timeMakan) - (Waktu.getDay() * 720 + Waktu.getTime())) >= 240
-                && !kesejahAltBAir) {
+        if (timeMakan != -1 && (((Waktu.getDay() * 720 + Waktu.getTime()) - (dayMakan * 720 + timeMakan)) >= 240)&& kesejahAltBAir == false) {
             kesehatan -= 5;
             mood -= 5;
             kesejahAltBAir = true;
-        } else if (timeMakan != -1 && ((dayMakan * 720 + timeMakan) - (Waktu.getDay() * 720 + Waktu.getTime())) <= 240
-                && kesejahAltBAir) {
+        } else if (timeMakan != -1 && ((Waktu.getDay() * 720 + Waktu.getTime()) - (dayMakan * 720 + timeMakan)) <= 240
+                && kesejahAltBAir == true) {
             kesehatan += 5;
             mood += 5;
             kesejahAltBAir = false;
@@ -579,14 +590,6 @@ public class Sim implements AksiAktif, AksiPasif {
         if (kesehatan == 100 && kesejahAltTidur){
             kesehatan = 95;
         }
-
-        // cekHidup
-        //
-        //
-        if (kesehatan <= 0 || mood <= 0 || kekenyangan <= 0) {
-            status = "dead";
-        }
-
         // kesejahteraan < 100
         if (kesehatan > 100) {
             kesehatan = 100;
@@ -597,6 +600,15 @@ public class Sim implements AksiAktif, AksiPasif {
         if (kekenyangan >= 100) {
             kekenyangan = 100;
         }
+
+        // cekHidup
+        //
+        //
+        if (kesehatan <= 0 || mood <= 0 || kekenyangan <= 0) {
+            status = "dead";
+        }
+
+        
         if (status == "vacation"
                 && ((Waktu.getDay() * 720 + Waktu.getTime()) - (startDayVacation * 720 + startTimeVacation)) >= 2160) {
             status = "";
