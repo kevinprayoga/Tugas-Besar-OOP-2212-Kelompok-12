@@ -10,6 +10,7 @@ import java.time.OffsetDateTime;
 import javax.swing.JLabel;
 
 import entity.NonMakanan;
+import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
@@ -131,7 +132,6 @@ public class ObjekPainter {
                         } else if(objek.getAksi().equals("Tidur")){
                             UI.setActionText("tidur");
                         } else if(objek.getAksi().equals("Baca")){
-                            System.out.println("BACA BACA BACA");
                             gamePanel.getPlayedSims().getSims().read();
                             UI.setActionText("read");
                             gamePanel.getGameUI().setLoadingMessage("Sedang Baca ... ");
@@ -139,6 +139,37 @@ public class ObjekPainter {
                             gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
                             System.out.println("Sedang ... ");
                             gamePanel.removeAll();
+
+                            for (Sim s : gamePanel.getPlayableSims()) {
+                                s.update(10);
+                            }
+                            
+                        } else if(objek.getAksi().equals("Bath")){
+                            gamePanel.getPlayedSims().getSims().bath();
+                            UI.setActionText("bath");
+                            gamePanel.getGameUI().setLoadingMessage("Sedang Mandi ... ");
+                            gamePanel.setGameState(GameState.LOADING_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                            System.out.println("Sedang ... ");
+                            gamePanel.removeAll();
+
+                            for (Sim s : gamePanel.getPlayableSims()) {
+                                s.update(5);
+                            }
+
+                        } else if(objek.getAksi().equals("Buang Air")){
+                            gamePanel.getPlayedSims().getSims().read();
+                            UI.setActionText("buang air");
+                            gamePanel.getGameUI().setLoadingMessage("Sedang Buang Air ... ");
+                            gamePanel.setGameState(GameState.LOADING_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                            System.out.println("Sedang ... ");
+                            gamePanel.removeAll();
+
+                            for (Sim s : gamePanel.getPlayableSims()) {
+                                s.update(10);
+                            }
+
                         }
                     } catch (Exception ex){
                         ex.getMessage();

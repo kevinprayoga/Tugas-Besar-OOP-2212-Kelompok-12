@@ -32,4 +32,6 @@ public interface AksiAktif {
     public void read() throws InterruptedException,ItemError;
 
     public void party() throws TidakCukupItem,InterruptedException;
+    
+    public void masak(Makanan m);
 }
