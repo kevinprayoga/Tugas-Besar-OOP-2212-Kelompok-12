@@ -3,7 +3,7 @@
         "SIM": {
             "namaLengkap": "Binomo",
             "charType": 1,
-            "jobPrinter": "BadutSulap",
+            "pekerjaan": "BadutSulap",
             "uang": 100,
             "inventory": {
                 "KasurSingleBed": 5,
@@ -24,10 +24,6 @@
             "startTimeVacation": 10,
             "startDayVacation": 20,
             "bonusInc": 10,
-            "rumah": {
-                "x": 10,
-                "y": 10
-            },
             "gajiBank": 20
         }
     }
