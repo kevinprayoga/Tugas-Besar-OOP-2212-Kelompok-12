@@ -111,6 +111,13 @@ public class UIPainter extends Painter {
             eatPainter.draw(graphics2d);
         }
 
+        if (gamePanel.getClockOpened() && gamePanel.getGameState() != GameState.LOADING_SCREEN) {
+            ClockPainter clockPainter = new ClockPainter(gamePanel);
+            clockPainter.draw(graphics2d);
+        }
+
+
+
         if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
             PopUpActionPainter popUpAction = new PopUpActionPainter(actionText, gamePanel);
             popUpAction.draw(graphics2d);

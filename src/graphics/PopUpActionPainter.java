@@ -33,7 +33,7 @@ public class PopUpActionPainter extends Painter {
     
     public void draw(Graphics2D graphics2d) {
         util.KeyHandler keyHandler = gamePanel.getKeyHandler();
-        if (keyHandler.code == KeyEvent.VK_ESCAPE || isClosed) {
+        if (keyHandler.code == KeyEvent.VK_ESCAPE || keyHandler.code == KeyEvent.VK_W || keyHandler.code == KeyEvent.VK_S || keyHandler.code == KeyEvent.VK_A || keyHandler.code == KeyEvent.VK_D || isClosed) {
             UIPainter.setActionText("");
             timeRead = 0;
         }

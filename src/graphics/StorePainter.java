@@ -53,7 +53,7 @@ public class StorePainter extends Painter {
     public void draw(Graphics2D graphics2d) {
         util.KeyHandler keyHandler = gamePanel.getKeyHandler();
 
-        if (keyHandler.code == KeyEvent.VK_ESCAPE) {
+        if (keyHandler.code == KeyEvent.VK_ESCAPE || keyHandler.code == KeyEvent.VK_W || keyHandler.code == KeyEvent.VK_S || keyHandler.code == KeyEvent.VK_A || keyHandler.code == KeyEvent.VK_D) {
             gamePanel.setStoreOpened(false);
         }
 
