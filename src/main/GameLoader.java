@@ -12,6 +12,12 @@ public class GameLoader {
 
     public static void loadGame(int opt) {
         fileOpt = opt;
+
+        System.out.println("Load Game");
+
+        gamePanel.reset();
+        ReadJSON.readLoadFile(gamePanel, opt);
+
         gamePanel.setGameState(GameState.CHARACTER_SELECTION_SCREEN);
         gamePanel.leastRecentlyUsed.push(GameState.CHARACTER_SELECTION_SCREEN);
         System.out.println(Arrays.toString(gamePanel.leastRecentlyUsed.toArray()));

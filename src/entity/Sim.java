@@ -179,6 +179,46 @@ public class Sim implements AksiAktif, AksiPasif {
         return bonusInc;
     }
 
+    public int getWood() {
+        return wood;
+    }
+
+    public int getTimeTidur() {
+        return timeTidur;
+    }
+
+    public int getDayTidur() {
+        return dayTidur;
+    }
+
+    public boolean getKesejahAltTidur() {
+        return kesejahAltTidur;
+    }
+
+    public int getTimeMakan() {
+        return timeMakan;
+    }
+
+    public int getDayMakan() {
+        return dayMakan;
+    }
+
+    public boolean getKesejahAltBAir() {
+        return kesejahAltBAir;
+    }
+
+    public int getStartTimeVacation() {
+        return startDayVacation;
+    }
+
+    public int getStartDayVacation() {
+        return startDayVacation;
+    }
+
+    public int getGajiBank() {
+        return gajiBank;
+    }
+
     public void setMinusUang(int mines) {
         uang -= mines;
     }
@@ -566,5 +606,69 @@ public class Sim implements AksiAktif, AksiPasif {
         this.ruangan.removeSim(this);
         this.ruangan = r;
         this.ruangan.addSim(this);
+    }
+
+    public void setKekenyangan(int kekenyangan) {
+        this.kekenyangan = kekenyangan;
+    }
+
+    public void setMood(int mood) {
+        this.mood = mood;
+    }
+
+    public void setKesehatan(int kesehatan) {
+        this.kesehatan = kesehatan;
+    }
+
+    public void setWood(int wood) {
+        this.wood = wood;
+    }
+
+    public void setTotalWaktuKerja(int totalWaktuKerja) {
+        this.totalWaktuKerja = totalWaktuKerja;
+    }
+
+    public void setTimeEmployed(int timeEmployed) {
+        this.timeEmployed = timeEmployed;
+    }
+
+    public void setTimeTidur(int timeTidur) {
+        this.timeTidur = timeTidur;
+    }
+
+    public void setDayTidur(int dayTidur) {
+        this.dayTidur = dayTidur;
+    }
+
+    public void setKesejahAltTidur(Boolean kesejahAltTidur) {
+        this.kesejahAltTidur = kesejahAltTidur;
+    }
+
+    public void setTimeMakan(int timeMakan) {
+        this.timeMakan = timeMakan;
+    }
+
+    public void setDayMakan(int dayMakan) {
+        this.dayMakan = dayMakan;
+    }
+
+    public void setKesejahAltBAir(Boolean kesejahAltBAir) {
+        this.kesejahAltBAir = kesejahAltBAir;
+    }
+
+    public void setStartTimeVacation(int startTimeVacation) {
+        this.startTimeVacation = startTimeVacation;
+    }
+
+    public void setStartDayVacation(int startDayVacation) {
+        this.startDayVacation = startDayVacation;
+    }
+
+    public void setBonusInc(int bonusInc) {
+        this.bonusInc = bonusInc;
+    }
+
+    public void setGajiBank(int gajiBank) {
+        this.gajiBank = gajiBank;
     }
 }
