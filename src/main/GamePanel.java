@@ -327,4 +327,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.playableSims.add(sim);
         world.createSim(sim);
     }
+
+    public Sim getSim(String name) {
+        int i = 0;
+        while (i < playableSims.size()) {
+            if (playableSims.get(i).getNamaLengkap().equals(name)) {
+                return playableSims.get(i);
+            }
+        }
+        return null;
+    }
 }

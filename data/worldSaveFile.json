@@ -19,11 +19,35 @@
                         ["0","0","0","0","0","0","0","0","0"],
                         ["0","0","0","0","0","0","0","0","0"]
                     ],
-                    "rooms": {
-                        "DEF": ["Right,Kasur Single Bed,0,0","Up,Shower,7,7","U,Toilet,5,5"],
-                        "center": ["Down,Jam,0,4"],
-                        "ABC": ["L,Kasur Queen Size,8,8"]
-                    }
+                    "rooms": [
+                        {
+                            "ruangan": {
+                                "namaRuangan": "DEF", 
+                                "orientasi": ["Right", "Up", "Up"],
+                                "namaObjek": ["Kasur Single Bed", "Shower", "Toilet"],
+                                "x": [0, 7, 5],
+                                "y": [0, 7, 6]
+                            }
+                        },
+                        {
+                            "ruangan": {
+                                "namaRuangan": "center",
+                                "orientasi": ["Down"],
+                                "namaObjek": ["Jam"],
+                                "x": [0],
+                                "y": [4]
+                            }
+                        },
+                        {
+                            "ruangan" : {
+                                "namaRuangan": "ABC",
+                                "orientasi": ["Left", "Left"],
+                                "namaObjek": ["Jam", "Kasur Queen Size"],
+                                "x": [2, 8],
+                                "y": [2, 8]
+                            }
+                        }
+                    ]
                 }
             },
             {
@@ -43,12 +67,44 @@
                         ["0","0","0","0","0","0","0","0","0"],
                         ["0","0","0","0","0","0","0","0","0"]
                     ],
-                    "rooms": {
-                        "XYZ": ["Right,Kasur Single Bed,0,0","U,Toilet,6,6"],
-                        "center": ["Down,Jam,0,9"],
-                        "FOO": ["L,Kasur King Size,5,5"],
-                        "BAR": ["L,Kasur Queen Size,7,7"]
-                    }
+                    "rooms": [
+                        {
+                            "ruangan": {
+                                "namaRuangan": "XYZ", 
+                                "orientasi": ["Right", "Up"],
+                                "namaObjek": ["Kasur Single Bed", "Shower"],
+                                "x": [0, 6],
+                                "y": [0, 6]
+                            }
+                        },
+                        {
+                            "ruangan": {
+                                "namaRuangan": "center",
+                                "orientasi": ["Down"],
+                                "namaObjek": ["Jam"],
+                                "x": [0],
+                                "y": [9]
+                            }
+                        },
+                        {
+                            "ruangan" : {
+                                "namaRuangan": "FOO",
+                                "orientasi": ["Left"],
+                                "namaObjek": ["Kasur King Size"],
+                                "x": [5],
+                                "y": [5]
+                            }
+                        },
+                        {
+                            "ruangan" : {
+                                "namaRuangan": "BAR",
+                                "orientasi": ["Left"],
+                                "namaObjek": ["Kasur Queen Size"],
+                                "x": [7],
+                                "y": [7]
+                            }
+                        }
+                    ]
                 }
             }
         ]

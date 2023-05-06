@@ -82,6 +82,14 @@ public class Rumah {
         createRuangan(4, 4, "center");
     }
 
+    public Rumah(Sim owner, int x, int y) {
+        this(owner);
+    }
+
+    public void setImage(String path) {
+        image = UtilityTool.loadImage(path);
+    }
+
     public BufferedImage getImage(){
         return image;
     }
