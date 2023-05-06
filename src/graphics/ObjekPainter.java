@@ -136,7 +136,7 @@ public class ObjekPainter {
                                 gamePanel.getPlayedSims().getSims().makan(null);
                             } else if(objek.getAksi().equals("Tidur")){
                                 UI.setActionText("tidur");
-                            } else if(objek.getAksi().equals("Read")){
+                            } else if(objek.getAksi().equals("Baca")){
                                 gamePanel.getPlayedSims().getSims().read();
                                 UI.setActionText("read");
                                 gamePanel.getGameUI().setLoadingMessage("Sedang Membaca ... ");
@@ -144,10 +144,24 @@ public class ObjekPainter {
                                 gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
                                 System.out.println("Sedang ... ");
                                 gamePanel.removeAll();
+                                for(Sim s: gamePanel.getPlayableSims()){
+                                    s.update(10);
+                                }
                             } else if (objek.getAksi().equals("Memasak")) {
                                 gamePanel.setCookingOpened(true);
                                 gamePanel.setStoreOpened(false);
                                 gamePanel.setWoodworkingOpened(false);
+                            } else if(objek.getAksi().equals("Bath")){
+                                gamePanel.getPlayedSims().getSims().bath();
+                                UI.setActionText("read");
+                                gamePanel.getGameUI().setLoadingMessage("Sedang Mandi ... ");
+                                gamePanel.setGameState(GameState.LOADING_SCREEN);
+                                gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                                System.out.println("Sedang ... ");
+                                gamePanel.removeAll();
+                                for(Sim s: gamePanel.getPlayableSims()){
+                                    s.update(5);
+                                }
                             }
                         } catch (Exception ex){
                             ex.getMessage();
