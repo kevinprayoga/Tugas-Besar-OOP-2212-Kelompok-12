@@ -15,7 +15,7 @@ import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
 
-public class WoodworkingPainter {
+public class WoodworkingPainter extends Painter {
     private GamePanel gamePanel;
     private Sim sim;
 
@@ -67,14 +67,14 @@ public class WoodworkingPainter {
                 graphics2d.drawImage(image, x + 24 - (int) (image.getWidth() / 2), y + 24 - (int) (image.getHeight() / 2) , gamePanel);
 
                 // Nama
-                graphics2d.setFont(UI.getGeneralFont().deriveFont(13f));
+                graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(13f));
                 graphics2d.setColor(ColorPalette.dark_grey);
                 graphics2d.drawString(produk.getNamaProduk(), x + 56, y + 18);
                 graphics2d.setColor(Color.decode("#B4977D"));
                 
                 graphics2d.fillRect(x + 56, y + 25, UtilityTool.getTextWidth(Integer.toString(((NonMakanan) produk).getHarga()), graphics2d) + 10, 17);
                 graphics2d.setColor(Color.decode("#4E4219"));
-                graphics2d.setFont(UI.getGeneralFont().deriveFont(11f));
+                graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(11f));
                 graphics2d.drawString(Integer.toString(produk.getHarga()), x + 62, y + 38);
 
                 // Jlabel
@@ -114,7 +114,7 @@ public class WoodworkingPainter {
         }
 
         // Jumlah
-        graphics2d.setFont(UI.getGeneralFont().deriveFont(14f));
+        graphics2d.setFont(UIPainter.getGeneralFont().deriveFont(14f));
         graphics2d.setColor(ColorPalette.dark_grey);
         graphics2d.drawString(Integer.toString(sim.getWood()), 324, 697);
 

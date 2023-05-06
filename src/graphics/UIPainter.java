@@ -20,7 +20,7 @@ import main.GameLoader;
 import main.GamePanel;
 import main.GamePanel.GameState;
 
-public class UI {
+public class UIPainter extends Painter {
     // Screen settings
     private GamePanel gamePanel;
     private Graphics2D graphics2d;
@@ -48,7 +48,7 @@ public class UI {
     private static int increment = 10;
     private static int actionTime = 0;
 
-    public UI (GamePanel gamePanel) {
+    public UIPainter (GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
         try {
@@ -112,7 +112,7 @@ public class UI {
         }
 
         if (actionText == "kerja" || actionText == "olahraga" || actionText == "meditasi" || actionText == "tidur" || actionText == "judi") {
-            PopUpAction popUpAction = new PopUpAction(actionText, gamePanel);
+            PopUpActionPainter popUpAction = new PopUpActionPainter(actionText, gamePanel);
             popUpAction.draw(graphics2d);
         } else if (actionText != "") {
             loadingText = "Sedang " + actionText + "... ";
@@ -665,7 +665,7 @@ public class UI {
         });
   
         // Drawing Dashboard
-        Dashboard dashboard = new Dashboard(gamePanel);
+        DashboardPainter dashboard = new DashboardPainter(gamePanel);
         dashboard.draw(graphics2d);
     }
 
@@ -720,7 +720,7 @@ public class UI {
         });
 
         // Drawing Dashboard
-        Dashboard dashboard = new Dashboard(gamePanel);
+        DashboardPainter dashboard = new DashboardPainter(gamePanel);
         dashboard.draw(graphics2d);
     }
 

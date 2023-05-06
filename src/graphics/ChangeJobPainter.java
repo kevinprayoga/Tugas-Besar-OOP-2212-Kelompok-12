@@ -1,6 +1,5 @@
 package graphics;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -9,12 +8,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
 
-import entity.Pekerjaan;
 import entity.PekerjaanPrinter;
 import entity.Sim;
 import main.GamePanel;
 
-public class ChangeJobPainter {
+public class ChangeJobPainter extends Painter {
     private GamePanel gamePanel;
     private Sim sim;
     private BufferedImage background = util.UtilityTool.loadImage("res/image/ui/change job.png");

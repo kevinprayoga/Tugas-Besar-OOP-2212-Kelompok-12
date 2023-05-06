@@ -13,7 +13,7 @@ import entity.Waktu;
 import entity.World;
 import graphics.HousePainter;
 import graphics.PlayedSims;
-import graphics.UI;
+import graphics.UIPainter;
 import graphics.WorldPainter;
 import util.CollisionHandler;
 import util.KeyHandler;
@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // System variables
     private final KeyHandler keyHandler = new KeyHandler();
-    private final UI ui = new UI(this); 
+    private final UIPainter ui = new UIPainter(this); 
 
     private Thread gameThread;
 
@@ -223,7 +223,7 @@ public class GamePanel extends JPanel implements Runnable {
         return keyHandler;
     }
 
-    public UI getGameUI() {
+    public UIPainter getGameUI() {
         return ui;
     }
 

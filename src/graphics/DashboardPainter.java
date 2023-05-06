@@ -8,13 +8,12 @@ import util.UtilityTool;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
 
-public class Dashboard {
+public class DashboardPainter extends Painter {
     private final GamePanel gamePanel;
     private Sim sims;
     private Inventory inventory;
@@ -23,7 +22,7 @@ public class Dashboard {
     private static boolean isDashboardOpen;
     private static boolean isInventoryOpen; 
     
-    public Dashboard(GamePanel gamePanel) {
+    public DashboardPainter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.sims = gamePanel.getPlayedSims().getSims();
         this.inventory = sims.getInventory();
@@ -152,7 +151,7 @@ public class Dashboard {
         BufferedImage simsStatusImage = UtilityTool.loadImage("res/image/ui/sims status.png");
         graphics2D.drawImage(simsStatusImage, 52, 969, gamePanel);
 
-        graphics2D.setFont(gamePanel.getGameUI().getTitleFont().deriveFont(12f));
+        graphics2D.setFont(UIPainter.getTitleFont().deriveFont(12f));
         graphics2D.setColor(ColorPalette.white);
         graphics2D.drawString(sims.getCurrentActivity(), 59, 980);
 
@@ -160,7 +159,7 @@ public class Dashboard {
         BufferedImage moneyPanel = UtilityTool.loadImage("res/image/ui/dashborad money frame.png");
         graphics2D.drawImage(moneyPanel, 8, 987, gamePanel);
 
-        graphics2D.setFont(gamePanel.getGameUI().getGeneralFont().deriveFont(13f));
+        graphics2D.setFont(UIPainter.getGeneralFont().deriveFont(13f));
         graphics2D.setColor(ColorPalette.dark_grey);
         graphics2D.drawString(Integer.toString(sims.getUang()), 55, 1004);
 
