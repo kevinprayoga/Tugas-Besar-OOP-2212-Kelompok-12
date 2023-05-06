@@ -9,30 +9,25 @@ import java.util.Arrays;
 
 import javax.swing.JLabel;
 
-import entity.NonMakanan;
+import entity.Makanan;
 import entity.Sim;
 import main.GamePanel;
 import main.GamePanel.GameState;
 import util.UtilityTool;
 
-public class WoodworkingPainter {
+public class CookingPainter {
     private GamePanel gamePanel;
     private Sim sim;
 
-    String[] listNonMakanan = {
-        "Kasur King Size",
-        "Kasur Queen Size",
-        "Kasur Single Size",
-        "Shower",
-        "Toilet",
-        "Kompor Gas",
-        "Kompor Listrik",
-        "Rak Buku",
-        "Meja dan Kursi",
-        "Jam"
+    String[] listMakanan = {
+        "Nasi Ayam",
+        "Nasi Kari",
+        "Susu Kacang",
+        "Tumis Sayur",
+        "Bistik"
     };
 
-    public WoodworkingPainter(GamePanel gamePanel) {
+    public CookingPainter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.sim = gamePanel.getPlayedSims().getSims();
     }
@@ -41,15 +36,15 @@ public class WoodworkingPainter {
         util.KeyHandler keyHandler = gamePanel.getKeyHandler();
 
         if (keyHandler.code == KeyEvent.VK_ESCAPE) {
-            gamePanel.setWoodworkingOpened(false);
+            gamePanel.setCookingOpened(false);
         }
 
         class Placeholder {
-            private NonMakanan produk;
+            private Makanan produk;
             private BufferedImage image;
             private BufferedImage placeholder = util.UtilityTool.loadImage("res/image/ui/store placeholder.png");
 
-            public Placeholder (NonMakanan produk) {
+            public Placeholder (Makanan produk) {
                 this.produk = produk;
                 this.image = util.UtilityTool.loadImage("res/image/object/" + produk.getNamaProduk() + ".png");
                 if (this.image == null) {
@@ -70,25 +65,34 @@ public class WoodworkingPainter {
                 graphics2d.setFont(UI.getGeneralFont().deriveFont(13f));
                 graphics2d.setColor(ColorPalette.dark_grey);
                 graphics2d.drawString(produk.getNamaProduk(), x + 56, y + 18);
-                graphics2d.setColor(Color.decode("#B4977D"));
+                graphics2d.setColor(Color.decode("#FFE68B"));
                 
-                graphics2d.fillRect(x + 56, y + 25, UtilityTool.getTextWidth(Integer.toString(((NonMakanan) produk).getHarga()), graphics2d) + 10, 17);
+                String[] bahan = produk.getBahan();
+                String bahanString = "";
+                for (int i = 0; i < bahan.length; i++) {
+                    bahanString += bahan[i];
+                    if (i != bahan.length - 1) {
+                        bahanString += ", ";
+                    }
+                }
+                
+                graphics2d.setFont(UI.getGeneralFont().deriveFont(10f));
+                graphics2d.fillRect(x + 56, y + 25, UtilityTool.getTextWidth(bahanString, graphics2d) + 10, 17);
                 graphics2d.setColor(Color.decode("#4E4219"));
-                graphics2d.setFont(UI.getGeneralFont().deriveFont(11f));
-                graphics2d.drawString(Integer.toString(produk.getHarga()), x + 62, y + 38);
+                graphics2d.drawString(bahanString, x + 62, y + 38);
 
                 // Jlabel
-                JLabel label = new JLabel("Bikin");
+                JLabel label = new JLabel("Makan");
                 label.setBounds(x, y, placeholder.getWidth(), placeholder.getHeight());
                 gamePanel.add(label);
 
                 label.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        System.out.println("Bikin");
+                        System.out.println("Makan");
                         try {
-                            sim.woodworking(produk);
+                            // sim.masak(produk);
                             System.out.println("Berhasil bikin coyy: ");
-                            gamePanel.getGameUI().setLoadingMessage("Sedang woodworking... ");
+                            gamePanel.getGameUI().setLoadingMessage("Sedang memasak... ");
                             gamePanel.setGameState(GameState.LOADING_SCREEN);
                             gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
                             gamePanel.removeAll();
@@ -100,19 +104,13 @@ public class WoodworkingPainter {
                 });
             }
         }
-        BufferedImage woodworkingPanel = UtilityTool.loadImage("res/image/ui/woodworking panel.png");
-        graphics2d.drawImage(woodworkingPanel, 266, 296, gamePanel);
+        BufferedImage cookPanel = UtilityTool.loadImage("res/image/ui/cooking panel.png");
+        graphics2d.drawImage(cookPanel, 266, 296, gamePanel);
 
-        ArrayList<String> listProduk = new ArrayList<>(Arrays.asList(listNonMakanan));
+        ArrayList<String> listProduk = new ArrayList<>(Arrays.asList(listMakanan));
         for (int i = 0; i < listProduk.size(); i++) {
-            Placeholder placeholder = new Placeholder(new NonMakanan(listProduk.get(i)));
+            Placeholder placeholder = new Placeholder(new Makanan(listProduk.get(i)));
             placeholder.draw(graphics2d, 286 + (i % 2) * 230, 382 + (i / 2) * 55);
         }
-
-        // Jumlah
-        graphics2d.setFont(UI.getGeneralFont().deriveFont(14f));
-        graphics2d.setColor(ColorPalette.dark_grey);
-        graphics2d.drawString(Integer.toString(sim.getWood()), 324, 697);
-
     }
 }

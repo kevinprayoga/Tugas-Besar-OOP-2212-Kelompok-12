@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     private GameState gameState; 
     private boolean isStoreOpened = false;
     private boolean isWoodworkingOpened = false;
+    private boolean isCookingOpened = false;
     private boolean isSomeoneDied = false;
 
     // Flicker handling
@@ -239,6 +240,10 @@ public class GamePanel extends JPanel implements Runnable {
         return isWoodworkingOpened;
     }
 
+    public boolean isCookingOpened() {
+        return isCookingOpened;
+    }
+
     public boolean getEnteredHouse() {
         return isEnteredHouse;
     }
@@ -276,6 +281,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setWoodworkingOpened(boolean isWoodworkingOpened) {
         this.isWoodworkingOpened = isWoodworkingOpened;
+    }
+
+    public void setCookingOpened(boolean isCookingOpened) {
+        this.isCookingOpened = isCookingOpened;
     }
 
     public void setEnteredHouse(boolean isEnteredHouse) {
