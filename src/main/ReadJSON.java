@@ -11,17 +11,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class ReadJSONExample {
+public class ReadJSON {
     private static GamePanel gp;
 
     @SuppressWarnings("unchecked")
-    public static void readLoadFile(GamePanel gPanel, String path) {
+    public static void readLoadFile(GamePanel gPanel, int pathOption) {
         // JSON parser object to parse read file
         gp = gPanel;
+        String[] paths = new String[] {"data/load1.json", "data/load2.json", "data/load3.json"};
 
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader(path)) {
+        try (FileReader reader = new FileReader(paths[pathOption])) {
             // Read JSON file
             Object obj = jsonParser.parse(reader);
 
@@ -29,7 +30,7 @@ public class ReadJSONExample {
             System.out.println(simList);
 
             // Iterate over sim array
-            simList.forEach(sim -> parseEmployeeObject((JSONObject) sim));
+            simList.forEach(sim -> parseSimObject((JSONObject) sim));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -40,7 +41,7 @@ public class ReadJSONExample {
         }
     }
 
-    private static void parseEmployeeObject(JSONObject sim) {
+    private static void parseSimObject(JSONObject sim) {
         // Get sim object within list
         JSONObject simObject = (JSONObject) sim.get("SIM");
 
@@ -108,6 +109,5 @@ public class ReadJSONExample {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-
     }
 }
