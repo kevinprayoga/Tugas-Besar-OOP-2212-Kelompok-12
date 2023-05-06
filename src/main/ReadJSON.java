@@ -76,7 +76,7 @@ public class ReadJSON {
         int y = (int) rumahObject.get("y");
 
         try {
-            Sim player = new Sim(namaLengkap, charType);
+            Sim player = new Sim(namaLengkap, charType, true);
             gp.addPlayableSims(player);
             player.getPekerjaanPrinter().setJob(jobPrinter);
             player.setMinusUang(100 - uang);
@@ -103,7 +103,7 @@ public class ReadJSON {
             player.setStartTimeVacation(startTimeVacation);
             player.setStartDayVacation(startDayVacation);
             player.setBonusInc(bonusInc);
-            player.setRumah(gp.getWorld().getHouse(x, y));
+            player.setMyRumah(gp.getWorld().getHouse(x, y));
             player.setGajiBank(gajiBank);
 
         } catch (Exception e) {
