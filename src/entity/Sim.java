@@ -288,8 +288,8 @@ public class Sim implements AksiAktif, AksiPasif {
             Waktu.setActionTimer(time);
             Waktu.addTime();
             status = "";
-            mood += (time / 30 * 10);
-            kekenyangan += (time / 30 * 10);
+            mood -= (time / 30 * 10);
+            kekenyangan -= (time / 30 * 10);
             gajiBank += time;
             uang += ((gajiBank / 240) * (jobPrinter.getTestPekerjaan().getGaji())) * ((100 + getBonusInc()) / 100);
             gajiBank = gajiBank % 240;
