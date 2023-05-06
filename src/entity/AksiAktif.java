@@ -21,7 +21,7 @@ public interface AksiAktif {
 
     public int getBonusInc();
 
-    public void vacation() throws TidakCukupItem;
+    public void nubes() throws InterruptedException;
 
     public void woodworking(NonMakanan item) throws InterruptedException,TidakCukupItem;
 

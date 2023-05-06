@@ -122,7 +122,7 @@ public class ActionButton {
         });
 
         // Holiday button
-        text = "Liburan";
+        text = "Nubes";
         CustomButton holidayButton = new CustomButton(text);
         yOffset = 160;
         xOffset = holidayButton.getWidth(graphics2d) + 48;
@@ -135,7 +135,22 @@ public class ActionButton {
         holidayLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi liburan
+                System.out.println("Pesta");
+                    try{
+                    sim.nubes();
+                    UI.setActionText("pesta");
+                    gamePanel.getGameUI().setLoadingMessage("Sedang Nubes ... ");
+                    gamePanel.setGameState(GameState.LOADING_SCREEN);
+                    gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                    System.out.println("Sedang ... ");
+                    gamePanel.removeAll();
+                    } catch(Exception ex){
+                        ex.getMessage();
+                    }
+                    // Updating
+                    for (Sim s : gamePanel.getPlayableSims()) {
+                        s.update(120);
+                    }
             }
         });
 

@@ -326,21 +326,12 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     // aksi pasif khusus
-    public void vacation() throws TidakCukupItem {
-        if (uang < 1800) {
-            throw new TidakCukupItem("Tidak cukup uang untuk berlibur!");
-        } else {
-            uang -= 1800;
-            status = "vacation";
-            startTimeVacation = Waktu.getTime();
-            startDayVacation = Waktu.getDay();
-            kekenyangan = 100;
-            mood = 100;
-            kesehatan = 100;
-            timeMakan = -1;
-            timeTidur = Waktu.getTime();
-            dayTidur = Waktu.getDay();
-        }
+    public void nubes() throws InterruptedException {
+        status = "nubes";
+        Waktu.setActionTimer(720);
+        Waktu.addTime();
+        status = "";
+        mood = 0;
     }
 
     public void woodworking(NonMakanan item) throws TidakCukupItem, InterruptedException {
