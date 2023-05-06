@@ -30,7 +30,7 @@ public class ClockPainter extends Painter {
         graphics2d.setFont(UIPainter.getTitleFont().deriveFont(97f));
         graphics2d.setColor(ColorPalette.dark_grey);
 
-        String time = String.format("%02d : %02d", (Waktu.getTime() % 720) / 30 , (Waktu.getTime() % 60));
+        String time = String.format("%02d : %02d", (Waktu.getTime() % 720) / 60 , (Waktu.getTime() % 60));
         graphics2d.drawString(time, UtilityTool.getXForCenterOfText(time, gamePanel, graphics2d), 553);
 
         String remainTime = "Sisa waktu " + Integer.toString(Waktu.getRemainTime());
