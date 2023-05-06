@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import entity.NonMakanan;
 import main.GamePanel;
+import main.GamePanel.GameState;
 import util.UtilityTool;
 
 public class ObjekPainter {
@@ -121,15 +122,23 @@ public class ObjekPainter {
             useLabel.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     try{
-                    System.out.println(objek.getNamaProduk() + " Used");
-                    isClicked = !isClicked;
-                    // Program methods here
-                    if(objek.getAksi().equals("Makan")){
-                        // Makanannnnnnnnnnn
-                        gamePanel.getPlayedSims().getSims().makan(null);
-                    } if(objek.getAksi().equals("Tidur")){
-                        UI.setActionText("tidur");
-                    }
+                        System.out.println(objek.getNamaProduk() + " Used");
+                        isClicked = !isClicked;
+                        // Program methods here
+                        if(objek.getAksi().equals("Makan")){
+                            // Makanannnnnnnnnnn
+                            gamePanel.getPlayedSims().getSims().makan(null);
+                        } else if(objek.getAksi().equals("Tidur")){
+                            UI.setActionText("tidur");
+                        } else if(objek.getAksi().equals("Read")){
+                            gamePanel.getPlayedSims().getSims().read();
+                            UI.setActionText("read");
+                            gamePanel.getGameUI().setLoadingMessage("Sedang Membaca ... ");
+                            gamePanel.setGameState(GameState.LOADING_SCREEN);
+                            gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                            System.out.println("Sedang ... ");
+                            gamePanel.removeAll();
+                        }
                     } catch (Exception ex){
                         ex.getMessage();
                     }
