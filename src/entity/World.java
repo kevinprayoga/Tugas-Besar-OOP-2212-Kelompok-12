@@ -114,7 +114,7 @@ public class World {
             for (int j = 0; j < getWidth(); j++) {
                 if (perumahan.get(i, j) != null) {
                     System.out.println(perumahan.get(i, j).getOwner().getNamaLengkap());
-                    if (perumahan.get(i, j).getOwner().equals(sim)) {
+                    if (perumahan.get(i, j).equals(sim.getCurrentHouse())) {
                             houseX = i; houseY = j;
                     }
                 }

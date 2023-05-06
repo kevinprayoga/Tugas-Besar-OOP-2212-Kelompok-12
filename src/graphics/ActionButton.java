@@ -84,7 +84,13 @@ public class ActionButton {
         switchJobLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi ganti pekerjaan
+                System.out.println("Ganti Pekerjaan");
+                gamePanel.setChangeJobOpened(true);
+
+                gamePanel.setStoreOpened(false);
+                gamePanel.setWoodworkingOpened(false);
+                gamePanel.setCookingOpened(false);
+                gamePanel.setEatPanelOpened(false);
             }
         });
 
@@ -117,12 +123,17 @@ public class ActionButton {
         woodworkingLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.setActionText("woodworking");
+                gamePanel.setWoodworkingOpened(true);
+                
+                gamePanel.setStoreOpened(false);
+                gamePanel.setCookingOpened(false);
+                gamePanel.setChangeJobOpened(false);
+                gamePanel.setEatPanelOpened(false);
             }
         });
 
         // Holiday button
-        text = "Liburan";
+        text = "Nubes";
         CustomButton holidayButton = new CustomButton(text);
         yOffset = 160;
         xOffset = holidayButton.getWidth(graphics2d) + 48;
@@ -135,7 +146,22 @@ public class ActionButton {
         holidayLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Fungsi liburan
+                System.out.println("Nubes");
+                    try{
+                    sim.nubes();
+                    UI.setActionText("nubes");
+                    gamePanel.getGameUI().setLoadingMessage("Sedang Nubes ... ");
+                    gamePanel.setGameState(GameState.LOADING_SCREEN);
+                    gamePanel.leastRecentlyUsed.push(GameState.LOADING_SCREEN);
+                    System.out.println("Sedang ... ");
+                    gamePanel.removeAll();
+                    } catch(Exception ex){
+                        ex.getMessage();
+                    }
+                    // Updating
+                    for (Sim s : gamePanel.getPlayableSims()) {
+                        s.update(120);
+                    }
             }
         });
 
