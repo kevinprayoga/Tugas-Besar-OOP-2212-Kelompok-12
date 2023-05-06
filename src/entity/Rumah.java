@@ -23,7 +23,6 @@ public class Rumah {
     private Integer[] upgradeLokasi = new Integer[2];
     private String nameUpgrade;
 
-
     // House state
     private boolean isBuildMode = false;
     
