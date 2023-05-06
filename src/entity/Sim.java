@@ -47,6 +47,7 @@ public class Sim implements AksiAktif, AksiPasif {
     private NonMakanan inFrontNonMakanan;
 
     private int gajiBank; // waktu leftover dari kerja
+    private int tidurBank;
 
     private int timerPembelian = -1;
     private Produk pembelianProduk;
@@ -63,6 +64,9 @@ public class Sim implements AksiAktif, AksiPasif {
         mood = 80;
         kesehatan = 80;
         uang = 100;
+
+        timeTidur = Waktu.getTime();
+        dayTidur = Waktu.getDay();
 
         this.charType = charType;
         currentPosition = "World";
@@ -303,17 +307,17 @@ public class Sim implements AksiAktif, AksiPasif {
     }
 
     public void tidur(int time) throws ItemError, InterruptedException,TimeError {
-        if (inFrontNonMakanan.getAksi() != "Tidur") {
-            throw new ItemError("Sim tidak sedang berada di depan tempat tidur!");
-        } else if(time <240){
+        if(time <180){
             throw new TimeError("Waktu harus lebih dari 240!");
         }else {
             status = "tidur";
             Waktu.setActionTimer(time);
             Waktu.addTime();
             status = "";
-            mood += (time / 240 * 30);
-            kesehatan += (time / 240 * 20);
+            tidurBank += time;
+            mood += (tidurBank / 240*30) ;
+            kesehatan += (tidurBank/240*20);
+            tidurBank = tidurBank % 240;
             timeTidur = Waktu.getTime();
             dayTidur = Waktu.getDay();
 

@@ -120,10 +120,19 @@ public class ObjekPainter {
 
             useLabel.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
+                    try{
                     System.out.println(objek.getNamaProduk() + " Used");
                     isClicked = !isClicked;
                     // Program methods here
-                    
+                    if(objek.getAksi().equals("Makan")){
+                        // Makanannnnnnnnnnn
+                        gamePanel.getPlayedSims().getSims().makan(null);
+                    } if(objek.getAksi().equals("Tidur")){
+                        UI.setActionText("tidur");
+                    }
+                    } catch (Exception ex){
+                        ex.getMessage();
+                    }
                     gamePanel.removeAll();
                 }
             });
