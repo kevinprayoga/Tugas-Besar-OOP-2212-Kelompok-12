@@ -25,10 +25,15 @@ Sim-Plicity ini sendiri merupakan versi lite selaku replika dari game "The Sims"
 Fitur-fitur seperti Sim, World, Rumah, Ruangan, dan objek-objek lainnya tersedia di game ini.<br>
 Selain itu, juga terdapat fitur tambahan yaitu GUI (Graphical User Interface).<br>
 <br><i><b>
-Cara memainkan game ini dengan:
-> Download zip dan extract <br>
+
+## Cara memainkan game ini
+
+> Download zip dan extract
+
 > Buka jar file dengan terminal
-> Masukkan kode ini: java -jar Tugas-Besar-OOP-2212-Kelompok-12.jar <br>
+
+> Masukkan kode ini: java -jar Tugas-Besar-OOP-2212-Kelompok-12.jar
+
 <br><i><b>
 Selamat menjelajahi repository ini!<br>
 Silahkan mencoba dan menikmati game-nya juga apabila berminat ^-^
