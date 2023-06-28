@@ -23,7 +23,13 @@ Adapun kelompok kami terdiri dari:
 Tugas kali ini, kami berkesempatan membuat sebuah game bernama Sim-Plicity.<br>
 Sim-Plicity ini sendiri merupakan versi lite selaku replika dari game "The Sims".<br>
 Fitur-fitur seperti Sim, World, Rumah, Ruangan, dan objek-objek lainnya tersedia di game ini.<br>
-Selain itu, juga terdapat fitur tambahan yaitu GUI (Graphical User Interface) dan save/load progres game.<br>
+Selain itu, juga terdapat fitur tambahan yaitu GUI (Graphical User Interface).<br>
+<br><i><b>
+Cara memainkan game ini dengan:
+- Download zip dan extract
+- Buka jar file dengan terminal
+- Masukkan kode ini
+> java -jar Tugas-Besar-OOP-2212-Kelompok-12.jar
 <br><i><b>
 Selamat menjelajahi repository ini!<br>
 Silahkan mencoba dan menikmati game-nya juga apabila berminat ^-^
