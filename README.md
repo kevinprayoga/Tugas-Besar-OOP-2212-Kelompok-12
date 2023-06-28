@@ -26,10 +26,9 @@ Fitur-fitur seperti Sim, World, Rumah, Ruangan, dan objek-objek lainnya tersedia
 Selain itu, juga terdapat fitur tambahan yaitu GUI (Graphical User Interface).<br>
 <br><i><b>
 Cara memainkan game ini dengan:
-- Download zip dan extract
-- Buka jar file dengan terminal
-- Masukkan kode ini
-> java -jar Tugas-Besar-OOP-2212-Kelompok-12.jar
+> Download zip dan extract <br>
+> Buka jar file dengan terminal
+> Masukkan kode ini: java -jar Tugas-Besar-OOP-2212-Kelompok-12.jar <br>
 <br><i><b>
 Selamat menjelajahi repository ini!<br>
 Silahkan mencoba dan menikmati game-nya juga apabila berminat ^-^
